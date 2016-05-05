@@ -60,14 +60,22 @@ function FluxWebSocket(fetchWebSocketPath, options) {
     }));
   }
 
+  function hasHandler(subchannel, handler) {
+    return handlers[subchannel].indexOf(handler) !== -1;
+  }
+
   function addHandler(subchannel, handler) {
     handlers[subchannel] = handlers[subchannel] || [];
-    handlers[subchannel].push(handler);
+
+    if (!hasHandler(subchannel, handler)) {
+      handlers[subchannel].push(handler);
+    }
   }
 
   function removeHandler(subchannel, handler) {
     const subchannelHandlers = handlers[subchannel] || [];
     const index = subchannelHandlers.indexOf(handler);
+
     if (index !== -1) { subchannelHandlers.splice(index, 1); }
   }
 
