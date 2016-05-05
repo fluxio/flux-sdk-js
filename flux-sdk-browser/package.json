@@ -1,0 +1,57 @@
+{
+  "name": "flux-sdk-browser",
+  "version": "0.3.0",
+  "description": "Flux JavaScript SDK for browser clients",
+  "files": [
+    "dist",
+    "es",
+    "lib",
+    "src"
+  ],
+  "main": "lib/index.js",
+  "jsnext:main": "es/index.js",
+  "scripts": {
+    "build": "npm run build:common && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build:common": "cross-env BABEL_ENV=commonjs babel src -d lib -s",
+    "build:es": "babel src -d es -s",
+    "build:umd": "cross-env BABEL_ENV=commonjs webpack src/index.js dist/flux-sdk.js --debug",
+    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack src/index.js dist/flux-sdk-min.js -p",
+    "check": "npm run lint && npm test",
+    "clean": "rimraf dist es lib",
+    "lint": "eslint src spec example/example.js",
+    "prepublish": "npm run clean && npm run build",
+    "test": "cross-env BABEL_ENV=commonjs babel-node ./node_modules/.bin/jasmine"
+  },
+  "author": "Flux Factory, Inc. (https://flux.io)",
+  "contributors": [
+    "Isobel Redelmeier <isobel@flux.io>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-es2015-block-scoping": "^6.7.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.7.0",
+    "babel-plugin-transform-es2015-parameters": "^6.7.0",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "cross-env": "^1.0.7",
+    "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.1.0",
+    "jasmine": "^2.4.1",
+    "json-loader": "^0.5.4",
+    "nightmare": "^2.2.0",
+    "nodemon": "^1.9.1",
+    "rimraf": "^2.5.2",
+    "webpack": "^1.12.14"
+  },
+  "dependencies": {
+    "flux-sdk-common": "^0.3.0",
+    "query-string": "^3.0.3",
+    "whatwg-fetch": "^0.11.0"
+  }
+}

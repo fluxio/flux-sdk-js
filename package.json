@@ -1,0 +1,25 @@
+{
+  "name": "flux-sdk-js",
+  "description": "Not for direct usage",
+  "private": true,
+  "version": "0.3.0",
+  "scripts": {
+    "build": "bash ./build.sh",
+    "docs:clean": "rimraf _book",
+    "docs:build": "npm run docs:clean && gitbook install && gitbook build",
+    "docs:install": "gitbook install",
+    "docs:preview": "npm run docs:build && gitbook serve",
+    "docs:publish": "npm run docs:build",
+    "prepublish": "npm run build && npm run docs:build",
+    "test": "bash ./test.sh"
+  },
+  "author": "Flux Factory, Inc. (https://flux.io)",
+  "contributors": [
+    "Isobel Redelmeier <isobel@flux.io>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "gitbook-cli": "^2.1.2",
+    "rimraf": "^2.5.2"
+  }
+}

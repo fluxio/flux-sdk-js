@@ -1,0 +1,15 @@
+{
+  "spec_dir": "spec",
+  "spec_files": [
+    "e2e/auth-flow-spec.js",
+    "e2e/endpoints/user-endpoints-spec.js",
+    "e2e/endpoints/project-endpoints-spec.js",
+    "e2e/endpoints/data-table-endpoints-spec.js",
+    "e2e/endpoints/cell-endpoints-spec.js"
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}

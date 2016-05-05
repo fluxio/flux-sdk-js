@@ -1,0 +1,40 @@
+{
+  "name": "flux-sdk-apps-script",
+  "version": "0.3.0",
+  "description": "Flux JavaScript SDK for Google Apps Script clients",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "webpack src/index.js dist/flux-sdk-apps-script-sdk.js --debug",
+    "build:min": "cross-env NODE_ENV=production webpack src/index.js dist/flux-sdk-apps-script.min.js",
+    "clean": "rimraf dist",
+    "prepublish": "npm run clean && npm run build && npm run build:min"
+  },
+  "author": "Flux Factory, Inc. (https://flux.io",
+  "contributors": [
+    "Isobel Redelmeier <isobel@flux.io>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "flux-sdk-common": "0.3.0",
+    "query-string": "^4.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
+    "babel-plugin-transform-es2015-block-scoping": "^6.7.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.7.4",
+    "babel-plugin-transform-es2015-parameters": "^6.7.0",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.5",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "cross-env": "^1.0.7",
+    "eslint": "^2.6.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.2.3",
+    "json-loader": "^0.5.4",
+    "rimraf": "^2.5.2",
+    "webpack": "^1.12.14"
+  }
+}

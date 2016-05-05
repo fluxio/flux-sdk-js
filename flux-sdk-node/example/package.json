@@ -1,0 +1,26 @@
+{
+  "name": "flux-sdk-node-example",
+  "version": "0.3.0",
+  "private": true,
+  "main": "./app.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "author": "Flux Factory, Inc. (https://flux.io)",
+  "contributors": [
+    "Isobel Redelmeier <isobel@flux.io>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "compression": "^1.6.1",
+    "cookie-parser": "~1.3.5",
+    "ejs": "^2.4.1",
+    "errorhandler": "^1.4.3",
+    "express": "~4.13.1",
+    "express-session": "^1.13.0",
+    "flux-sdk-node": "file:..",
+    "morgan": "~1.6.1",
+    "serve-favicon": "~2.3.0"
+  }
+}

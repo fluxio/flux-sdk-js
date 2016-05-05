@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var app = require('../app');
+
+var port = app.get('port');
+
+app.listen(port, function() {
+  console.log('Listening on `http://localhost:' + port + '`');
+});

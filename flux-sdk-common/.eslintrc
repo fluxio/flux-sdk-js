@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb/base",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "space-before-function-paren": [2, "never"],
+    "no-use-before-define": ["error", { "functions": false }]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb/base",
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "space-before-function-paren": [2, "never"]
+  }
+}

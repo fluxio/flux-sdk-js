@@ -1,0 +1,55 @@
+{
+  "name": "flux-sdk-common",
+  "version": "0.3.0",
+  "description": "",
+  "main": "lib/index.js",
+  "jsnext:main": "es/index.js",
+  "scripts": {
+    "build": "npm run build:common && npm run build:es",
+    "build:common": "cross-env BABEL_ENV=commonjs babel src -d lib -s",
+    "build:es": "cross-env babel src -d es -s",
+    "check": "npm run lint && npm run test",
+    "clean": "rimraf es lib",
+    "lint": "eslint src spec",
+    "prepublish": "npm run clean && npm run build",
+    "test": "cross-env BABEL_ENV=commonjs babel-node ./node_modules/.bin/jasmine",
+    "test:watch": "nodemon -x 'npm test' -w src -w spec"
+  },
+  "author": "Flux Factory, Inc. (https://flux.io)",
+  "contributors": [
+    "Isobel Redelmeier <isobel@flux.io>",
+    "Tom Alcorn <alcorn@flux.io>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-plugin-check-es2015-constants": "^6.7.2",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
+    "babel-plugin-transform-es2015-block-scoped-functions": "^6.6.5",
+    "babel-plugin-transform-es2015-block-scoping": "^6.7.1",
+    "babel-plugin-transform-es2015-computed-properties": "^6.6.5",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.5",
+    "babel-plugin-transform-es2015-function-name": "^6.5.0",
+    "babel-plugin-transform-es2015-literals": "^6.5.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.7.4",
+    "babel-plugin-transform-es2015-parameters": "^6.7.0",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-plugin-transform-es2015-spread": "^6.6.5",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.5",
+    "babel-plugin-transform-es2015-typeof-symbol": "^6.6.0",
+    "babel-plugin-transform-es2015-unicode-regex": "^6.5.0",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "cross-env": "^1.0.7",
+    "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.3",
+    "faker": "^3.1.0",
+    "jasmine": "^2.4.1",
+    "nodemon": "^1.9.1",
+    "rimraf": "^2.5.2"
+  },
+  "dependencies": {
+    "is-my-json-valid": "^2.13.1",
+    "jws": "^3.1.3"
+  }
+}

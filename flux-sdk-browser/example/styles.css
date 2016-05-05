@@ -1,0 +1,29 @@
+html {
+  font-size: 16px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  padding: 24px;
+}
+
+a {
+  text-decoration: none;
+}
+
+div,
+button,
+h1, h2, h3, h4, p {
+  box-sizing: border-box;
+}
