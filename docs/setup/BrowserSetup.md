@@ -54,11 +54,10 @@ For example:
   <head>
     <meta charset="UTF-8">
     <title>My Fancy Flux App</title>
-    <script src="https://flux.io/sdk/sdk-0.3.0.js"></script>
+    <script src="https://npmcdn.com/flux-sdk-browser@0.3.0/dist/flux-sdk-min.js"></script>
     <script src="./my-app.js"></script>
   <!-- ... -->
 ```
-<!--TODO: Use a valid link!!!-->
 
 ## <a id="advanced-setup"></a> Advanced Setup
 
