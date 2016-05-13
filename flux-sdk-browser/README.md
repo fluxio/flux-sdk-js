@@ -24,23 +24,28 @@ tools and plugins with which you can set build-time variables.
 
 ### Using a script tag
 
+This makes the SDK available as `window.FluxSdk`.
+
 Production version:
 
-*`<version>` indicates the SDK version from
-[here](/flux-sdk-browser/package.json), e.g., `0.3.0`.*,*`<version>` indicates
-the SDK version from [here](/flux-sdk-browser/package.json), e.g., `0.3.0`.*
-
 ```
-<script src="https://flux.io/sdk/<version>/flux-sdk.min.js"></script>
+<script src="https://npmcdn.com/flux-sdk-browser@<version>/dist/flux-sdk-min.js"></script>
 ```
 
 Development version:
 
 ```
-<script src="https://flux.io/sdk/<version>/flux-sdk.js"></script>
+<script src="https://npmcdn.com/flux-sdk-browser@<version>/dist/flux-sdk.js"></script>
 ```
 
-This makes the SDK available as `window.Flux`.
+The development version is unminified and provides additional debugging
+information, such as logging.
+
+*`<version>` indicates the SDK version from
+[here](/flux-sdk-browser/package.json), e.g., `0.3.0`.*,*`<version>` indicates
+the SDK version from [here](/flux-sdk-browser/package.json), e.g., `0.3.0`.
+To automatically get the most recent non-breaking changes, omit the patch
+version - e.g., use `0.3` instead of `0.3.1`.*
 
 ## Environment Configuration
 

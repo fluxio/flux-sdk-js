@@ -109,5 +109,4 @@ app.use('/projects', function(req, res, next) {
 
 ## Complete Example
 
-[Here](/flux-sdk-node/example)
-<!--TODO: Fix link-->
+[Here](https://github.com/fluxio/flux-sdk-js/tree/master/flux-sdk-node/example)

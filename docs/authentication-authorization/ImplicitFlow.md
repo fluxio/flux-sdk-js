@@ -165,5 +165,4 @@ if (!credentials) {
 
 ## Complete Example
 
-[Here](/flux-sdk-browser/example)
-<!--TODO: Fix link-->
+[Here](https://github.com/fluxio/flux-sdk-js/tree/master/flux-sdk-browser/example)
