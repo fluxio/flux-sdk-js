@@ -112,6 +112,23 @@ describe('utils.FluxWebSocket', function() {
         expect(this.handlerSpy2).not.toHaveBeenCalled();
       });
     });
+
+    describe('when the handler has been added multiple times', function() {
+      beforeEach(function() {
+        this.fluxWebSocket.addHandler('SUBCHANNEL', this.handlerSpy1);
+      });
+
+      it('should only get called once', function() {
+        this.reconnectingWebSocketSpy.emit('message', {
+          data: JSON.stringify({
+            type: 'SUBCHANNEL',
+            body: 'MESSAGE DATA',
+          }),
+        });
+
+        expect(this.handlerSpy1).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 
   describe('#removeHandler', function() {
