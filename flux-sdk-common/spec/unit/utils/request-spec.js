@@ -110,11 +110,11 @@ describe('utils.request', function() {
 
     describe('when the request returns with an error status', function() {
       beforeEach(function() {
-        this.textSpy = jasmine.createSpy('text').and.returnValue(Promise.resolve('TEXT'));
+        this.textSpy = jasmine.createSpy('text')
+          .and.returnValue(Promise.resolve('something bad happened'));
         fetchPort.fetch.and.returnValue(Promise.resolve({
           status: 500,
           text: this.textSpy,
-          statusText: 'something bad happened',
         }));
       });
 
@@ -122,12 +122,12 @@ describe('utils.request', function() {
         request('SOME_PATH')
           .then(done.fail)
           .catch(err => {
-            expect(err.message).toEqual('500 something bad happened: TEXT');
+            expect(err.message).toEqual('500: something bad happened');
             expect(err.response).toEqual({
               status: 500,
-              statusText: 'something bad happened',
               text: this.textSpy,
             });
+            expect(err.status).toEqual(500);
             done();
           });
       });
