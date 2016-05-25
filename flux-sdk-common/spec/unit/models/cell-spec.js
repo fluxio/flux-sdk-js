@@ -54,10 +54,31 @@ describe('models.Cell', function() {
   });
 
   describe('#update', function() {
+    beforeEach(function() {
+      requestUtils.authenticatedRequest.and.callFake((credentials, path) => {
+        let response = 'CELL_UPDATE_RESPONSE';
+
+        if (path.search(/cells\/?$/) !== -1) {
+          response = [{
+            CellId: 'another cell id',
+            ClientMetadata: {},
+          }, {
+            CellId: 'CELL_ID',
+            ClientMetadata: {
+              Foo: 'bar',
+              Label: 'ORIGINAL LABEL',
+            },
+          }];
+        }
+
+        return Promise.resolve(response);
+      });
+    });
+
     it('should return the response', function(done) {
       this.cell.update({ value: 10, label: 'NEW LABEL' })
         .then(response => {
-          expect(Cell.serialize).toHaveBeenCalledWith('RESPONSE');
+          expect(Cell.serialize).toHaveBeenCalledWith('CELL_UPDATE_RESPONSE');
           expect(response).toEqual('SERIALIZED');
         })
         .then(done, done.fail);
@@ -77,7 +98,8 @@ describe('models.Cell', function() {
             method: 'post',
             fluxOptions: {
               Metadata: true,
-              ClientMetadata: { Label: 'NEW LABEL' },
+              ClientMetadata: { Foo: 'bar', Label: 'NEW LABEL' },
+              IgnoreValue: false,
             },
             body: 10,
           }
@@ -92,14 +114,18 @@ describe('models.Cell', function() {
           .then(done, done.fail);
       });
 
-      it('should update only the value of the cell', function() {
+      it('should update only the value of the cell and use the original metadata', function() {
         expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
           this.credentials,
           'p/DATA_TABLE_ID/api/datatable/v1/cells/CELL_ID/', {
             method: 'post',
             fluxOptions: {
               Metadata: true,
-              ClientMetadata: {},
+              ClientMetadata: {
+                Foo: 'bar',
+                Label: 'ORIGINAL LABEL',
+              },
+              IgnoreValue: false,
             },
             body: 10,
           }
@@ -121,7 +147,8 @@ describe('models.Cell', function() {
             method: 'post',
             fluxOptions: {
               Metadata: true,
-              ClientMetadata: { Label: 'NEW LABEL' },
+              ClientMetadata: { Foo: 'bar', Label: 'NEW LABEL' },
+              IgnoreValue: true,
             },
           })
         );
@@ -230,6 +257,7 @@ describe('models.Cell.static', function() {
             fluxOptions: {
               Metadata: true,
               ClientMetadata: { Label: 'NEW KEY', Description: 'FOO' },
+              IgnoreValue: false,
             },
             body: 10,
           }
@@ -257,6 +285,7 @@ describe('models.Cell.static', function() {
             fluxOptions: {
               Metadata: true,
               ClientMetadata: { Label: 'NEW KEY' },
+              IgnoreValue: true,
             },
           })
         );

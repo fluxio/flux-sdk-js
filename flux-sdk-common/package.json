@@ -49,6 +49,7 @@
     "rimraf": "^2.5.2"
   },
   "dependencies": {
+    "humps": "^1.1.0",
     "is-my-json-valid": "^2.13.1",
     "jws": "^3.1.3"
   }

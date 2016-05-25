@@ -1,3 +1,5 @@
+import { camelizeKeys, pascalizeKeys } from 'humps';
+
 import DataTable from './data-table';
 import { authenticatedRequest } from '../utils/request';
 import {
@@ -11,26 +13,16 @@ import {
   serializeList,
 } from '../serializers/cell-serializer';
 
-// Ensure all keys have leading caps.
-// TODO(daishi): Move this to some utility module or possibly use a third-party
-// library like https://github.com/domchristie/humps.
-function capcaseKeys(obj) {
-  return Object.keys(obj).reduce((acc, key) => {
-    const ret = acc;
-    ret[key.replace(/^[a-z]/, match => match.toUpperCase())] = obj[key];
-    return ret;
-  }, {});
-}
+function updateCell(credentials, dataTableId, id, cellOptions = {}) {
+  const { value, ...others } = cellOptions;
 
-function updateCell(credentials, dataTableId, id, keyOptions = {}) {
-  const { value, ...others } = keyOptions;
-
-  const clientMetadata = capcaseKeys(others);
+  const clientMetadata = pascalizeKeys(others);
   // TODO(daishi): Generalize functionality to not assume client metadata
   // capability (this issue exists elsewhere also).
   const fluxOptions = {
     Metadata: true,
     ClientMetadata: clientMetadata,
+    IgnoreValue: !value,
   };
 
   return authenticatedRequest(credentials, cellPath(dataTableId, id), {
@@ -48,8 +40,26 @@ function listCells(credentials, dataTableId) {
     .then(Cell.serializeList);
 }
 
-function createCell(credentials, dataTableId, label, keyOptions = {}) {
-  return updateCell(credentials, dataTableId, '', { label, ...keyOptions });
+function createCell(credentials, dataTableId, label, cellOptions = {}) {
+  return updateCell(credentials, dataTableId, '', { label, ...cellOptions });
+}
+
+function fetchCellMetadata(credentials, dataTableId, cellId) {
+  // We can't use Cell.listCells since Cell.serializeList may be overridden and therefore
+  // there's no guarantee about the return object's shape.
+  // Also, we use the endpoint for listing cells rather than fetching a single cell
+  // for performance reasons. The latter request contains the cell's value,
+  // which may be quite large.
+  // TODO: Once the back end supports an option that lets us fetch a cell's metadata without
+  // its value, we can switch over.
+  return authenticatedRequest(credentials, cellsPath(dataTableId), { fluxOptions: true })
+    .then(cells => {
+      // Uses Array.filter instead of Array.find due to IE's lack of support for Array.find
+      const matches = cells.filter(cell => cell.CellId === cellId);
+      return matches ? matches[0] : {};
+    })
+    .then(cell => (cell.ClientMetadata || {}))
+    .then(camelizeKeys);
 }
 
 function Cell(credentials, dataTableId, id) {
@@ -67,8 +77,14 @@ function Cell(credentials, dataTableId, id) {
       .then(Cell.serialize);
   }
 
-  function update(keyOptions) {
-    return updateCell(credentials, dataTableId, id, keyOptions);
+  function update(cellOptions) {
+    // Even though update is a POST request, the back end will overwrite certain keys
+    // if they're not present (such as description) and do nothing if the 'label'
+    // isn't present.
+    // We therefore have to combine the new changes with the original state to ensure
+    // that the expected behaviour occurs.
+    return fetchCellMetadata(credentials, dataTableId, id)
+      .then(data => updateCell(credentials, dataTableId, id, { ...data, ...cellOptions }));
   }
 
   function deleteCell() {
