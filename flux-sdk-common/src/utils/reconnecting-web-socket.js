@@ -4,14 +4,16 @@ import { WebSocket } from '../ports/web-socket';
 function ReconnectingWebSocket(fetchWebSocketPath, options = {}) {
   EventEmitter.call(this);
 
-  const { delayMultiplier, errorTimeout } = {
+  const { delayMultiplier, errorTimeout, credentials } = {
     delayMultiplier: 1.2,
     errorTimeout: 120000,
+    credentials: {},
     ...options,
   };
 
   const self = this;
   const buffer = [];
+  const accessToken = credentials.accessToken || '';
 
   let reconnectDelay = options.reconnectDelay || 5000;
   let webSocket = null;
@@ -25,8 +27,8 @@ function ReconnectingWebSocket(fetchWebSocketPath, options = {}) {
     connect();
   }
 
-  function onError() {
-    self.emit('error');
+  function onError(error) {
+    self.emit('error', error);
     webSocket = null;
     killed = true;
     clearTimeout(attemptReconnectId);
@@ -61,7 +63,10 @@ function ReconnectingWebSocket(fetchWebSocketPath, options = {}) {
   }
 
   function initializeWebSocket(path) {
-    webSocket = new WebSocket(path);
+    webSocket = new WebSocket(path, [], {
+      headers: { cookie: `auth=${accessToken}` },
+    });
+
     webSocket.onopen = onOpen;
     webSocket.onmessage = onMessage;
     webSocket.onclose = reconnect;

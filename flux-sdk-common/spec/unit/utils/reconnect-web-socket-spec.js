@@ -43,6 +43,7 @@ describe('utils.ReconnectingWebSocket', function() {
       delayMultiplier: 1,
       errorTimeout: 10000,
       reconnectDelay: 1000,
+      credentials: { accessToken: 'ACCESS_TOKEN' },
     });
 
     this.openWebSocket = (callback, path) => {
@@ -73,7 +74,9 @@ describe('utils.ReconnectingWebSocket', function() {
         });
 
         it('should set up the Web Socket', function() {
-          expect(webSocketPort.WebSocket).toHaveBeenCalledWith('WEB_SOCKET_PATH');
+          expect(webSocketPort.WebSocket).toHaveBeenCalledWith('WEB_SOCKET_PATH', [], {
+            headers: { cookie: 'auth=ACCESS_TOKEN' },
+          });
         });
       });
 
