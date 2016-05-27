@@ -46,9 +46,8 @@ function handleError(response) {
   return response.text()
     .then(text => {
       const status = response.status;
-      const statusText = response.statusText || text;
+      const error = new Error(`${status}: ${text}`);
 
-      const error = new Error(`${status}: ${statusText}`);
       error.response = response;
       error.status = status;
 
