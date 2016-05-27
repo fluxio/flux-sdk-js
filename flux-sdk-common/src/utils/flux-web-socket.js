@@ -1,7 +1,7 @@
 import ReconnectingWebSocket from './reconnecting-web-socket';
 
-function handleError() {
-  throw new Error('Error connecting to web socket');
+function handleError(error) {
+  throw new Error('Error connecting to web socket:', error);
 }
 
 function FluxWebSocket(fetchWebSocketPath, options) {

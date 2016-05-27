@@ -64,7 +64,11 @@ function DataTable(credentials, id) {
       onOpenWebSocket();
       onOpen();
     } : onOpenWebSocket;
-    webSocket = createWebSocket(id, fetchWebSocketPath, { onOpen: handleOnOpen, ...others });
+    webSocket = createWebSocket(id, fetchWebSocketPath, {
+      onOpen: handleOnOpen,
+      ...others,
+      credentials,
+    });
     webSocket.addHandler(DATA_TABLE_SUBCHANNEL, handleMessage);
     return webSocket;
   }
