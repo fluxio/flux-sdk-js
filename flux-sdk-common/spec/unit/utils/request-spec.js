@@ -9,6 +9,7 @@ import * as base64 from '../../../src/ports/base64';
 import * as url from '../../../src/ports/url';
 import * as querystring from '../../../src/ports/querystring';
 import credentialsFactory from '../../factories/credentials-factory';
+import { version } from '../../../package.json';
 
 describe('utils.request', function() {
   beforeEach(function() {
@@ -102,7 +103,12 @@ describe('utils.request', function() {
         expect(url.joinUrl).toHaveBeenCalledWith('https://flux.io/', 'SOME_PATH', '');
         expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', {
           credentials: 'include',
-          headers: { a: 'b' },
+          headers: {
+            a: 'b',
+            'User-Agent': `JsSDK/${version}`,
+            'Flux-Plugin-Version': version,
+            'Flux-Plugin-Platform': 'JsSDK',
+          },
           foo: 'bar',
         });
       });
@@ -230,8 +236,12 @@ describe('utils.request', function() {
         headers: {
           Authorization: 'TOKEN_TYPE ACCESS_TOKEN',
           Cookie: 'auth=ACCESS_TOKEN; flux_token=FLUX_TOKEN',
+          'User-Agent': `JsSDK/${version}`,
           'Flux-Request-Token': 'FLUX_TOKEN',
           'Flux-Request-Marker': 1,
+          'Flux-Plugin-Version': version,
+          'Flux-Plugin-Platform': 'JsSDK',
+          'Flux-Plugin-Host': this.credentials.clientId,
         },
       });
     });
@@ -257,9 +267,13 @@ describe('utils.request', function() {
             headers: {
               Authorization: 'TOKEN_TYPE ACCESS_TOKEN',
               Cookie: 'auth=ACCESS_TOKEN; flux_token=FLUX_TOKEN',
+              'User-Agent': `JsSDK/${version}`,
               'Flux-Request-Token': 'FLUX_TOKEN',
               'Flux-Request-Marker': 1,
               'Flux-Options': 'B64_ENCODED',
+              'Flux-Plugin-Version': version,
+              'Flux-Plugin-Platform': 'JsSDK',
+              'Flux-Plugin-Host': this.credentials.clientId,
               another: 'header',
             },
           });
@@ -283,9 +297,13 @@ describe('utils.request', function() {
             headers: {
               Authorization: 'TOKEN_TYPE ACCESS_TOKEN',
               Cookie: 'auth=ACCESS_TOKEN; flux_token=FLUX_TOKEN',
+              'User-Agent': `JsSDK/${version}`,
               'Flux-Request-Token': 'FLUX_TOKEN',
               'Flux-Request-Marker': 1,
               'Flux-Options': 'B64_ENCODED',
+              'Flux-Plugin-Version': version,
+              'Flux-Plugin-Platform': 'JsSDK',
+              'Flux-Plugin-Host': this.credentials.clientId,
               another: 'header',
             },
           });
@@ -306,8 +324,12 @@ describe('utils.request', function() {
           HeaderKey: 'I am a header!',
           Authorization: 'TOKEN_TYPE ACCESS_TOKEN',
           Cookie: 'auth=ACCESS_TOKEN; flux_token=FLUX_TOKEN',
+          'User-Agent': `JsSDK/${version}`,
           'Flux-Request-Token': 'FLUX_TOKEN',
           'Flux-Request-Marker': 1,
+          'Flux-Plugin-Version': version,
+          'Flux-Plugin-Platform': 'JsSDK',
+          'Flux-Plugin-Host': this.credentials.clientId,
         },
         foo: 'bar',
       });
