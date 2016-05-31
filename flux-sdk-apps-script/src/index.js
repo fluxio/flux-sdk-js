@@ -3,8 +3,6 @@ import qs from 'query-string';
 import fluxSdkWrapper from 'flux-sdk-common';
 import { handleCredentials } from 'flux-sdk-common/lib/utils/open-id-connect';
 
-const emptyBody = JSON.stringify(null);
-
 function parseUrl(url) {
   // https://gist.github.com/jlong/2428561
   const anchor = document.createElement('a');
@@ -24,12 +22,19 @@ function parseUrl(url) {
 
 function scriptFetch(path, options = {}) {
   const { headers, method, body } = options;
+
+  // Given any payload, Apps Script seems to coerce the method from 'get' to 'post'
+  // (even if the payload is falsey).
+  // Therefore, we need to ensure that the 'payload' key is only set if we really,
+  // really mean to send a body.
+  const payload = body ? { payload: body } : null;
+
   const requestOptions = {
     muteHttpExceptions: false,
     headers: headers || {},
     method: method || 'get',
-    payload: body || emptyBody,
     contentType: headers['Content-Type'] || headers['content-type'] || 'application/json',
+    ...payload,
   };
 
   return new Promise((resolve, reject) => {
@@ -39,12 +44,20 @@ function scriptFetch(path, options = {}) {
       .makeURLFetchAppCall(path, requestOptions);
   })
     .then(response => {
-      const responseHeaders = response.headers;
-      const responseBody = response.body;
+      // In the actual fetch API, headers are case-insensitive (i.e., for methods like
+      // headers.has and headers.get).
+      // We need to approximate this case insensitivity, at least in functionality.
+      const responseHeaders = Object.keys(response.headers).reduce((acc, header) => {
+        const ret = acc;
+        ret[header.toLowerCase()] = response.headers[header];
+        return ret;
+      }, {});
+      const responseBody = response.body || null;
+
       return {
         headers: {
-          has: header => !!responseHeaders[header],
-          get: header => responseHeaders[header] || '',
+          has: header => !!responseHeaders[header.toLowerCase()],
+          get: header => responseHeaders[header.toLowerCase()] || '',
         },
         text: () => Promise.resolve(responseBody),
         json: () => Promise.resolve(JSON.parse(responseBody)),
