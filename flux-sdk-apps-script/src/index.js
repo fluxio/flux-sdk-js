@@ -30,7 +30,7 @@ function scriptFetch(path, options = {}) {
   const payload = body ? { payload: body } : null;
 
   const requestOptions = {
-    muteHttpExceptions: false,
+    muteHttpExceptions: true,
     headers: headers || {},
     method: method || 'get',
     contentType: headers['Content-Type'] || headers['content-type'] || 'application/json',
@@ -53,8 +53,10 @@ function scriptFetch(path, options = {}) {
         return ret;
       }, {});
       const responseBody = response.body || null;
+      const status = response.status;
 
       return {
+        status,
         headers: {
           has: header => !!responseHeaders[header.toLowerCase()],
           get: header => responseHeaders[header.toLowerCase()] || '',
