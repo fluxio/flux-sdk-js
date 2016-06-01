@@ -22,7 +22,7 @@ function updateCell(credentials, dataTableId, id, cellOptions = {}) {
   const fluxOptions = {
     Metadata: true,
     ClientMetadata: clientMetadata,
-    IgnoreValue: !value,
+    IgnoreValue: value === undefined,
   };
 
   return authenticatedRequest(credentials, cellPath(dataTableId, id), {
@@ -41,7 +41,8 @@ function listCells(credentials, dataTableId) {
 }
 
 function createCell(credentials, dataTableId, label, cellOptions = {}) {
-  return updateCell(credentials, dataTableId, '', { label, ...cellOptions });
+  const value = cellOptions.value || null;
+  return updateCell(credentials, dataTableId, '', { label, value, ...cellOptions });
 }
 
 function fetchCellMetadata(credentials, dataTableId, cellId) {
