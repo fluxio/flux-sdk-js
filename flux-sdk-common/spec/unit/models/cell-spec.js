@@ -285,7 +285,7 @@ describe('models.Cell.static', function() {
             fluxOptions: {
               Metadata: true,
               ClientMetadata: { Label: 'NEW KEY' },
-              IgnoreValue: true,
+              IgnoreValue: false,
             },
           })
         );
