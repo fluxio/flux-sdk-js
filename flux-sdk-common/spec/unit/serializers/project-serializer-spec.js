@@ -8,6 +8,8 @@ describe('serializers.projectSerializer', function() {
         name: 'PROJECT NAME',
         creator_id: 'CREATOR_ID',
         creator: 'CREATOR NAME',
+        acl: 'owner',
+        kind: 'full',
       });
       const serializedProject = serialize(projectResponse);
 
@@ -17,6 +19,8 @@ describe('serializers.projectSerializer', function() {
       expect(serializedProject.creatorName).toEqual('CREATOR NAME');
       expect(serializedProject.timeCreated).toEqual(jasmine.any(Date));
       expect(serializedProject.timeUpdated).toEqual(jasmine.any(Date));
+      expect(serializedProject.acl).toEqual('owner');
+      expect(serializedProject.kind).toEqual('full');
     });
   });
 

@@ -6,6 +6,8 @@ function serialize(entity) {
     creatorName: entity.creator,
     timeCreated: new Date(entity.created_at),
     timeUpdated: new Date(entity.last_updated),
+    acl: entity.acl,
+    kind: entity.kind,
   };
 }
 
