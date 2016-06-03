@@ -74,9 +74,8 @@ function request(path, options = {}) {
     headers: {
       ...headers,
       ...contentType,
-      'User-Agent': `JsSDK/${version}`,
-      'Flux-Plugin-Version': version,
-      'Flux-Plugin-Platform': 'JsSDK',
+      'User-Agent': `js-sdk/${version}`,
+      'Flux-Plugin-Platform': `browser/js-sdk/${version}`,
     },
     ...payload,
     ...others,
