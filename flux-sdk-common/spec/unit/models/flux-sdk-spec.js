@@ -1,8 +1,9 @@
 import FluxSdk from '../../../src/models/flux-sdk';
 import * as userModule from '../../../src/models/user';
 import * as schemaValidators from '../../../src/utils/schema-validators';
-import * as openIdConnect from '../../../src/utils/open-id-connect';
+import * as openIdConnect from '../../../src/open-id-connect';
 import * as requestUtils from '../../../src/utils/request';
+import * as queryStringModule from '../../../src/ports/querystring';
 
 describe('models.FluxSdk', function() {
   beforeEach(function() {
@@ -36,145 +37,166 @@ describe('models.FluxSdk', function() {
   });
 
   describe('#getAuthorizeUrl', function() {
-    describe('when no state is provided', function() {
-      it('should throw an error', function() {
-        const sdk = new FluxSdk('CLIENT_ID', { clientSecret: 'CLIENT_SECRET' });
-        expect(() => sdk.getAuthorizeUrl('', 'EXPECTED_NONCE'))
-          .toThrowError('No `state` provided');
-      });
+    beforeEach(function() {
+      spyOn(openIdConnect, 'getAuthorizeUrl').and.returnValue('FAKE_AUTHORIZE_URL');
     });
 
-    describe('when no nonce is provided', function() {
-      it('should throw an error', function() {
-        const sdk = new FluxSdk('CLIENT_ID', { clientSecret: 'CLIENT_SECRET' });
-        expect(() => sdk.getAuthorizeUrl('EXPECTED_STATE', ''))
-          .toThrowError('No `nonce` provided');
+    it('should return the authorize URL', function() {
+      const sdk = new FluxSdk('CLIENT_ID', {
+        redirectUri: 'FAKE_REDIRECT_URI',
+        clientSecret: 'FAKE_SECRET',
       });
-    });
+      const authorizeUrl = sdk.getAuthorizeUrl('FAKE_STATE', 'FAKE_NONCE');
 
-    describe('server flow', function() {
-      beforeEach(function() {
-        this.sdk = new FluxSdk('CLIENT_ID', {
-          clientId: 'CLIENT_ID',
-          clientSecret: 'CLIENT_SECRET',
-          redirectUri: 'REDIRECT_URI',
+      expect(authorizeUrl).toEqual('FAKE_AUTHORIZE_URL');
+      expect(openIdConnect.getAuthorizeUrl)
+        .toHaveBeenCalledWith('FAKE_STATE', 'FAKE_NONCE', 'CLIENT_ID', 'FAKE_REDIRECT_URI', {
+          fluxUrl: '',
+          implicit: false,
         });
-        spyOn(openIdConnect, 'getServerAuthorizeUrl').and.returnValue('SERVER_URL');
+    });
+
+    it('should allow the user to override the redirect URI', function() {
+      const sdk = new FluxSdk('CLIENT_ID', {
+        redirectUri: 'FAKE_REDIRECT_URI',
+        clientSecret: 'FAKE_SECRET',
+      });
+      const authorizeUrl = sdk.getAuthorizeUrl('FAKE_STATE', 'FAKE_NONCE', {
+        redirectUri: 'DIFFERENT_REDIRECT_URI',
       });
 
-      it('should return the server authorize URL', function() {
-        const authorizeUrl = this.sdk.getAuthorizeUrl('STATE', 'NONCE');
+      expect(authorizeUrl).toEqual('FAKE_AUTHORIZE_URL');
+      expect(openIdConnect.getAuthorizeUrl)
+        .toHaveBeenCalledWith('FAKE_STATE', 'FAKE_NONCE', 'CLIENT_ID', 'DIFFERENT_REDIRECT_URI', {
+          fluxUrl: '',
+          implicit: false,
+        });
+    });
 
-        expect(openIdConnect.getServerAuthorizeUrl)
-          .toHaveBeenCalledWith('STATE', 'NONCE', jasmine.objectContaining({
-            clientId: 'CLIENT_ID',
-            redirectUri: 'REDIRECT_URI',
-          }));
-        expect(authorizeUrl).toEqual('SERVER_URL');
+    it('should allow the user to override the Flux URL', function() {
+      const sdk = new FluxSdk('CLIENT_ID', {
+        redirectUri: 'FAKE_REDIRECT_URI',
+        clientSecret: 'FAKE_SECRET',
+      });
+      const authorizeUrl = sdk.getAuthorizeUrl('FAKE_STATE', 'FAKE_NONCE', {
+        fluxUrl: 'FAKE_FLUX_URL',
       });
 
+      expect(authorizeUrl).toEqual('FAKE_AUTHORIZE_URL');
+      expect(openIdConnect.getAuthorizeUrl)
+        .toHaveBeenCalledWith('FAKE_STATE', 'FAKE_NONCE', 'CLIENT_ID', 'FAKE_REDIRECT_URI', {
+          fluxUrl: 'FAKE_FLUX_URL',
+          implicit: false,
+        });
+    });
 
-      it('should be able to override the redirect URI', function() {
-        this.sdk.getAuthorizeUrl('STATE', 'NONCE', { redirectUri: 'OVERRIDDEN_REDIRECT_URI' });
-        expect(openIdConnect.getServerAuthorizeUrl)
-          .toHaveBeenCalledWith('STATE', 'NONCE', jasmine.objectContaining({
-            clientId: 'CLIENT_ID',
-            redirectUri: 'OVERRIDDEN_REDIRECT_URI',
-          }));
+    describe('when the SDK is implicit', function() {
+      it('should get the implicit authorize URL', function() {
+        const sdk = new FluxSdk('CLIENT_ID', {
+          redirectUri: 'FAKE_REDIRECT_URI',
+          implicit: true,
+        });
+        const authorizeUrl = sdk.getAuthorizeUrl('FAKE_STATE', 'FAKE_NONCE');
+
+        expect(authorizeUrl).toEqual('FAKE_AUTHORIZE_URL');
+        expect(openIdConnect.getAuthorizeUrl)
+          .toHaveBeenCalledWith('FAKE_STATE', 'FAKE_NONCE', 'CLIENT_ID', 'FAKE_REDIRECT_URI', {
+            fluxUrl: '',
+            implicit: true,
+          });
       });
     });
   });
 
   describe('#exchangeCredentials', function() {
-    describe('without an expected state', function() {
-      it('should reject with an error', function(done) {
-        const sdk = new FluxSdk('CLIENT_ID', { clientSecret: 'CLIENT_SECRET' });
-        sdk.exchangeCredentials('', 'EXPECTED_NONCE', {})
-          .then(done.fail)
-          .catch(err => {
-            expect(err).toEqual('No `expectedState` provided');
-            done();
-          });
-      });
+    beforeEach(function() {
+      spyOn(openIdConnect, 'exchangeCredentials').and.returnValue('EXCHANGED_CREDENTIALS');
     });
 
-    describe('without an expectedNonce', function() {
-      it('should reject with an error', function(done) {
-        const sdk = new FluxSdk('CLIENT_ID', { clientSecret: 'CLIENT_SECRET' });
-        sdk.exchangeCredentials('EXPECTED_STATE', '', {})
-          .then(done.fail)
-          .catch(err => {
-            expect(err).toEqual('No `expectedNonce` provided');
-            done();
+    describe('server (non-implicit) flow', function() {
+      beforeEach(function() {
+        this.sdk = new FluxSdk('CLIENT_ID', {
+          clientSecret: 'CLIENT_SECRET',
+          fluxUrl: 'FLUX_URL',
+          redirectUri: 'REDIRECT_URI',
+        });
+      });
+
+      it('should correctly request to exchange the credentials', function() {
+        const credentials = this.sdk.exchangeCredentials('STATE', 'NONCE', { foo: 'bar' });
+
+        expect(credentials).toEqual('EXCHANGED_CREDENTIALS');
+
+        expect(openIdConnect.exchangeCredentials)
+          .toHaveBeenCalledWith('STATE', 'NONCE', 'CLIENT_ID', 'REDIRECT_URI', { foo: 'bar' }, {
+            clientSecret: 'CLIENT_SECRET',
+            fluxUrl: 'FLUX_URL',
+            implicit: false,
           });
       });
-    });
 
-    describe('when the expected state does not match the actual state', function() {
-      it('should reject with an error', function(done) {
-        const sdk = new FluxSdk('CLIENT_ID', { clientSecret: 'CLIENT_SECRET' });
-        sdk.exchangeCredentials('EXPECTED_STATE', 'EXPECTED_NONCE', {
-          state: 'ACTUAL_STATE',
-        })
-          .then(done.fail)
-          .catch(err => {
-            expect(err).toEqual('Expected state `ACTUAL_STATE` to match `EXPECTED_STATE`');
-            done();
+      it('should allow the user to override the redirect URI', function() {
+        const credentials = this.sdk.exchangeCredentials('STATE', 'NONCE', { foo: 'bar' }, {
+          redirectUri: 'DIFFERENT_REDIRECT_URI',
+        });
+
+        expect(credentials).toEqual('EXCHANGED_CREDENTIALS');
+
+        expect(openIdConnect.exchangeCredentials)
+          .toHaveBeenCalledWith('STATE', 'NONCE', 'CLIENT_ID', 'DIFFERENT_REDIRECT_URI', {
+            foo: 'bar',
+          }, {
+            clientSecret: 'CLIENT_SECRET',
+            fluxUrl: 'FLUX_URL',
+            implicit: false,
           });
       });
     });
 
     describe('implicit flow', function() {
-      it('should use the implicit flow to request credentials', function() {
-        pending('TODO');
-      });
+      beforeEach(function() {
+        this.originalWindow = global.window;
+        global.window = {
+          location: { hash: '#UNPARSED_HASH' },
+        };
 
-      it('should handle the response', function() {
-        pending('TODO');
-      });
+        spyOn(queryStringModule, 'parseQuery').and.returnValue('PARSED_QUERY');
 
-      it('should resolve to the handled credentials', function() {
-        pending('TODO');
-      });
-    });
-
-    describe('server flow', function() {
-      beforeEach(function(done) {
         this.sdk = new FluxSdk('CLIENT_ID', {
-          clientId: 'CLIENT_ID',
-          clientSecret: 'CLIENT_SECRET',
+          fluxUrl: 'FLUX_URL',
           redirectUri: 'REDIRECT_URI',
-        });
-        spyOn(openIdConnect, 'requestServerCredentials')
-          .and.returnValue(Promise.resolve('SERVER_CREDENTIALS'));
-        spyOn(openIdConnect, 'handleCredentials')
-          .and.returnValue(Promise.resolve('HANDLED_CREDENTIALS'));
-
-        this.sdk.exchangeCredentials('STATE', 'NONCE', {
-          code: 'CODE',
-          state: 'STATE',
-          flux_token: 'FLUX_TOKEN',
-        })
-          .then(response => { this.response = response; })
-          .then(done, done.fail);
-      });
-
-      it('should use the server flow to request credentials', function() {
-        expect(openIdConnect.requestServerCredentials).toHaveBeenCalledWith({
-          clientId: 'CLIENT_ID',
-          clientSecret: 'CLIENT_SECRET',
-          code: 'CODE',
-          redirectUri: 'REDIRECT_URI',
+          implicit: true,
         });
       });
 
-      it('should handle the server response', function() {
-        expect(openIdConnect.handleCredentials)
-          .toHaveBeenCalledWith('CLIENT_ID', 'FLUX_TOKEN', 'NONCE', 'SERVER_CREDENTIALS', false);
+      afterEach(function() {
+        global.window = this.originalWindow;
       });
 
-      it('should resolve to the handled credentials', function() {
-        expect(this.response).toEqual('HANDLED_CREDENTIALS');
+      it('should correctly request to exchange the credentials', function() {
+        const credentials = this.sdk.exchangeCredentials('STATE', 'NONCE', { foo: 'bar' });
+
+        expect(queryStringModule.parseQuery).toHaveBeenCalledWith('UNPARSED_HASH');
+        expect(credentials).toEqual('EXCHANGED_CREDENTIALS');
+        expect(openIdConnect.exchangeCredentials)
+          .toHaveBeenCalledWith('STATE', 'NONCE', 'CLIENT_ID', 'REDIRECT_URI', 'PARSED_QUERY', {
+            clientSecret: undefined,
+            fluxUrl: 'FLUX_URL',
+            implicit: true,
+          });
+      });
+
+      it('should allow the user to override the redirect URI', function() {
+        this.sdk.exchangeCredentials('STATE', 'NONCE', { foo: 'bar' }, {
+          redirectUri: 'DIFFERENT_REDIRECT_URI',
+        });
+
+        expect(openIdConnect.exchangeCredentials).toHaveBeenCalledWith(
+          'STATE', 'NONCE', 'CLIENT_ID', 'DIFFERENT_REDIRECT_URI', 'PARSED_QUERY', {
+            clientSecret: undefined,
+            fluxUrl: 'FLUX_URL',
+            implicit: true,
+          });
       });
     });
   });
