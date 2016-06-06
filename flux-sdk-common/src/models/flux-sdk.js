@@ -1,74 +1,41 @@
 import { checkSdk } from '../utils/schema-validators';
 import {
-  getImplicitAuthorizeUrl,
-  getServerAuthorizeUrl,
-  requestServerCredentials,
-  handleCredentials,
-} from '../utils/open-id-connect';
+  getAuthorizeUrl as _getAuthorizeUrl,
+  exchangeCredentials as _exchangeCredentials,
+} from '../open-id-connect';
 import { parseQuery } from '../ports/querystring';
 import User from './user';
 import * as models from './index';
 import * as constants from '../constants';
 import { setFluxUrl } from '../utils/request';
 
-// TODO: Investigate these keys re: necessity, usefulness
-/*
- DeveloperId
- DeveloperName
- ClientName
- OS
- HostProgramVersion
- HostProgramMainFile
- */
-
 function FluxSdk(clientId, sdkOptions = {}) {
   const {
-    clientSecret,
     fluxUrl,
     redirectUri,
     implicit,
+    clientSecret,
   } = sdkOptions;
   checkSdk({ clientId, ...sdkOptions });
 
   setFluxUrl(fluxUrl);
 
   function getAuthorizeUrl(state, nonce, options = {}) {
-    if (!state) {
-      throw new Error('No `state` provided');
-    } else if (!nonce) {
-      throw new Error('No `nonce` provided');
-    }
-
-    return (implicit ? getImplicitAuthorizeUrl : getServerAuthorizeUrl)(state, nonce, {
-      fluxUrl,
-      clientId,
-      redirectUri: options.redirectUri || redirectUri,
+    return _getAuthorizeUrl(state, nonce, clientId, options.redirectUri || redirectUri, {
+      fluxUrl: options.fluxUrl || fluxUrl || '',
+      implicit: !!implicit,
     });
   }
 
-  function exchangeCredentials(expectedState, nonce, responseQuery = {}, options = {}) {
-    const {
-      code,
-      state,
-      flux_token,
-      ...others,
-    } = implicit ? parseQuery(window.location.hash.slice(1)) : responseQuery;
+  function exchangeCredentials(state, nonce, responseQuery = {}, options = {}) {
+    const query = implicit ? parseQuery(window.location.hash.slice(1)) : responseQuery;
+    const redirect = options.redirectUri || redirectUri;
 
-    if (!expectedState) {
-      return Promise.reject('No `expectedState` provided');
-    } else if (!nonce) {
-      return Promise.reject('No `expectedNonce` provided');
-    } else if (expectedState !== state) {
-      return Promise.reject(`Expected state \`${state}\` to match \`${expectedState}\``);
-    }
-
-    return (implicit ? Promise.resolve(others) : requestServerCredentials({
-      clientId,
+    return _exchangeCredentials(state, nonce, clientId, redirect, query, {
+      fluxUrl,
       clientSecret,
-      code,
-      redirectUri: options.redirectUri || redirectUri,
-    }))
-      .then(response => handleCredentials(clientId, flux_token, nonce, response, !!implicit));
+      implicit: !!implicit,
+    });
   }
 
   function getUser(credentials) {
