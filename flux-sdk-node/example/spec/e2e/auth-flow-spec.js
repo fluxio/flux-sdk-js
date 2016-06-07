@@ -1,6 +1,6 @@
-import nightmare from 'nightmare';
+var nightmare = require('nightmare');
 
-import { setCookies } from '../support/test-state';
+var setCookies = require('../support/test-state').setCookies;
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -21,20 +21,24 @@ describe('auth flow', function() {
   });
 
   it('should be able to retrieve credentials for a user', function(done) {
-    const baseUrl = `http://localhost:${this.PORT}`;
+    var baseUrl = 'http://localhost:' + this.PORT;
+    var self = this;
+    console.log('baseUrl', baseUrl)
 
-    this.app.listen(this.PORT, () => {
-      this.nightmare.goto(`${baseUrl}/auth_callback`)
+    this.app.listen(this.PORT, function() {
+      self.nightmare.goto(baseUrl + '/auth_callback')
         .wait('#emailInput')
-        .type('#emailInput', this.EMAIL)
-        .type('#passwordInput', this.PASSWORD)
+        .type('#emailInput', self.EMAIL)
+        .type('#passwordInput', self.PASSWORD)
         .click('#handleLogin')
         .wait('#authorizeApp')
         .click('#authorizeApp paper-button')
-        .wait(origin => window.location.origin === origin, baseUrl)
+        .wait(function(origin) {
+          return window.location.origin === origin;
+        }, baseUrl)
         .cookies.get('connect.sid')
-        .then(cookies => {
-          setCookies(`connect.sid=${cookies.value}`);
+        .then(function(cookies) {
+          setCookies('connect.sid=' + cookies.value);
           done();
         });
     });
