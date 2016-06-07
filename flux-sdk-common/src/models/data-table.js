@@ -133,21 +133,23 @@ function DataTable(credentials, id) {
   function fetchHistory(options = {}) {
     const { cellIds, limit, values, eventTypes, startTime, endTime, page } = options;
     const begin = startTime ? { begin: startTime } : null;
-    const end = startTime ? { end: endTime } : null;
+    const end = endTime ? { end: endTime } : null;
     const cursor = page ? { cursor: page.toString() } : null;
+    const cells = cellIds ? { cells: cellIds } : null;
+    const types = eventTypes ? { types: eventTypes } : null;
 
     return authenticatedRequest(credentials, historyPath, {
       method: 'post',
       fluxOptions: true,
       body: {
         historyQuery: {
-          cellIds,
           limit,
           values,
-          eventTypes,
           ...cursor,
           ...begin,
           ...end,
+          ...cells,
+          ...types,
         },
       },
     })
