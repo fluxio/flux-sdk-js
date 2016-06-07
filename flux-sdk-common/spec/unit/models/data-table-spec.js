@@ -179,10 +179,10 @@ describe('models.DataTable', function() {
               fluxOptions: true,
               body: {
                 historyQuery: {
-                  cellIds: ['CELL1', 'CELL2'],
+                  cells: ['CELL1', 'CELL2'],
                   cursor: '2',
                   limit: 5,
-                  eventTypes: ['CELL_MODIFIED'],
+                  types: ['CELL_MODIFIED'],
                   begin: 1000,
                   end: 2000,
                   values: ['FOO'],
