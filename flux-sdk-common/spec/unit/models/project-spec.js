@@ -49,29 +49,6 @@ describe('models.Project', function() {
     });
   });
 
-  describe('#update', function() {
-    beforeEach(function(done) {
-      this.request = this.project.update({ name: 'NEW NAME' })
-        .then(response => {
-          this.response = response;
-        })
-        .then(done, done.fail);
-    });
-
-    it('should update the project', function() {
-      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
-        this.credentials, 'p/PROJECT_ID/api/meta/', {
-          method: 'put',
-          query: { name: 'NEW NAME' },
-        });
-    });
-
-    it('should return the serialized projects', function() {
-      expect(Project.serialize).toHaveBeenCalledWith('RESPONSE');
-      expect(this.response).toEqual('SERIALIZED');
-    });
-  });
-
   describe('#getDataTable', function() {
     it('should instantiate a data table for the project', function() {
       const dataTable = this.project.getDataTable();

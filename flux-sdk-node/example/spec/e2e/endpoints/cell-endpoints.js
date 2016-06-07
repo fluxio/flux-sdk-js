@@ -1,21 +1,17 @@
-import {
-  getProjectId,
-  getCellId,
-  setCellId,
-} from '../../support/test-state';
+var testState = require('../../support/test-state');
 
 describe('DataTable', function() {
   beforeEach(function() {
-    this.dataTableId = getProjectId();
-    this.cellId = getCellId();
-    this.cellPath = `/api/datatables/${this.dataTableId}/cells/${this.cellId}`;
+    this.dataTableId = testState.getProjectId();
+    this.cellId = testState.getCellId();
+    this.cellPath = '/api/datatables/' + this.dataTableId + '/cells/' + this.cellId;
   });
 
   describe('#fetch', function() {
     it("should fetch the cell's data", function(done) {
       this.request(this.cellPath)
         .expect(200)
-        .expect(res => {
+        .expect(function(res) {
           expect(Object.keys(res.body)).toContain(
             'id',
             'label',
@@ -38,7 +34,7 @@ describe('DataTable', function() {
       this.request(this.cellPath, 'post')
         .send({ label: 'NEW LABEL' })
         .expect(200)
-        .expect(res => {
+        .expect(function(res) {
           expect(res.body.label).toEqual('NEW LABEL');
         })
         .end(this.endRequest(done));
@@ -47,9 +43,9 @@ describe('DataTable', function() {
 
   describe('#fetchHistory', function() {
     it('should fetch the history of the cell', function(done) {
-      this.request(`${this.cellPath}/history`)
+      this.request(this.cellPath + '/history)
         .expect(200)
-        .expect(res => {
+        .expect(function(res) {
           expect(Object.keys(res.body)).toContain(
             'entities',
             'page',
@@ -63,8 +59,8 @@ describe('DataTable', function() {
       it('should delete the cell', function(done) {
         this.request(this.cellPath, 'delete')
           .expect(202)
-          .expect(() => {
-            setCellId(null);
+          .expect(function() {
+            testState.setCellId(null);
           })
           .end(this.endRequest(done));
       });

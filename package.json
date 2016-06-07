@@ -11,7 +11,8 @@
     "docs:preview": "npm run docs:build && gitbook serve",
     "docs:publish": "npm run docs:build",
     "prepublish": "npm run build && npm run docs:build",
-    "test": "bash ./test.sh"
+    "test": "bash ./test.sh",
+    "test:genie": "bash ./test-genie.sh"
   },
   "author": "Flux Factory, Inc. (https://flux.io)",
   "contributors": [

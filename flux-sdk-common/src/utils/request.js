@@ -4,7 +4,7 @@ import { joinUrl } from '../ports/url';
 import { base64Decode, base64Encode } from '../ports/base64';
 import { stringifyQuery } from '../ports/querystring';
 
-const EMPTY_BODY = JSON.stringify(null);
+const EMPTY_BODY = null;
 
 let fluxUrl = FLUX_URL;
 

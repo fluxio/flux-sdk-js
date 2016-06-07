@@ -12,6 +12,6 @@ pushd `dirname $0`
   popd
 
   pushd flux-sdk-browser
-    npm run lint
+    npm run check
   popd
 popd

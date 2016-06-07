@@ -1,7 +1,8 @@
-var CLIENT_ID = 'replace-with-your-client-id';
+var CLIENT_ID = '1b5f5497-91d7-42fa-8392-1fe4538ca344';
 
 var sdk = new FluxSdk(CLIENT_ID, {
-  redirectUri: window.location.origin
+  redirectUri: window.location.origin,
+  fluxUrl: 'https://localhost:8443',
 });
 
 if (!getCredentials()) {
