@@ -12,6 +12,8 @@ import {
 } from '../constants/paths';
 import FLUX_PUBLIC_KEY from '../constants/flux-public-key';
 
+import { version } from '../../package.json';
+
 const SCOPE = 'openid profile email';
 
 function getAuthorizeUrl(responseType, state, nonce, { fluxUrl, clientId, redirectUri }) {
@@ -66,7 +68,7 @@ function handleCredentials(clientId, fluxToken, expectedNonce, response, implici
         HostProgramMainFile: 'web',
       },
       SDKName: 'Flux Javascript SDK',
-      SDKVersion: '0.3.0',
+      SDKVersion: version,
     },
   };
   checkCredentials(credentials);

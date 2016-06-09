@@ -1,6 +1,6 @@
 {
   "name": "flux-sdk-apps-script",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Flux JavaScript SDK for Google Apps Script clients",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "flux-sdk-common": "0.3.0",
+    "flux-sdk-common": "0.3.1",
     "query-string": "^4.1.0"
   },
   "devDependencies": {

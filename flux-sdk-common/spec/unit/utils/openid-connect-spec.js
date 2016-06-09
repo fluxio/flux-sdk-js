@@ -13,6 +13,8 @@ import * as requestUtils from '../../../src/utils/request';
 import * as typeCheckers from '../../../src/utils/schema-validators';
 import FLUX_PUBLIC_KEY from '../../../src/constants/flux-public-key';
 
+import { version } from '../../../package.json';
+
 describe('utils.openIdConnect', function() {
   beforeEach(function() {
     spyOn(qs, 'stringifyQuery').and.returnValue('STRINGIFIED_QUERY');
@@ -252,7 +254,7 @@ describe('utils.openIdConnect', function() {
               HostProgramMainFile: 'web',
             },
             SDKName: 'Flux Javascript SDK',
-            SDKVersion: '0.3.0',
+            SDKVersion: version,
           },
         });
       });
@@ -275,7 +277,7 @@ describe('utils.openIdConnect', function() {
               HostProgramMainFile: 'web',
             },
             SDKName: 'Flux Javascript SDK',
-            SDKVersion: '0.3.0',
+            SDKVersion: version,
           },
         });
       });
