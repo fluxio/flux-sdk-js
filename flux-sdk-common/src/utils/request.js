@@ -3,8 +3,9 @@ import { fetch } from '../ports/fetch';
 import { joinUrl } from '../ports/url';
 import { base64Decode, base64Encode } from '../ports/base64';
 import { stringifyQuery } from '../ports/querystring';
+import { version } from '../../package.json';
 
-const EMPTY_BODY = JSON.stringify(null);
+const EMPTY_BODY = null;
 
 let fluxUrl = FLUX_URL;
 
@@ -12,12 +13,13 @@ function decodeHeader(header) {
   return JSON.parse(base64Decode(header));
 }
 
-function createAuthHeaders({ tokenType, accessToken, fluxToken }) {
+function createAuthHeaders({ tokenType, accessToken, fluxToken, clientId }) {
   return {
     Authorization: `${tokenType} ${accessToken}`,
     Cookie: `auth=${accessToken}; flux_token=${fluxToken}`,
     'Flux-Request-Token': fluxToken,
     'Flux-Request-Marker': 1,
+    'Flux-Plugin-Host': clientId,
   };
 }
 
@@ -72,6 +74,8 @@ function request(path, options = {}) {
     headers: {
       ...headers,
       ...contentType,
+      'User-Agent': `js-sdk/${version}`,
+      'Flux-Plugin-Platform': `browser/js-sdk/${version}`,
     },
     ...payload,
     ...others,
