@@ -37,14 +37,6 @@ function Project(credentials, id) {
       .then(Project.serialize);
   }
 
-  function update(options) {
-    return authenticatedRequest(credentials, metaPath, {
-      method: 'put',
-      query: options,
-    })
-      .then(Project.serialize);
-  }
-
   function deleteProject() {
     return authenticatedRequest(credentials, path, { method: 'delete' });
   }
@@ -63,7 +55,6 @@ function Project(credentials, id) {
   }
 
   this.fetch = fetch;
-  this.update = update;
   this.delete = deleteProject;
   this.getDataTable = getDataTable;
   this.openWebSocket = openWebSocket;

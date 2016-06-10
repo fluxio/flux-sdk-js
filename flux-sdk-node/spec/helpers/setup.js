@@ -1,46 +1,58 @@
-import request from 'supertest';
+import FluxSdk from '../../src/index';
 
-import app from '../../example/app';
-import {
-  getCookies,
-  getProjectId,
-} from '../support/test-state';
+import credentialsFactory from '../../../flux-sdk-common/spec/factories/credentials-factory';
 
-function randomString() {
-  return Math.random().toString().substring(10);
-}
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 beforeAll(function() {
-  this.PORT = process.env.EXAMPLE_PORT || app.get('port');
-  this.EMAIL = process.env.TEST_EMAIL || `${process.env.USER}+nodetest@flux.io`;
-  this.PASSWORD = process.env.TEST_PASSWORD || 'nodetest123';
-  this.FLUX_URL = process.env.FLUX_URL;
-  this.CLIENT_ID = process.env.CLIENT_ID;
-  this.CLIENT_SECRET = process.env.CLIENT_SECRET;
+  const accessToken = process.env.ACCESS_TOKEN;
+  const fluxToken = process.env.FLUX_TOKEN;
+  const clientId = process.env.CLIENT_ID;
+  const clientSecret = process.env.CLIENT_SECRET;
+  const fluxUrl = process.env.FLUX_URL;
 
-  this.randomString = randomString;
-  this.app = app;
+  this.CLIENT_ID = clientId;
 
-  this.request = (path, method) => {
-    const req = request(app)[method || 'get'](path);
-    req.cookies = getCookies();
-    return req;
-  };
+  this.sdk = new FluxSdk(clientId, {
+    clientSecret,
+    fluxUrl,
+  });
 
-  this.endRequest = done => err => {
-    if (err) {
-      done.fail(err);
-    } else {
-      done();
-    }
-  };
+  this.credentials = credentialsFactory({
+    clientId,
+    accessToken,
+    fluxToken,
+  });
+  this.user = this.sdk.getUser(this.credentials);
+
+  // We want to be able to both inspect the original server response
+  // and see the (default) serialized version for endpoints.
+  const serializers = [
+    { module: this.sdk.User, methods: ['serializeProfile'] },
+    { module: this.sdk.Project, methods: ['serialize', 'serializeList'] },
+    { module: this.sdk.DataTable, methods: ['serializeHistory'] },
+    { module: this.sdk.Cell, methods: ['serialize', 'serializeList'] },
+  ];
+
+  serializers.forEach(({ module, methods }) => {
+    methods.forEach(method => {
+      const originalMethod = module[method];
+      const modifiedModule = module;
+
+      modifiedModule[method] = res => ({
+        original: res,
+        transformed: originalMethod(res),
+      });
+    });
+  });
 });
 
-afterAll(function(done) {
-  this.request(`/api/projects/${getProjectId()}`, 'delete')
-    .expect(202)
-    .end(err => {
-      if (err) { throw err; }
-      done();
-    });
+beforeAll(function(done) {
+  this.user.fetchProfile()
+    .then(({ transformed }) => {
+      this.userProfile = transformed;
+
+      this.userFullName = `${this.userProfile.firstName} ${this.userProfile.lastName}`;
+    })
+    .then(done, done.fail);
 });

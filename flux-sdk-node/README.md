@@ -35,10 +35,25 @@ This affects both writing and running tests.
 This test suite requires the following environment configuration:
 
 **CLIENT_ID**: Your (test) client ID
+
 **CLIENT_SECRET**: Your (test) client secret
+
 **FLUX_URL**: The URL of the Flux genie server you are testing against.
+
 **TEST_EMAIL**: Your test account's email address
+
 **TEST_PASSWORD**: Your test account's password
+
 **DEBUG** *(default: `false`)*: Set to `true` to make Nightmare visible
+
 **EXAMPLE_PORT** *(default: `4567`)*: Set to change the port used in any tests
 that set up a full server (i.e., the auth flow tests).
+
+**SKIP_AUTH_FLOW** *(default: `false`)*: Set to bypass the auth flow when running tests. This
+requires `ACCESS_TOKEN` and `FLUX_TOKEN` to be set.
+
+**ACCESS_TOKEN**: Set if using `SKIP_AUTH_FLOW` is `true`. Must be a valid token, e.g., from an
+existing session.
+
+**FLUX_TOKEN**: Set if using `SKIP_AUTH_FLOW` is `true`. Must be a valid token that corresponds
+to the provided `ACCESS_TOKEN`.
