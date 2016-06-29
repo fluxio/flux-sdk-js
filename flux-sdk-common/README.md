@@ -1,9 +1,10 @@
 # Flux-SDK-Common
 
 This directory contains the core source code for the Flux JavaScript SDK.
-It is not intended for direct usage. Developers working with the SDK should
-instead use `flux-sdk-browser` or `flux-sdk-node`, depending on which
-environment they are targeting.
+It is not intended for direct usage.
+
+Developers working with the SDK should instead use `flux-sdk-browser` or `flux-sdk-node`,
+depending on which environment they are targeting.
 
 * [Installing](#installing)
 * [Running Tests](#running-tests)

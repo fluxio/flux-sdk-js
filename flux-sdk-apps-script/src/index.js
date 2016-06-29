@@ -1,7 +1,7 @@
 import qs from 'query-string';
 
 import fluxSdkWrapper from 'flux-sdk-common';
-import { handleCredentials } from 'flux-sdk-common/lib/utils/open-id-connect';
+import handleCredentials from 'flux-sdk-common/lib/open-id-connect/handle-credentials';
 
 function parseUrl(url) {
   // https://gist.github.com/jlong/2428561

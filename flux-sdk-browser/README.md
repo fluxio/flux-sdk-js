@@ -3,8 +3,8 @@
 * [Installation](#installation)
 * [Environment Configuration](#environment-configuration)
 * [Development](#development)
-* [Documentation](/docs)
-* [Example](/flux-sdk-browser/example)
+* [Documentation](https://flux.gitbooks.io/flux-javascript-sdk/content/)
+* [Example](https://github.com/fluxio/flux-sdk-js/tree/master/flux-sdk-example/example)
 
 ## Installation
 
@@ -42,10 +42,10 @@ The development version is unminified and provides additional debugging
 information, such as logging.
 
 *`<version>` indicates the SDK version from
-[here](/flux-sdk-browser/package.json), e.g., `0.3.1`.*,*`<version>` indicates
-the SDK version from [here](/flux-sdk-browser/package.json), e.g., `0.3.1`.
+[here](/flux-sdk-browser/package.json), e.g., `0.3.2`.*,*`<version>` indicates
+the SDK version from [here](/flux-sdk-browser/package.json), e.g., `0.3.2`.
 To automatically get the most recent non-breaking changes, omit the patch
-version - e.g., use `0.3` instead of `0.3.1`.*
+version - e.g., use `0.3` instead of `0.3.2`.*
 
 ## Environment Configuration
 

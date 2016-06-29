@@ -3,8 +3,8 @@
 * [Installation](#installation)
 * [Environment Configuration](#environment-configuration)
 * [Development](#development)
-* [Documentation](/docs)
-* [Example](/flux-sdk-node/example)
+* [Documentation](https://flux.gitbooks.io/flux-javascript-sdk/content/)
+* [Example](https://github.com/fluxio/flux-sdk-js/tree/master/flux-sdk-node/example)
 
 ## Installation
 
