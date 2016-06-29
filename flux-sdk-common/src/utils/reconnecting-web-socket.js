@@ -76,8 +76,7 @@ function ReconnectingWebSocket(fetchWebSocketPath, options = {}) {
   function connect() {
     killed = false;
     if (webSocket && webSocket.readyState === webSocket.CLOSING) {
-      close();
-      connect();
+      reconnect();
     } else if (!webSocket || (webSocket && webSocket.readyState === webSocket.CLOSED)) {
       errorTimeoutId = setTimeout(onError, errorTimeout);
       fetchWebSocketPath()

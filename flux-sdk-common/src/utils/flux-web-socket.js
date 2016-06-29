@@ -41,7 +41,9 @@ function FluxWebSocket(fetchWebSocketPath, options) {
     if (type === 'PING') {
       pingPong();
     } else {
+      clearTimeout(pingTimeoutId);
       (handlers[type] || []).forEach(handler => handler(body));
+      pingTimeoutId = setTimeout(handlePingTimeout, pingTimeout);
     }
   }
 
