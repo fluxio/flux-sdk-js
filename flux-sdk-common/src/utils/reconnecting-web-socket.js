@@ -27,11 +27,18 @@ function ReconnectingWebSocket(fetchWebSocketPath, options = {}) {
     connect();
   }
 
+  function resetTimeouts() {
+    isReconnecting = false;
+    clearTimeout(attemptReconnectId);
+    clearTimeout(errorTimeoutId);
+  }
+
   function onError(error) {
-    self.emit('error', error);
+    resetTimeouts();
     webSocket = null;
     killed = true;
-    clearTimeout(attemptReconnectId);
+
+    self.emit('error', error);
   }
 
   function reconnect() {
@@ -44,10 +51,11 @@ function ReconnectingWebSocket(fetchWebSocketPath, options = {}) {
   }
 
   function onOpen() {
-    self.emit('open');
-    clearTimeout(errorTimeoutId);
+    resetTimeouts();
     buffer.forEach(send);
     buffer.splice(0);
+
+    self.emit('open');
   }
 
   function onMessage(message) {

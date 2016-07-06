@@ -3,6 +3,8 @@ import * as webSocketPort from '../../../src/ports/web-socket';
 
 describe('utils.ReconnectingWebSocket', function() {
   beforeEach(function() {
+    jasmine.clock().install();
+
     // Sadly, this spy needs to be quite substantial
     // to mimic the relevant WebSocket behaviour :(
     this.webSocketSpy = {
@@ -53,12 +55,13 @@ describe('utils.ReconnectingWebSocket', function() {
         .then(this.webSocketSpy.open)
         .then(callback);
     };
-
-    jasmine.clock().install();
   });
 
-  afterEach(function() {
+  afterEach(function(done) {
+    // We make this async to handle weird pollution that otherwise
+    // seems to come from the clock.
     jasmine.clock().uninstall();
+    setTimeout(done, 0);
   });
 
   describe('#connect', function() {
@@ -232,6 +235,9 @@ describe('utils.ReconnectingWebSocket', function() {
 
   describe('when the web socket has an error', function() {
     beforeEach(function(done) {
+      this.onErrorSpy = jasmine.createSpy('onError');
+      this.reconnectingWebSocket.on('error', this.onErrorSpy);
+
       this.openWebSocket(() => {
         this.fetchWebSocketPathSpy.calls.reset();
 
