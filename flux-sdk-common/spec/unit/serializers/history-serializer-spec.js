@@ -29,21 +29,21 @@ describe('serializers.historySerializer', function() {
         this.serializedHistory = serialize(historyResponse);
       });
 
-      it('should set page and limit as 0', function() {
-        expect(this.serializedHistory.page).toEqual(0);
+      it('should set cursor and limit accordingly', function() {
+        expect(this.serializedHistory.cursor).toEqual(null);
         expect(this.serializedHistory.limit).toEqual(0);
       });
     });
 
     describe('with a historyCursor', function() {
       beforeEach(function() {
-        const historyResponse = historyFactory({ page: 2, limit: 5 });
+        const historyResponse = historyFactory({ limit: 5, cursor: 'FOO_CURSOR' });
         this.serializedHistory = serialize(historyResponse);
       });
 
-      it('should set page and limit', function() {
-        expect(this.serializedHistory.page).toEqual(2);
+      it('should set the cursor and cursor limit', function() {
         expect(this.serializedHistory.limit).toEqual(5);
+        expect(this.serializedHistory.cursor).toEqual('FOO_CURSOR');
       });
     });
   });

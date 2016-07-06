@@ -1,6 +1,6 @@
-function historyQueryFactory(limit, page) {
+function historyQueryFactory(limit, cursor) {
   const Limit = limit ? { Limit: limit } : null;
-  const Cursor = page ? { Cursor: page.toString() } : null;
+  const Cursor = cursor ? { Cursor: cursor } : null;
   return {
     ...Limit,
     ...Cursor,
@@ -8,39 +8,33 @@ function historyQueryFactory(limit, page) {
 }
 
 function historyResponseFactory(options = {}) {
-  const { limit, page } = options;
-  const historyQuery = historyQueryFactory(limit, page);
+  const { limit, cursor } = options;
+  const historyQuery = historyQueryFactory(limit, cursor);
   return {
     historyQuery,
-    closeErr: null,
-    historyEvent: [{
-      cellEvent: {
-        Event: {
-          Type: 'CELL_MODIFIED',
-          ClientInfo: {
-            DeveloperId: '',
-            DeveloperName: '',
-            ClientId: 'CLIENT_ID',
-            ClientName: 'CLIENT NAME',
-            ClientVersion: '',
-            AdditionalClientData: {
-              HostProgramMainFile: '',
-              HostProgramVersion: '',
-            },
-            SDKName: '',
-            SDKVersion: '',
-            OS: '',
-            UserId: 'USER_ID',
-            UserName: 'USERNAME',
-          },
-          CellId: 'CELL_ID',
-          ValueRef: '/SOME_VALUE_REF_PATH/',
-          Time: 5000,
-          Size: 400,
+    historyEvents: [{
+      Event: {
+        Type: 'CELL_MODIFIED',
+        ClientInfo: {
+          DeveloperId: '',
+          DeveloperName: '',
+          ClientId: 'CLIENT_ID',
+          ClientName: 'CLIENT NAME',
+          ClientVersion: '',
+          AdditionalClientData: { HostProgramMainFile: '', HostProgramVersion: '' },
+          SDKName: '',
+          SDKVersion: '',
+          OS: 'BROWSER_USER_AGENT',
+          UserId: 'USER_ID',
+          UserName: 'USERNAME',
         },
+        CellId: 'CELL_ID',
+        ValueRef: '/SOME_VALUE_REF_PATH/',
+        Time: 1.467241275947e+12,
+        Size: 4,
       },
-      error: null,
     }],
+    errStr: '',
   };
 }
 
