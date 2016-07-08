@@ -165,7 +165,7 @@ describe('models.DataTable', function() {
     it('should be able to add additional options', function(done) {
       this.dataTable.fetchHistory({
         cellIds: ['CELL1', 'CELL2'],
-        page: 2,
+        cursor: 'SOME_CURSOR',
         limit: 5,
         eventTypes: ['CELL_MODIFIED'],
         startTime: 1000,
@@ -180,7 +180,7 @@ describe('models.DataTable', function() {
               body: {
                 historyQuery: {
                   cells: ['CELL1', 'CELL2'],
-                  cursor: '2',
+                  cursor: 'SOME_CURSOR',
                   limit: 5,
                   types: ['CELL_MODIFIED'],
                   begin: 1000,

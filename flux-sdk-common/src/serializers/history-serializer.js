@@ -13,11 +13,12 @@ function serializeEvent(event) {
   };
 }
 
-function serialize({ historyEvent, historyQuery }) {
+function serialize({ historyEvents, historyQuery }) {
   const query = historyQuery || {};
+
   return {
-    entities: historyEvent.map(event => serializeEvent(event.cellEvent.Event)),
-    page: Number(query.Cursor || 0),
+    entities: (historyEvents || []).map(event => serializeEvent(event.Event)),
+    cursor: query.Cursor || null,
     limit: query.Limit || 0,
   };
 }

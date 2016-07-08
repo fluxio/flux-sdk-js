@@ -105,18 +105,16 @@ describe('DataTable', function() {
       });
 
       it('should receive the history for the full data table', function() {
-        expect(this.original.closeErr).toEqual(null);
+        expect(this.original.errStr).toEqual('');
         expect(this.original.historyQuery).toEqual(null);
 
-        expect(this.original.historyEvent).toEqual(jasmine.any(Array));
+        expect(this.original.historyEvents).toEqual(jasmine.any(Array));
 
         // We can't guarantee the length because it depends on the test order.
-        expect(this.original.historyEvent.length).toBeGreaterThan(3);
+        expect(this.original.historyEvents.length).toBeGreaterThan(3);
 
-        this.original.historyEvent.forEach(event => {
-          const cellEvent = event.cellEvent.Event;
-
-          expect(event.error).toEqual(null);
+        this.original.historyEvents.forEach(event => {
+          const cellEvent = event.Event;
 
           expect(cellEvent.Type).toEqual('CELL_MODIFIED');
           expect(cellEvent.CellId).toEqual(jasmine.any(String));
@@ -144,9 +142,9 @@ describe('DataTable', function() {
       });
 
       it('should only receive events for the specified IDs', function() {
-        expect(this.original.historyEvent.length).toEqual(2);
+        expect(this.original.historyEvents.length).toEqual(2);
 
-        const cellIds = this.original.historyEvent.map(event => event.cellEvent.Event.CellId);
+        const cellIds = this.original.historyEvents.map(event => event.Event.CellId);
 
         expect(cellIds).toContain(this.seedCell3.id, this.seedCell4.id);
         expect(cellIds).not.toContain(this.seedCell1.id, this.seedCell2.id);
@@ -166,7 +164,7 @@ describe('DataTable', function() {
       it('should paginate the results', function() {
         expect(this.original.historyQuery).toEqual({
           Limit: 2,
-          Cursor: '2',
+          Cursor: jasmine.any(String),
         });
       });
     });
@@ -212,10 +210,10 @@ describe('DataTable', function() {
 
       it('should only receive the events from within the bounded times', function() {
         // We expect to receive only the events where the value gets updated to 1 and 2.
-        expect(this.original.historyEvent.length).toEqual(2);
+        expect(this.original.historyEvents.length).toEqual(2);
 
-        this.original.historyEvent.forEach(event => {
-          const time = event.cellEvent.Event.Time;
+        this.original.historyEvents.forEach(event => {
+          const time = event.Event.Time;
 
           expect(time).toBeGreaterThan(this.startTime);
           expect(time).toBeLessThan(this.endTime);
