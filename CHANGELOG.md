@@ -9,6 +9,10 @@ breaking changes.
 
 ## [Unreleased]
 
+## [0.4.0] - 7/7/2016
+
+* Update dataTable.fetchHistory to accommodate the changes to the history API **(breaking)**
+
 ## [0.3.2] - 6/28/2016
 
 * Improves web socket reconnection, particular with respect to ping/pong expectations
