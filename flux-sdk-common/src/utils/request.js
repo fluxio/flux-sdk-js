@@ -65,7 +65,7 @@ function handleResponse(response) {
 
 function request(path, options = {}) {
   const { query, body, headers, ...others } = options;
-  const payload = body ? { body: JSON.stringify(body) } : null;
+  const payload = body === undefined ? null : { body: JSON.stringify(body) };
   const contentType = payload ? { 'Content-Type': 'application/json' } : null;
   const search = query ? stringifyQuery(query) : '';
 

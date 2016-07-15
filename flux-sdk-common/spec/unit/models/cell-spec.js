@@ -270,6 +270,34 @@ describe('models.Cell.static', function() {
       });
     });
 
+    describe('when there is a falsey value', function() {
+      beforeEach(function(done) {
+        Cell.createCell(this.credentials, 'DATA_TABLE_ID', 'NEW KEY', {
+          value: false,
+          description: 'FOO',
+        })
+          .then(response => {
+            this.response = response;
+          })
+          .then(done, done.fail);
+      });
+
+      it('should set the value and client metadata of the new cell', function() {
+        expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+          this.credentials,
+          'p/DATA_TABLE_ID/api/datatable/v1/cells/', {
+            method: 'post',
+            fluxOptions: {
+              Metadata: true,
+              ClientMetadata: { Label: 'NEW KEY', Description: 'FOO' },
+              IgnoreValue: false,
+            },
+            body: false,
+          }
+        );
+      });
+    });
+
     describe('when there is no value', function() {
       beforeEach(function(done) {
         Cell.createCell(this.credentials, 'DATA_TABLE_ID', 'NEW KEY')
