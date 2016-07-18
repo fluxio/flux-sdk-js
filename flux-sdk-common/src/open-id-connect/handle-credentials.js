@@ -3,7 +3,7 @@ import jws from 'jws';
 import { checkCredentials } from '../utils/schema-validators';
 import FLUX_PUBLIC_KEY from '../constants/flux-public-key';
 
-import { version } from '../../package.json';
+import { VERSION, PLATFORM } from '../config';
 
 function handleCredentials(clientId, fluxToken, expectedNonce, response, implicit) {
   const { id_token, access_token, token_type, scope, refresh_token } = response;
@@ -31,12 +31,9 @@ function handleCredentials(clientId, fluxToken, expectedNonce, response, implici
     clientInfo: {
       ClientId: clientId,
       ClientVersion: '',
-      AdditionalClientData: {
-        HostProgramVersion: 'unknown',
-        HostProgramMainFile: 'web',
-      },
       SDKName: 'Flux Javascript SDK',
-      SDKVersion: version,
+      SDKVersion: VERSION,
+      OS: PLATFORM,
     },
   };
   checkCredentials(credentials);

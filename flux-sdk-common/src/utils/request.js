@@ -3,7 +3,7 @@ import { fetch } from '../ports/fetch';
 import { joinUrl } from '../ports/url';
 import { base64Decode, base64Encode } from '../ports/base64';
 import { stringifyQuery } from '../ports/querystring';
-import { version } from '../../package.json';
+import { USER_AGENT, PLATFORM } from '../config';
 
 const EMPTY_BODY = null;
 
@@ -74,8 +74,8 @@ function request(path, options = {}) {
     headers: {
       ...headers,
       ...contentType,
-      'User-Agent': `js-sdk/${version}`,
-      'Flux-Plugin-Platform': `browser/js-sdk/${version}`,
+      'User-Agent': USER_AGENT,
+      'Flux-Plugin-Platform': PLATFORM,
     },
     ...payload,
     ...others,
