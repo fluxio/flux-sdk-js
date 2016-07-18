@@ -4,6 +4,8 @@ import credentialsFactory from '../../../flux-sdk-common/spec/factories/credenti
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
+
 beforeAll(function() {
   const accessToken = process.env.ACCESS_TOKEN;
   const fluxToken = process.env.FLUX_TOKEN;
