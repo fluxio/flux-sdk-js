@@ -9,6 +9,8 @@ import * as models from './index';
 import * as constants from '../constants';
 import { setFluxUrl } from '../utils/request';
 
+import { VERSION } from '../config';
+
 function FluxSdk(clientId, sdkOptions = {}) {
   const {
     fluxUrl,
@@ -49,5 +51,7 @@ function FluxSdk(clientId, sdkOptions = {}) {
 
 Object.keys(models).forEach(key => { FluxSdk.prototype[key] = models[key]; });
 FluxSdk.prototype.constants = constants;
+
+FluxSdk.prototype.version = FluxSdk.version = VERSION;
 
 export default FluxSdk;
