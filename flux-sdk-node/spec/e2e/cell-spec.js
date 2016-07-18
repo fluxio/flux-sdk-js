@@ -147,6 +147,56 @@ describe('Cell', function() {
           });
         });
 
+        describe('when the value is updated', function() {
+          beforeAll(function(done) {
+            this.cell.update({ value: 'new value' })
+              .then(({ transformed }) => {
+                this.transformed = transformed;
+              })
+              .then(done, done.fail);
+          });
+
+          afterAll(function(done) {
+            this.cell.update({ value: this.originalValue }).then(done, done.fail);
+          });
+
+          it('should change only the value', function(done) {
+            this.cell.fetch()
+              .then(({ transformed }) => {
+                expect(transformed.value).toEqual('new value');
+
+                expect(transformed.label).toEqual(this.originalLabel);
+                expect(transformed.description).toEqual(this.originalDescription);
+              })
+              .then(done, done.fail);
+          });
+        });
+
+        describe('when the value is updated with a falsey value', function() {
+          beforeAll(function(done) {
+            this.cell.update({ value: false })
+              .then(({ transformed }) => {
+                this.transformed = transformed;
+              })
+              .then(done, done.fail);
+          });
+
+          afterAll(function(done) {
+            this.cell.update({ value: this.originalValue }).then(done, done.fail);
+          });
+
+          it('should change only the value', function(done) {
+            this.cell.fetch()
+              .then(({ transformed }) => {
+                expect(transformed.value).toEqual(false);
+
+                expect(transformed.label).toEqual(this.originalLabel);
+                expect(transformed.description).toEqual(this.originalDescription);
+              })
+              .then(done, done.fail);
+          });
+        });
+
         describe('when the cell gets locked', function() {
           beforeAll(function(done) {
             this.cell.update({ locked: true })

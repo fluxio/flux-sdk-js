@@ -96,6 +96,19 @@ describe('utils.request', function() {
       });
     });
 
+    describe('when a falsey body is specified', function() {
+      beforeEach(function() {
+        request('SOME_PATH', { body: false });
+      });
+
+      it('should send the body', function() {
+        expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', jasmine.objectContaining({
+          credentials: 'include',
+          body: JSON.stringify(false),
+        }));
+      });
+    });
+
     describe('when additional options are added', function() {
       it('should add them to the fetch request', function() {
         request('SOME_PATH', { headers: { a: 'b' }, foo: 'bar' });

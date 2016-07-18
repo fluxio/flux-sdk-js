@@ -41,7 +41,7 @@ function listCells(credentials, dataTableId) {
 }
 
 function createCell(credentials, dataTableId, label, cellOptions = {}) {
-  const value = cellOptions.value || null;
+  const value = cellOptions.value === undefined ? null : cellOptions.value;
   return updateCell(credentials, dataTableId, '', { label, value, ...cellOptions });
 }
 
