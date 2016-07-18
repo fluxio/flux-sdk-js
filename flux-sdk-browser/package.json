@@ -16,11 +16,10 @@
     "build:es": "babel src -d es -s",
     "build:umd": "cross-env BABEL_ENV=commonjs webpack src/index.js dist/flux-sdk.js --debug",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack src/index.js dist/flux-sdk-min.js -p",
-    "check": "npm run lint && npm test",
+    "check": "npm run lint",
     "clean": "rimraf dist es lib",
     "lint": "eslint src spec example/example.js",
-    "prepublish": "npm run clean && npm run build",
-    "test": "cross-env BABEL_ENV=commonjs babel-node ./node_modules/.bin/jasmine"
+    "prepublish": "npm run clean && npm run build"
   },
   "author": "Flux Factory, Inc. (https://flux.io)",
   "contributors": [
