@@ -120,12 +120,9 @@ describe('openIdConnect.handleCredentials', function() {
         clientInfo: {
           ClientId: 'CLIENT_ID',
           ClientVersion: '',
-          AdditionalClientData: {
-            HostProgramVersion: 'unknown',
-            HostProgramMainFile: 'web',
-          },
           SDKName: 'Flux Javascript SDK',
           SDKVersion: version,
+          OS: `browser/js-sdk/${version}`
         },
       });
     });
@@ -143,12 +140,9 @@ describe('openIdConnect.handleCredentials', function() {
         clientInfo: {
           ClientId: 'CLIENT_ID',
           ClientVersion: '',
-          AdditionalClientData: {
-            HostProgramVersion: 'unknown',
-            HostProgramMainFile: 'web',
-          },
           SDKName: 'Flux Javascript SDK',
           SDKVersion: version,
+          OS: `browser/js-sdk/${version}`
         },
       });
     });
