@@ -105,8 +105,8 @@ describe('DataTable', function() {
       });
 
       it('should receive the history for the full data table', function() {
-        expect(this.original.errStr).toEqual('');
-        expect(this.original.historyQuery).toEqual(null);
+        expect(this.original.errStr).toEqual(undefined);
+        expect(this.original.historyQuery).toEqual(undefined);
 
         expect(this.original.historyEvents).toEqual(jasmine.any(Array));
 
