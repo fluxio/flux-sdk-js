@@ -10,8 +10,9 @@ Instance methods:
 * [createCell](./DataTable.md#createcell)
 * [openWebSocket](./DataTable.md#openwebsocket)
 * [closeWebSocket](./DataTable.md#closewebsocket)
-* [addWebSocketHandler](./DataTable.md#addWebSocketHandler)
-* [removeWebSocketHandler](./DataTable.md#removeWebSocketHandler)
+* [addWebSocketHandler](./DataTable.md#addwebsockethandler)
+* [removeWebSocketHandler](./DataTable.md#removewebsockethandler)
+* [removeWebSocketHandlers](./DataTable.md#removewebsockethandlers)
 * [sendMessage](./DataTable.md#sendMessage)
 
 Static properties:
@@ -128,9 +129,15 @@ delayMultiplier: Number }`)*
   `delayMultiplier` (default: `1.2`): How much to increase the delay each time
   there is a failed connection attempt
 
-### <a id="closewebsocket"></a>`closeWebSocket()`
+### <a id="closewebsocket"></a>`closeWebSocket(removeHandlers)`
 
 Closes the web socket, if a web socket has been opened for the data table.
+
+#### Arguments
+
+1. `removeHandlers` *(Boolean)*: Whether the registered handlers for the data
+table's web socket should be reset. If true, the handlers will no longer be
+called if and when the data table's web socket is reopened.
 
 ### <a id="addwebsockethandler"></a>`addWebSocketHandler(handler,s [notificationTypes])`
 
@@ -167,6 +174,18 @@ web socket receives messages.
 1. `notificationTypes` *(String | String[])*: The type or types of notifications
 for which the handler should no longer be called. If no types are supplied, the
 handler will be removed completely.
+
+### <a id="removewebsockethandlers"></a>`removeWebSocketHandlers([notificationTypes])`
+
+Removes all handlers, or all handlers of the specified notification type(s), such
+that the handlers will no longer be called when the data table's web socket
+receives messages.
+
+#### Arguments
+
+1. `?notificationTypes` *(String | String[])*: The type or types of notifications
+for which handlers should no longer be called. If no types are supplied, all
+handlers will be removed completely.
 
 ### <a id="sendmessage"></a>`sendmessage(message)`
 

@@ -34,7 +34,7 @@ function DataTable(credentials, id) {
   checkDataTable({ credentials, id });
 
   let webSocket = null;
-  const handlers = initializeHandlers();
+  let handlers = initializeHandlers();
   const capabilityPath = dataTableCapabilityPath(id);
   const historyPath = dataTableHistoryPath(id);
 
@@ -73,7 +73,11 @@ function DataTable(credentials, id) {
     return webSocket;
   }
 
-  function closeWebSocket() {
+  function closeWebSocket(removeHandlers) {
+    if (removeHandlers) {
+      removeWebSocketHandlers();
+    }
+
     if (webSocket) {
       webSocket.send(DATA_TABLE_SUBCHANNEL, {
         type: SUBSCRIBE,
@@ -94,6 +98,16 @@ function DataTable(credentials, id) {
       const index = handlers[type].indexOf(handler);
       if (index !== -1) { handlers[type].splice(index, 1); }
     });
+  }
+
+  function removeWebSocketHandlers(notificationTypes) {
+    if (notificationTypes) {
+      [].concat(notificationTypes).forEach(type => {
+        handlers[type] = [];
+      });
+    } else {
+      handlers = initializeHandlers();
+    }
   }
 
   function sendMessage(message) {
@@ -159,6 +173,7 @@ function DataTable(credentials, id) {
   this.closeWebSocket = closeWebSocket;
   this.addWebSocketHandler = addWebSocketHandler;
   this.removeWebSocketHandler = removeWebSocketHandler;
+  this.removeWebSocketHandlers = removeWebSocketHandlers;
   this.sendMessage = sendMessage;
   this.fetchCapability = fetchCapability;
   this.listCells = listCells;
