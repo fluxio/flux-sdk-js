@@ -122,7 +122,7 @@ describe('openIdConnect.handleCredentials', function() {
           ClientVersion: '',
           SDKName: 'Flux Javascript SDK',
           SDKVersion: version,
-          OS: `browser/js-sdk/${version}`
+          OS: `browser/js-sdk/${version}`,
         },
       });
     });
@@ -142,7 +142,7 @@ describe('openIdConnect.handleCredentials', function() {
           ClientVersion: '',
           SDKName: 'Flux Javascript SDK',
           SDKVersion: version,
-          OS: `browser/js-sdk/${version}`
+          OS: `browser/js-sdk/${version}`,
         },
       });
     });

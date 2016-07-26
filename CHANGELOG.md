@@ -7,7 +7,11 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
-## [Unreleased]
+## [0.4.1] - 7/25/2015
+
+* Makes the current version accessible on `FluxSdk.version` or `sdk.version`
+* Allow unicode characters in cell names, values, etc.
+* Fix bug when creating or updating cells with falsy values
 
 ## [0.4.0] - 7/7/2016
 
