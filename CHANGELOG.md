@@ -7,7 +7,15 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
-## [0.4.1] - 7/25/2015
+## [0.4.2] - 7/26/2016
+
+* Adds `dataTable.removeWebSocketHandlers` to remove all handlers, or all
+handlers matching the specified notification types, from a data table's web
+socket
+* Extends the signature of `dataTable.closeWebsocket` to enable removing all
+of that data table's web socket handlers when the web socket is closed
+
+## [0.4.1] - 7/25/2016
 
 * Makes the current version accessible on `FluxSdk.version` or `sdk.version`
 * Allow unicode characters in cell names, values, etc.

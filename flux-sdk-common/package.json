@@ -1,6 +1,6 @@
 {
   "name": "flux-sdk-common",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
