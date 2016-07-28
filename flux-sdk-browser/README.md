@@ -42,9 +42,9 @@ The development version is unminified and provides additional debugging
 information, such as logging.
 
 *`<version>` indicates the SDK version from
-[here](/flux-sdk-browser/package.json), e.g., `0.4.2`.
+[here](/flux-sdk-browser/package.json), e.g., `0.4.3`.
 To automatically get the most recent non-breaking changes, omit the patch
-version - e.g., use `0.4` instead of `0.4.2`.*
+version - e.g., use `0.4` instead of `0.4.3`.*
 
 ## Environment Configuration
 

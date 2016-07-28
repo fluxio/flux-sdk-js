@@ -7,6 +7,12 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.4.3] - 7/28/2016
+
+* Updates `dataTable.fetchHistory` and `cell.fetchHistory` to enable
+arbitrary query options and, by default, return the host file name for
+history events
+
 ## [0.4.2] - 7/26/2016
 
 * Adds `dataTable.removeWebSocketHandlers` to remove all handlers, or all
