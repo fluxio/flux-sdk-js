@@ -171,6 +171,7 @@ describe('models.DataTable', function() {
         startTime: 1000,
         endTime: 2000,
         values: ['FOO'],
+        foo: 'bar',
       })
         .then(() => {
           expect(requestUtils.authenticatedRequest)
@@ -186,6 +187,7 @@ describe('models.DataTable', function() {
                   begin: 1000,
                   end: 2000,
                   values: ['FOO'],
+                  foo: 'bar',
                 },
               },
             });
