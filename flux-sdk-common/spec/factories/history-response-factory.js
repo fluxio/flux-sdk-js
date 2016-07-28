@@ -8,7 +8,7 @@ function historyQueryFactory(limit, cursor) {
 }
 
 function historyResponseFactory(options = {}) {
-  const { limit, cursor } = options;
+  const { limit, cursor, fileName } = options;
   const historyQuery = historyQueryFactory(limit, cursor);
   return {
     historyQuery,
@@ -21,7 +21,10 @@ function historyResponseFactory(options = {}) {
           ClientId: 'CLIENT_ID',
           ClientName: 'CLIENT NAME',
           ClientVersion: '',
-          AdditionalClientData: { HostProgramMainFile: '', HostProgramVersion: '' },
+          AdditionalClientData: {
+            HostProgramMainFile: fileName || '',
+            HostProgramVersion: '',
+          },
           SDKName: '',
           SDKVersion: '',
           OS: 'BROWSER_USER_AGENT',
@@ -34,7 +37,6 @@ function historyResponseFactory(options = {}) {
         Size: 4,
       },
     }],
-    errStr: '',
   };
 }
 

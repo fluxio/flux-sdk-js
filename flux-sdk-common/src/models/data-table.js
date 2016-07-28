@@ -145,7 +145,7 @@ function DataTable(credentials, id) {
   }
 
   function fetchHistory(options = {}) {
-    const { cellIds, limit, values, eventTypes, startTime, endTime, cursor } = options;
+    const { cellIds, limit, values, eventTypes, startTime, endTime, cursor, ...others } = options;
     const begin = startTime ? { begin: startTime } : null;
     const end = endTime ? { end: endTime } : null;
     const cells = cellIds ? { cells: cellIds } : null;
@@ -163,6 +163,7 @@ function DataTable(credentials, id) {
           ...end,
           ...cells,
           ...types,
+          ...others,
         },
       },
     })

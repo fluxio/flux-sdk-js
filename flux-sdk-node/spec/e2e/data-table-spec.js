@@ -105,9 +105,6 @@ describe('DataTable', function() {
       });
 
       it('should receive the history for the full data table', function() {
-        expect(this.original.errStr).toEqual(undefined);
-        expect(this.original.historyQuery).toEqual(undefined);
-
         expect(this.original.historyEvents).toEqual(jasmine.any(Array));
 
         // We can't guarantee the length because it depends on the test order.
@@ -118,7 +115,11 @@ describe('DataTable', function() {
 
           expect(cellEvent.Type).toEqual('CELL_MODIFIED');
           expect(cellEvent.CellId).toEqual(jasmine.any(String));
-          expect(cellEvent.ClientInfo).toEqual(jasmine.any(Object));
+          expect(cellEvent.ClientInfo).toEqual(jasmine.objectContaining({
+            AdditionalClientData: jasmine.objectContaining({
+              HostProgramMainFile: jasmine.any(String),
+            }),
+          }));
           expect(cellEvent.Size).toEqual(jasmine.any(Number));
           expect(cellEvent.Time).toEqual(jasmine.any(Number));
           expect(cellEvent.ValueRef).toEqual(jasmine.any(String));

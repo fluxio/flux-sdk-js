@@ -1,5 +1,7 @@
 function serializeEvent(event) {
   const clientInfo = event.ClientInfo || {};
+  const additionalData = clientInfo.AdditionalClientData || {};
+
   return {
     cellId: event.CellId,
     eventType: event.Type,
@@ -10,6 +12,7 @@ function serializeEvent(event) {
     clientName: clientInfo.ClientName,
     authorId: clientInfo.UserId,
     authorName: clientInfo.UserName,
+    hostFileName: additionalData.HostProgramMainFile,
   };
 }
 

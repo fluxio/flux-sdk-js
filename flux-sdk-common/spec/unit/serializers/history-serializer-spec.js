@@ -4,7 +4,9 @@ import historyFactory from './../../factories/history-response-factory';
 describe('serializers.historySerializer', function() {
   describe('#serialize', function() {
     it('should serialize the events', function() {
-      const historyResponse = historyFactory();
+      const historyResponse = historyFactory({
+        fileName: 'foo.xls',
+      });
       const serializedHistory = serialize(historyResponse);
       const entities = serializedHistory.entities;
 
@@ -21,6 +23,7 @@ describe('serializers.historySerializer', function() {
       expect(event.authorName).toEqual('USERNAME');
       expect(event.clientId).toEqual('CLIENT_ID');
       expect(event.clientName).toEqual('CLIENT NAME');
+      expect(event.hostFileName).toEqual('foo.xls');
     });
 
     describe('with no historyCursor', function() {
