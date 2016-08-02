@@ -20,8 +20,9 @@ When a user first loads your app, they'll be asked to authorize access to Flux o
 
 ## <a id="implementing-login"></a>Implementing Login
 
-Create a new file with the path "/js/config.js" containing the contents below. This will declare a constant named config that can be used throughout your app:
+Create a new file with the path `/js/config.js` containing the contents below. This will declare a constant named `config` that can be used throughout your app:
 
+{% label %}js/config.js{% endlabel %}
 ```js
 const config = {
   url: 'http://localhost:8080', // your url
@@ -30,10 +31,11 @@ const config = {
 }
 ```
 
-You'll need to set flux_client_id to the client ID you created for your app in [Before You Begin](#bookmark=id.yq0dw854u2un). For now, the config above assumes you will want to develop on localhost port 8080. If you're using a different host or port, you'll need to add it to the list of valid "post-authorization" URLs for your app (using the [Flux App Manager](https://flux.io/developer/apps)).
+You'll need to set `flux_client_id` to the client ID you created for your app in [Before You Begin](../README.md#before-you-begin). For now, the config above assumes you will want to develop on localhost port 8080. If you're using a different host or port, you'll need to add it to the list of valid "post-authorization" URLs for your app (using the [Flux App Manager](https://flux.io/developer/apps)).
 
-Now, add the following to a new file, "index.html":
+Now, add the following to a new file, `index.html`:
 
+{% label %}index.html{% endlabel %}
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -65,18 +67,20 @@ Now, add the following to a new file, "index.html":
 </html>
 ```
 
-Right now this is just HTML that exposes a login button for the user to click. We need to add some logic to bring this to life. First we need to create an instance of the Flux SDK and helper libraries for login. Copy the following code into a file "js/helpers.js":
+Right now this is just HTML that exposes a login button for the user to click. We need to add some logic to bring this to life. First we need to create an instance of the Flux SDK and helper libraries for login. Copy the following code into a file `js/helpers.js`:
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
-// instantiate the Flux SDK with your app'd client id
+// instantiate the Flux SDK with your app's client id
 var sdk = new FluxSdk(config.flux_client_id, { redirectUri: config.url, fluxUrl: config.flux_url })
 var helpers = new FluxHelpers(sdk)
 ```
 
-You'll notice FluxSdk is instantiated using values from our config object, and FluxHelpers is created using an instance of the sdk. This separation makes it possible to use the SDK without helpers, in case you want more control over the login implementation. However, that is an advanced topic that will not be covered by this tutorial.
+You'll notice `FluxSdk` is instantiated using values from our `config` object, and `FluxHelpers` is created using an instance of the sdk. This separation makes it possible to use the SDK without helpers, in case you want more control over the login implementation. However, that is an advanced topic that will not be covered by this tutorial.
 
-Over the course of this tutorial, we'll try to keep the logic for accessing Flux inside of helpers.js. The app's controller logic (code that controls the user interface) will be in a separate file "js/index.js". Copy the following code into js/index.js:
+Over the course of this tutorial, we'll try to keep the logic for accessing Flux inside of `js/helpers.js`. The app's controller logic (code that controls the user interface) will be in a separate file `js/index.js`. Copy the following code into `js/index.js`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 /**
  * Hide the login page and attach events to the logout button.
@@ -121,15 +125,15 @@ function init() {
 window.onload = init
 ```
 
-The init function is triggered when the page loads, and immediately checks to see if the user has logged in (using the login helper). If the user has not logged in with Flux, the "login" div is revealed via showLogin and an event handler is added to let us know when the login button is clicked. Upon clicking the login button, your user will be taken to Flux to authenticate and authorize access to your app.
+The `init` function is triggered when the page loads, and immediately checks to see if the user has logged in (using the login helper). If the user has not logged in with Flux, the "login" div is revealed via `showLogin` and an event handler is added to let us know when the login button is clicked. Upon clicking the login button, your user will be taken to Flux to authenticate and authorize access to your app.
 
-You're ready to run your app! For the purposes of this tutorial, we'll use a simple command line server for Node called "http-server". However, you should feel free to run whatever you're comfortable with. Assuming you have Node installed, use npm to install the server:
+You're ready to run your app! For the purposes of this tutorial, we'll use a simple command line server for Node called ["http-server"](https://github.com/indexzero/http-server). However, you should feel free to run whatever you're comfortable with. Assuming you have Node installed, use npm to install the server:
 
 ```
 $ npm install http-server -g
 ```
 
-After the you have http-server installed, navigate to the directory containing index.html, and start the server:
+After the you have http-server installed, navigate to the directory containing `index.html`, and start the server:
 
 ```
 $ http-server
@@ -141,8 +145,9 @@ Open a browser and navigate to [http://localhost:8080](http://localhost:8080). Y
 
 ## <a id="logging-out-of-flux"></a>Logging Out of Flux
 
-"You're logged in!" - that alert gets old pretty quickly. Let's take it out, and replace it with a logout button. Add the following code below the login div in index.html:
+"You're logged in!" - that alert gets old pretty quickly. Let's take it out, and replace it with a logout button. Add the following code below the login div in `index.html`:
 
+{% label %}index.html{% endlabel %}
 ```html
 <!-- main container -->
 <div id='container' class="ui container">
@@ -159,12 +164,14 @@ Open a browser and navigate to [http://localhost:8080](http://localhost:8080). Y
 </div>
 ```
 
-Next, we need to add some logic to hide the login div (which exposes the container div positioned beneath it on the z-index). Add a click handler to the logout button in hideLogin:
+Next, we need to add some logic to hide the login div (which exposes the container div positioned beneath it on the z-index). Add a click handler to the logout button in `hideLogin`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function hideLogin() {
   // hide the login button
   $('#login').hide()
+  
   // attach the event handler to the logout button
   $('#logout').click(showLogin)
 }
@@ -172,6 +179,7 @@ function hideLogin() {
 
 Now you can rip out that annoying alert message :)
 
+{% label %}js/index.js{% endlabel %}
 ```js
 if (isLoggedIn) {
   // if logged in, make sure the login page is hidden
@@ -188,4 +196,4 @@ Refresh your browser, and you should see something similar to the screenshot bel
 
 ## <a id="download-chapter-1-source-code"></a>Download Chapter 1 Source Code
 
-The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_1_login). Be sure to set your own flux_client_id in config.js and point your local http server to the new directory!
+The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_1_login). Be sure to set your own `flux_client_id` in `config.js` and point your local http server to the new directory!

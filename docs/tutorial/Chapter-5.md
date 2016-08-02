@@ -11,8 +11,9 @@ In previous chapters we've focused on reading data from Flux, which gets you pre
 
 ## <a id="writing-values-to-a-cell"></a> Writing Values to a Cell
 
-We're going to add a new section to the app that allows your user to write values to a cell by adjusting a number slider. Insert the following snippet into index.html after the left column div, which creates a new range slider (with the help of jQuery) and list to select a cell that will be written to:
+We're going to add a new section to the app that allows your user to write values to a cell by adjusting a number slider. Insert the following snippet into `index.html` after the left column div, which creates a new range slider (with the help of jQuery) and list to select a cell that will be written to:
 
+{% label %}index.html{% endlabel %}
 ```html
 <!-- right column -->
 <div class='column'>
@@ -31,8 +32,9 @@ When you refresh your browser, you'll see that a slider and a select list (with 
 
 ![image alt text](image_10.png)
 
-Now we can add some code to write to "Slider Value" cell (or any other cell you select). First, add a new function updateCellValue to your helpers.js file. This will do the work of actually sending the value to Flux:
+Now we can add some code to write to "Slider Value" cell (or any other cell you select). First, add a new function `updateCellValue` to your `js/helpers.js` file. This will do the work of actually sending the value to Flux:
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
 /**
  * Update the value in a project cell (key).
@@ -43,8 +45,9 @@ function updateCellValue(project, cell, value) {
 }
 ```
 
-Modify initCells in index.js by adding the following:
+Modify `initCells` in `js/index.js` by adding the following:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 /**
  * Attach events to the cell (key) selection boxes.
@@ -90,7 +93,7 @@ function initCells() {
 }
 ```
 
-This adds an event handler to the list that chooses a cell. The handler is called when the slider value changes, and we respond by calling updateCellValue to write the value to Flux.
+This adds an event handler to the list that chooses a cell. The handler is called when the slider value changes, and we respond by calling `updateCellValue` to write the value to Flux.
 
 Refresh your browser, and choose the "Slider Value" cell from the list of options. Then, change the slider value:
 
@@ -102,8 +105,9 @@ When you log in to flux.io and inspect the value of "Slider Value" (double click
 
 ## <a id="creating-cells"></a>Creating Cells
 
-So far, the cells we've been working with in the "SDK Tutorial" project were all created automatically for you. Now we're going to add the ability to create new cells from your app. Add a new div to index.html after the content in the right column:
+So far, the cells we've been working with in the "SDK Tutorial" project were all created automatically for you. Now we're going to add the ability to create new cells from your app. Add a new div to `index.html` after the content in the right column:
 
+{% label %}index.html{% endlabel %}
 ```html
 <!-- right column -->
 <div class='column'>
@@ -122,8 +126,9 @@ So far, the cells we've been working with in the "SDK Tutorial" project were all
 </div>
 ```
 
-We've added an input for your user to type in the name for their cell, along with a button to submit that input. Next, we'll add a helper function createCell in helpers.js to add the key to a project's data table.
+We've added an input for your user to type in the name for their cell, along with a button to submit that input. Next, we'll add a helper function `createCell` in `js/helpers.js` to add the key to a project's data table.
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
 /**
  * Create a project cell (key) in Flux.
@@ -134,8 +139,9 @@ function createCell(project, name) {
 }
 ```
 
-Next, we'll add a function named initCreate to index.js just above init. This function will listen for the create button to be clicked, then submit the input text for the cell name to createCell using the selected project. Once created, cells in each list will be refreshed by fetchCells.
+Next, we'll add a function named `initCreate` to `js/index.js` just above `init`. This function will listen for the create button to be clicked, then submit the input text for the cell name to `createCell` using the selected project. Once created, cells in each list will be refreshed by `fetchCells`.
 
+{% label %}js/index.js{% endlabel %}
 ```js
 /**
  * Initialize the create cell (key) input + button.
@@ -161,8 +167,9 @@ function initCreate() {
 }
 ```
 
-Last, we need to call initCreate from our init function to make sure the button click handler is listening before the user is able to interact with the app:
+Last, we need to call `initCreate` from our `init` function to make sure the button click handler is listening before the user is able to interact with the app:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function init() {
   // Check if we're coming back from Flux with the login credentials.
@@ -201,11 +208,10 @@ Go ahead and type the name of your cell, then submit your request using the "CRE
 You'll need to be careful when attempting to write values to a cell. There are two conditions in which a cell may be read-only:
 
 1. The cell exists within a project that your user is only allowed to read from.
-
-2. The cell is marked as "protected".
+1. The cell is marked as "protected".
 
 When your user attempts writing to write values to a cell without permission, the SDK will throw an exception. At the very least, you'll want to anticipate an exception and handle it accordingly.
 
 ## <a id="download-chapter-5-source-code"></a>Download Chapter 5 Source Code
 
-The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_5_write). Remember to set your own flux_client_id in config.js and point your local http server to the new directory!
+The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_5_write). Remember to set your own `flux_client_id` in `config.js` and point your local http server to the new directory!

@@ -11,27 +11,23 @@ So much goodness - but you still haven't seen the truly compelling case for usin
 In this chapter, we're going to:
 
 * Add the ability to detect changes to a project/data table (outside of your app)
-
 * Add a console that records every change notification received for the selected project
-
 * Refresh the viewport for the selected cell whenever a change for that cell value occurs
 
 ## <a id="listening-for-changes"></a>Listening for Changes
 
 There are many types of changes that can occur at the project/data table level. This is not an exhaustive list of notification types, but to name a few:
 
-* CELL_CREATED: A new cell was added to the data table
-
-* CELL_DELETED: An existing cell was removed from the data table
-
-* CELL_MODIFIED: The value of a specific cell was modified
-
-* CELL_CLIENT_METADATA_MODIFIED: Metadata for a specific cell, like timestamp, label or description was modified
+* `CELL_CREATED`: A new cell was added to the data table
+* `CELL_DELETED`: An existing cell was removed from the data table
+* `CELL_MODIFIED`: The value of a specific cell was modified
+* `CELL_CLIENT_METADATA_MODIFIED`: Metadata for a specific cell, like timestamp, label or description was modified
 
 Again, types of notification types may change over time. It's important to anticipate that in the code you write.
 
-To start things off, let's add a new section to index.html at the bottom of the right column. This will create a textarea element that will be used like a console to print out notifications as they are received:
+To start things off, let's add a new section to `index.html` at the bottom of the right column. This will create a textarea element that will be used like a console to print out notifications as they are received:
 
+{% label %}index.html{% endlabel %}
 ```html
 <!-- right column -->
 <div class='column'>
@@ -53,8 +49,9 @@ To start things off, let's add a new section to index.html at the bottom of the 
 </div>
 ```
 
-Now we're going to add a helper function to helpers.js called createWebSocket. This will create a [WebSocket](https://en.wikipedia.org/wiki/WebSocket) that holds a persistent connection with Flux, so information can flow bidirectionally as needed. More specifically, Flux servers will send messages to your app through the WebSocket whenever something interesting happens.
+Now we're going to add a helper function to `js/helpers.js` called `createWebSocket`. This will create a [WebSocket](https://en.wikipedia.org/wiki/WebSocket) that holds a persistent connection with Flux, so information can flow bidirectionally as needed. More specifically, Flux servers will send messages to your app through the WebSocket whenever something interesting happens.
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
 /**
  * Creates a websocket for a project that listens for data table events, and calls
@@ -78,8 +75,9 @@ function createWebSocket(project, notificationHandler){
 }
 ```
 
-Last, we need to create the WebSocket whenever the selected project changes. We'll do this by modifying the change event handler in the fetchProjects function within index.js:
+Last, we need to create the WebSocket whenever the selected project changes. We'll do this by modifying the change event handler in the `fetchProjects` function within `js/index.js`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function fetchProjects() {
   // get the user's projects from flux (returns a promise)
@@ -118,7 +116,7 @@ function fetchProjects() {
 }
 ```
 
-The code above introduces a notificationHandler function that will be called whenever the WebSocket receives a message from Flux. For now, the handler will simply print the message type and relevant cell's label to the app's console. Refresh your browser window and select a project:
+The code above introduces a `notificationHandler` function that will be called whenever the WebSocket receives a message from Flux. For now, the handler will simply print the message type and relevant cell's label to the app's console. Refresh your browser window and select a project:
 
 ![image alt text](image_15.png)
 
@@ -132,8 +130,9 @@ Also, notice that creating or deleting a cell on Flux (for the selected project)
 
 The console is useful for you as a developer. You can see what is changing, and when. However, your users will probably expect your app to do something more relevant.
 
-As an example, we're going to re-render the viewport when the CELL_MODIFIED notification is received. This is simple, since it requires only that we add a check inside of our notificationHandler function:
+As an example, we're going to re-render the viewport when the `CELL_MODIFIED` notification is received. This is simple, since it requires only that we add a check inside of our `notificationHandler` function:
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
 var notificationHandler = function(msg) {
   //write all events to the app console
@@ -159,4 +158,4 @@ Select "Sphere" in your app's viewport. When you change the color or radius cell
 
 ## <a id="download-chapter-6-source-code"></a>Download Chapter 6 Source Code
 
-The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_6_changes). Remember to set your own flux_client_id in config.js and point your local http server to the new directory!
+The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_6_changes). Remember to set your own `flux_client_id` in `config.js` and point your local http server to the new directory!

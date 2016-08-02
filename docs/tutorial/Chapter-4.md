@@ -9,10 +9,6 @@
 * [Units of Measure](#units-of-measure)
 * [Handling Non-Geometric Primitives](#handling-non-geometric-primitives)
 * [Download Chapter 4 Source Code](#download-chapter-4-source-code)
-* foo
-  * bar
-  * baz
-* fsdfsdf
 
 &nbsp;
 
@@ -22,21 +18,21 @@ But how could we tell the difference between JSON that represents geometry, and 
 
 ```json
 {
-    "dimensions": [
-      2,
-      2,
-      2
-    ],
-    "origin": [
-      0,
-      0,
-      0
-    ],
-    "primitive": "block",
-    "units": {
-      "dimensions": "meters",
-      "origin": "meters"
-    }
+  "dimensions": [
+    2,
+    2,
+    2
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "primitive": "block",
+  "units": {
+    "dimensions": "meters",
+    "origin": "meters"
+  }
 }
 ```
 
@@ -44,11 +40,11 @@ Similarly, a point primitive is really just:
 
 ```json
 {
-    "primitive":"point",
-    "point":[0,1,0],
-    "units":{
-      "point":"meters"
-    }
+  "primitive":"point",
+  "point":[0,1,0],
+  "units":{
+    "point":"meters"
+  }
 }
 ```
 
@@ -98,8 +94,7 @@ And, keep in mind JSON arrays are not type enforced. The same array may contain 
 Your app may require detail beyond what is communicated by a Flux primitive. Before you create an entirely new type, consider that there are two ways you can extend Flux primitives beyond their prescribed form:
 
 1. Add your own custom attributes under a designated "attributes" member
-
-2. Embed Flux primitives within your own custom structures
+1. Embed Flux primitives within your own custom structures
 
 ## <a id="custom-attributes"></a>Custom Attributes
 
@@ -107,14 +102,14 @@ In most cases, custom attributes are the recommended approach. The "attributes" 
 
 ```json
 {
-    "primitive":”point”,
-    "point":[0,1,0],
-    "units":{
-      "point":”meters”
-    },
-    "attributes":{
-      "hello":“world”
-    }
+  "primitive":”point”,
+  "point":[0,1,0],
+  "units":{
+    "point":”meters”
+  },
+  "attributes":{
+    "hello":“world”
+  }
 }
 ```
 
@@ -150,8 +145,9 @@ This approach is less preferred because some apps may not know what to do with t
 
 So far, our app only handles geometric primitives (using the viewport). The viewport does not render non-geometric types - even the basic ones like numbers or strings. Let's address that.
 
-Add a new div to index.html for displaying general content without the use of the viewport:
+Add a new div to `index.html` for displaying general content without the use of the viewport:
 
+{% label %}index.html{% endlabel %}
 ```html
 <div id='output'>
   <div class='label'>From Flux</div>
@@ -167,7 +163,7 @@ Add a new div to index.html for displaying general content without the use of th
 </div>
 ```
 
-Then, we need to modify the render function in index.js to toggle displays based on type. If the general display is showing, we'll do a bit of simple formatting:
+Then, we need to modify the `render` function in `index.js` to toggle displays based on type. If the general display is showing, we'll do a bit of simple formatting:
 
 ```js
 function render(data) {
@@ -220,4 +216,4 @@ Refresh your browser and select one of the cells holding a non-geometric type (l
 
 ## <a id="download-chapter-4-source-code"></a>Download Chapter 4 Source Code
 
-The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_4_primitives). Remember to set your own flux_client_id in config.js and point your local http server to the new directory!
+The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_4_primitives). Remember to set your own `flux_client_id` in `config.js` and point your local http server to the new directory!

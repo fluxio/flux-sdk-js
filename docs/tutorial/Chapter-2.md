@@ -11,8 +11,9 @@ The same 3D viewport we use in the Flux web interface is also available to you a
 
 ## <a id="instantiating-the-flux-3d-viewport"></a>Instantiating the Flux 3D Viewport
 
-In order to create a viewport, we will need to include a reference to the viewport script. Insert the following code just below the config.js script tag in index.html:
+In order to create a viewport, we will need to include a reference to the viewport script. Insert the following code just below the config.js script tag in `index.html`:
 
+{% label %}index.html{% endlabel %}
 ```html
 ...
 <script src="js/config.js"></script>
@@ -25,6 +26,7 @@ In order to create a viewport, we will need to include a reference to the viewpo
 
 We also need to create a placeholder for the viewport in our index.html, just below the header div:
 
+{% label %}index.html{% endlabel %}
 ```html
 <!-- main container -->
 <div id='container' class="ui container">
@@ -48,14 +50,16 @@ We also need to create a placeholder for the viewport in our index.html, just be
 </div>
 ```
 
-Let's declare a variable for our viewport at the very top of index.js before anything else:
+Let's declare a variable for our viewport at the very top of `js/index.js` before anything else:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 var viewport
 ```
 
-Also inside of index.js, add a new function named initViewport. The initViewport function instantiates the viewport, passing it an element it can use to append its own content - in our case, the div we just added to index.html.
+Also inside of `js/index.js`, add a new function named `initViewport`. The `initViewport` function instantiates the viewport, passing it an element it can use to append its own content - in our case, the div we just added to `index.html`.
 
+{% label %}js/index.js{% endlabel %}
 ```js
 /**
  * Initialize the 3D viewport.
@@ -68,8 +72,9 @@ function initViewport() {
 }
 ```
 
-Lastly, we need to call initViewport from our init method, so it actually attempts to load.
+Lastly, we need to call `initViewport` from our `init` method, so it actually attempts to load.
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function init() {
   // Check if we're coming back from Flux with the login credentials.
@@ -95,8 +100,9 @@ Refresh the browser, and you should see a screen similar to the following:
 
 ## <a id="viewing-3d-data-in-the-viewport"></a>Viewing 3D Data in the Viewport
 
-The viewport we just added is empty, and it needs some data to render. For now, let's keep things simple by pointing it to a static blob of JSON that represents a solid box. Add the following  code to a new file "js/box.js", but don't worry much about what it means for now:
+The viewport we just added is empty, and it needs some data to render. For now, let's keep things simple by pointing it to a static blob of JSON that represents a solid box. Add the following  code to a new file `js/box.js`, but don't worry much about what it means for now:
 
+{% label %}js/box.js{% endlabel %}
 ```js
 var box_data = [
   {
@@ -119,8 +125,9 @@ var box_data = [
 ]
 ```
 
-Add a new script tag for box.js below the stylesheet reference in index.html:
+Add a new script tag for `js/box.js` below the stylesheet reference in `index.html`:
 
+{% label %}index.html{% endlabel %}
 ```html
 ...
 <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -130,8 +137,9 @@ Add a new script tag for box.js below the stylesheet reference in index.html:
 ...
 ```
 
-Now, set the viewport's geometry to the variable we declared in box.js as "box_data":
+Now, set the viewport's geometry to the variable we declared in `js/box.js` as `box_data`:
 
+{% label %}js/box.js{% endlabel %}
 ```js
 function init() {
   checkLogin().then(() => {
@@ -153,8 +161,9 @@ Refresh the browser, and you should see something similar to the following:
 
 Eww - that grey. We're going to make some simple adjustments to the default viewport configuration. You can find more advanced examples in the [viewport ](https://github.com/fluxio/flux-viewport/tree/master/demo)[documentation](https://github.com/fluxio/flux-viewport/tree/master/demo).
 
-Update the initViewport function we created, by setting the clear (unrendered) area to white:
+Update the `initViewport` function we created, by setting the clear (unrendered) area to white:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function initViewport() {
   // attach the viewport to the #div view
@@ -172,4 +181,4 @@ Refresh your browser, and you should see something similar to the following:
 
 ## <a id="download-chapter-2-source-code"></a>Download Chapter 2 Source Code
 
-The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_2_viewport). Remember to set your own flux_client_id in config.js and point your local http server to the new directory!
+The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_2_viewport). Remember to set your own `flux_client_id` in `config.js` and point your local http server to the new directory!

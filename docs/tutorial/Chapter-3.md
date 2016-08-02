@@ -25,6 +25,7 @@ TBD
 
 We're going to add some code that displays projects for the logged in user as a dropdown list. Inside of index.html, insert a new div containing a select element just before the logout div (as shown below):
 
+{% label %}index.html{% endlabel %}
 ```html
 <div id='actions'>
   <div class='select'><select class='project'></select></div>
@@ -32,8 +33,9 @@ We're going to add some code that displays projects for the logged in user as a 
 </div>
 ```
 
-Add the following to helper.js, which makes it a bit more convenient to work with user-specific SDK functions:
+Add the following to `js/helper.js`, which makes it a bit more convenient to work with user-specific SDK functions:
 
+{% label %}js/helper.js{% endlabel %}
 ```js
 var user = null
 
@@ -55,8 +57,9 @@ function getProjects() {
 }
 ```
 
-Inside index.js, add a function named fetchProjects. This uses the the Flux SDK to get projects for the currently logged in user, then adds each project to the drop down list we just declared in index.html:
+Inside `js/index.js`, add a function named `fetchProjects`. This uses the the Flux SDK to get projects for the currently logged in user, then adds each project to the drop down list we just declared in `index.html`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 var viewport, projects
 
@@ -80,8 +83,9 @@ function fetchProjects() {
 }
 ```
 
-Lastly, we'll want to call fetchProjects from our init method that runs when the page loads:
+Lastly, we'll want to call `fetchProjects` from our `init` method that runs when the page loads:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function init() {
   // Check if we're coming back from Flux with the login credentials.
@@ -111,18 +115,16 @@ Each Flux project has its own data table, which is the top-level container for d
 
 Cells embody four main components:
 
-1. Cell value: A cell can hold any kind of JSON value - including [standard data types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) like boolean, strings, numbers, null, object, etc. [Chapter 4](#bookmark=id.w0urcyiya91g) discusses Flux Primitive values, which are also JSON, but use a particular structure that has worked well for us in the apps we've built using the SDK.
-
-2. Cell metadata: A cell has data that describes itself. For example, an id, name, description, revision date and owner. Some metadata is structured, so apps have a certain amount of consistency in the information they can present to an end-user. However, developers can extend a cell with their own metadata as needed.
-
-3. Cell state: A cell can be unlocked (by default), or locked if a user has decided to prevent unexpected changes to a cell's value
-
-4. Cell history: A cell maintains the entire chronological set of cell values since it was first created.
+1. Cell value: A cell can hold any kind of JSON value - including [standard data types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) like boolean, strings, numbers, null, object, etc. [Chapter 4](./Chapter-4.md) discusses Flux Primitive values, which are also JSON, but use a particular structure that has worked well for us in the apps we've built using the SDK.
+1. Cell metadata: A cell has data that describes itself. For example, an id, name, description, revision date and owner. Some metadata is structured, so apps have a certain amount of consistency in the information they can present to an end-user. However, developers can extend a cell with their own metadata as needed.
+1. Cell state: A cell can be unlocked (by default), or locked if a user has decided to prevent unexpected changes to a cell's value
+1. Cell history: A cell maintains the entire chronological set of cell values since it was first created.
 
 Accessing the data table and its cells is simple once you have a project id. The list that we added earlier in this chapter allows your user to decide which project and data table they want to access. The next step is to help them select a cell to read from.
 
-Let's add another list to our app that allows the user to select a cell to display in the viewport. Modify the geometry div in index.html by adding a new div to select a cell.
+Let's add another list to our app that allows the user to select a cell to display in the viewport. Modify the geometry div in `index.html` by adding a new div to select a cell.
 
+{% label %}index.html{% endlabel %}
 ```html
 <div id='output'>
   <div class='label'>From Flux</div>
@@ -134,8 +136,9 @@ Let's add another list to our app that allows the user to select a cell to displ
 </div>
 ```
 
-First, we'll insert a few new functions into helpers.js just above the getUser function. The getCells function will access the data table for a project and return its cells:
+First, we'll insert a few new functions into `js/helpers.js` just above the `getUser` function. The `getCells` function will access the data table for a project and return its cells:
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
 var dataTables = {}
 
@@ -158,14 +161,16 @@ function getCells(project) {
 }
 ```
 
-Now we can populate the drop down in index.html with cells from the selected project. Let's add a variable named projectCells at the top of index.js to hold a local reference to cells returned by the SDK:
+Now we can populate the drop down in `index.html` with cells from the selected project. Let's add a variable named `projectCells` at the top of `js/index.js` to hold a local reference to cells returned by the SDK:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 var viewport, projects, selectedProject, projectCells
 ```
 
-Then, let's add a function fetchCells to index.js to get cells from Flux based on the selected project. This will populate our projectCells variable, and add items to the cell list declared in index.html:
+Then, let's add a function `fetchCells` to `js/index.js` to get cells from Flux based on the selected project. This will populate our `projectCells` variable, and add items to the cell list declared in `index.html`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 /**
  * Fetch the cells (keys) of the currently selected project from Flux.
@@ -188,8 +193,9 @@ function fetchCells() {
 }
 ```
 
-Finally, we need to modify fetchProjects so it clears and rebuilds the list of cells whenever the project changes (including when it first loads):
+Finally, we need to modify `fetchProjects` so it clears and rebuilds the list of cells whenever the project changes (including when it first loads):
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function fetchProjects() {
   // get the user's projects from flux (returns a promise)
@@ -218,8 +224,9 @@ Refresh your browser, and you should see a drop down list below the viewport. Th
 
 You probably noticed that in the last section our beautiful cube remained, despite the allure of "Please select a cell" message with actual cells to select. Let's make it happen - we're going to load a cube from Flux using the selected cell value.
 
-Add a few new functions in your helpers.js to get a cell, and the value contained by a cell:
+Add a few new functions in your `helpers.js` to get a cell, and the value contained by a cell:
 
+{% label %}js/helpers.js{% endlabel %}
 ```js
 /**
  * Get a specific project cell (key).
@@ -236,14 +243,16 @@ function getValue(project, cell) {
 }
 ```
 
-Next, modify index.js by adding a new global variable named selectedOutputCell:
+Next, modify `js/index.js` by adding a new global variable named `selectedOutputCell`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 let viewport, projects, selectedProject, projectCells, selectedOutputCell
 ```
 
-We'll need to add a new function to index.js for handling data that needs to be rendered. When the data is recognized as geometry (more on this in [Chapter 4: Flux Primitives](#bookmark=id.w0urcyiya91g)), it will be passed off to the viewport. We'll name this new function render:
+We'll need to add a new function to `js/index.js` for handling data that needs to be rendered. When the data is recognized as geometry (more on this in [Chapter 4: Flux Primitives](./Chapter-4.md)), it will be passed off to the viewport. We'll name this new function `render`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function render(data) {
   if(!data){
@@ -258,8 +267,9 @@ function render(data) {
 }
 ```
 
-We should update fetchCells to call render with an empty value, so the viewport gets cleared out when the selected project changes (and reloads cells):
+We should update `fetchCells` to call `render` with an empty value, so the viewport gets cleared out when the selected project changes (and reloads cells):
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function fetchCells() {
 ...
@@ -271,8 +281,9 @@ function fetchCells() {
 }
 ```
 
-Add a new function initCells to index.js before init. This will listen for changes to the selected cell, load the new's cells value from Flux, and hand it off to render.
+Add a new function `initCells` to `js/index.js` before `init`. This will listen for changes to the selected cell, load the new cells value from Flux, and hand it off to render.
 
+{% label %}js/index.js{% endlabel %}
 ```js
 /**
  * Attach events to the cell (aka key) selection boxes.
@@ -294,8 +305,9 @@ function initCells() {
 }
 ```
 
-Now we just need to remove the code that sets the viewport to render box_data, and add a call to initCells from init:
+Now we just need to remove the code that sets the viewport to render `box_data`, and add a call to `initCells` from `init`:
 
+{% label %}js/index.js{% endlabel %}
 ```js
 function init() {
 ...
@@ -320,5 +332,5 @@ That was a bit of work, but consider what you now have access to. Your users can
 
 ## <a id="downloading-chapter-3-source-code"></a>Download Chapter 3 Source Code
 
-The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_3_read). Remember to set your own flux_client_id in config.js and point your local http server to the new directory!
+The files mentioned in this chapter can be conveniently [downloaded here](https://github.com/flux-labs/flux-seed/tree/master/tutorials/chapter_3_read). Remember to set your own `flux_client_id` in `config.js` and point your local http server to the new directory!
 
