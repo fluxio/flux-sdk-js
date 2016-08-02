@@ -4,6 +4,11 @@
   "description": "Documentation for the Flux JS SDK",
   "author": "Flux Factory, Inc.",
   "root": "docs",
+  "plugins": [
+    "anchors",
+    "back-to-top-button",
+    "codeblock-label"
+  ],
   "pluginsConfig": {
     "theme-default": {
       "showLevel": true
