@@ -9,13 +9,13 @@
 
 &nbsp;
 
-Users of your app can now log in to Flux, and view a static model of a cube in their browser. That’s pretty neat, but not super useful yet. In this chapter you’ll learn how to connect the viewport to live data that comes from Flux. In doing so, your app will be able to talk to any other tools that integrate with Flux. For example, SketchUp, Revit, Excel, Grasshopper, Dynamo, 3ds Max or AutoCAD!
+Users of your app can now log in to Flux, and view a static model of a cube in their browser. That's pretty neat, but not super useful yet. In this chapter you'll learn how to connect the viewport to live data that comes from Flux. In doing so, your app will be able to talk to any other tools that integrate with Flux. For example, SketchUp, Revit, Excel, Grasshopper, Dynamo, 3ds Max or AutoCAD!
 
 ## <a id="flux-projects"></a>Flux Projects
 
-Before we dive in, it’s important to understand how Flux user data is organized. The highest level of organization is referred to as a "project". A project can be shared among multiple Flux users, each having permissions to read and possibly modify the the project. In order to work with user data, you’ll first have to designate a project to work with.
+Before we dive in, it's important to understand how Flux user data is organized. The highest level of organization is referred to as a "project". A project can be shared among multiple Flux users, each having permissions to read and possibly modify the the project. In order to work with user data, you'll first have to designate a project to work with.
 
-Once a user has has logged in and authorized your app, you’ll be able to access to their projects through the SDK. For the purposes of this tutorial, it’s recommended you log into your app as yourself and work with your own projects.
+Once a user has has logged in and authorized your app, you'll be able to access to their projects through the SDK. For the purposes of this tutorial, it's recommended you log into your app as yourself and work with your own projects.
 
 ## <a id="create-an-sdk-tutorial-project"></a>Create An SDK Tutorial Project
 
@@ -23,7 +23,7 @@ TBD
 
 ## <a id="accessing-projects"></a>Accessing Projects
 
-We’re going to add some code that displays projects for the logged in user as a dropdown list. Inside of index.html, insert a new div containing a select element just before the logout div (as shown below):
+We're going to add some code that displays projects for the logged in user as a dropdown list. Inside of index.html, insert a new div containing a select element just before the logout div (as shown below):
 
 ```html
 <div id='actions'>
@@ -80,7 +80,7 @@ function fetchProjects() {
 }
 ```
 
-Lastly, we’ll want to call fetchProjects from our init method that runs when the page loads:
+Lastly, we'll want to call fetchProjects from our init method that runs when the page loads:
 
 ```js
 function init() {
@@ -111,17 +111,17 @@ Each Flux project has its own data table, which is the top-level container for d
 
 Cells embody four main components:
 
-1. Cell value: A cell can hold any kind of JSON value -- including [standard data types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) like boolean, strings, numbers, null, object, etc. [Chapter 4](#bookmark=id.w0urcyiya91g) discusses Flux Primitive values, which are also JSON, but use a particular structure that has worked well for us in the apps we’ve built using the SDK.
+1. Cell value: A cell can hold any kind of JSON value - including [standard data types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) like boolean, strings, numbers, null, object, etc. [Chapter 4](#bookmark=id.w0urcyiya91g) discusses Flux Primitive values, which are also JSON, but use a particular structure that has worked well for us in the apps we've built using the SDK.
 
 2. Cell metadata: A cell has data that describes itself. For example, an id, name, description, revision date and owner. Some metadata is structured, so apps have a certain amount of consistency in the information they can present to an end-user. However, developers can extend a cell with their own metadata as needed.
 
-3. Cell state: A cell can be unlocked (by default), or locked if a user has decided to prevent unexpected changes to a cell’s value
+3. Cell state: A cell can be unlocked (by default), or locked if a user has decided to prevent unexpected changes to a cell's value
 
 4. Cell history: A cell maintains the entire chronological set of cell values since it was first created.
 
 Accessing the data table and its cells is simple once you have a project id. The list that we added earlier in this chapter allows your user to decide which project and data table they want to access. The next step is to help them select a cell to read from.
 
-Let’s add another list to our app that allows the user to select a cell to display in the viewport. Modify the geometry div in index.html by adding a new div to select a cell.
+Let's add another list to our app that allows the user to select a cell to display in the viewport. Modify the geometry div in index.html by adding a new div to select a cell.
 
 ```html
 <div id='output'>
@@ -134,7 +134,7 @@ Let’s add another list to our app that allows the user to select a cell to dis
 </div>
 ```
 
-First, we’ll insert a few new functions into helpers.js just above the getUser function. The getCells function will access the data table for a project and return its cells:
+First, we'll insert a few new functions into helpers.js just above the getUser function. The getCells function will access the data table for a project and return its cells:
 
 ```js
 var dataTables = {}
@@ -158,13 +158,13 @@ function getCells(project) {
 }
 ```
 
-Now we can populate the drop down in index.html with cells from the selected project. Let’s add a variable named projectCells at the top of index.js to hold a local reference to cells returned by the SDK:
+Now we can populate the drop down in index.html with cells from the selected project. Let's add a variable named projectCells at the top of index.js to hold a local reference to cells returned by the SDK:
 
 ```js
 var viewport, projects, selectedProject, projectCells
 ```
 
-Then, let’s add a function fetchCells to index.js to get cells from Flux based on the selected project. This will populate our projectCells variable, and add items to the cell list declared in index.html:
+Then, let's add a function fetchCells to index.js to get cells from Flux based on the selected project. This will populate our projectCells variable, and add items to the cell list declared in index.html:
 
 ```js
 /**
@@ -216,7 +216,7 @@ Refresh your browser, and you should see a drop down list below the viewport. Th
 
 ## <a id="reading-a-cell-value"></a>Reading a Cell Value
 
-You probably noticed that in the last section our beautiful cube remained, despite the allure of "Please select a cell" message with actual cells to select. Let’s make it happen -- we’re going to load a cube from Flux using the selected cell value.
+You probably noticed that in the last section our beautiful cube remained, despite the allure of "Please select a cell" message with actual cells to select. Let's make it happen - we're going to load a cube from Flux using the selected cell value.
 
 Add a few new functions in your helpers.js to get a cell, and the value contained by a cell:
 
@@ -242,7 +242,7 @@ Next, modify index.js by adding a new global variable named selectedOutputCell:
 let viewport, projects, selectedProject, projectCells, selectedOutputCell
 ```
 
-We’ll need to add a new function to index.js for handling data that needs to be rendered. When the data is recognized as geometry (more on this in [Chapter 4: Flux Primitives](#bookmark=id.w0urcyiya91g)), it will be passed off to the viewport. We’ll name this new function render:
+We'll need to add a new function to index.js for handling data that needs to be rendered. When the data is recognized as geometry (more on this in [Chapter 4: Flux Primitives](#bookmark=id.w0urcyiya91g)), it will be passed off to the viewport. We'll name this new function render:
 
 ```js
 function render(data) {
@@ -271,7 +271,7 @@ function fetchCells() {
 }
 ```
 
-Add a new function initCells to index.js before init. This will listen for changes to the selected cell, load the new’s cells value from Flux, and hand it off to render.
+Add a new function initCells to index.js before init. This will listen for changes to the selected cell, load the new's cells value from Flux, and hand it off to render.
 
 ```js
 /**
@@ -312,7 +312,7 @@ function init() {
 }
 ```
 
-And, there you go -- refresh your browser and verify that our cube is loading again. Only this time, the JSON is coming from Flux instead of a static file. Go ahead and try it out by selecting a different cell named "sphere" in the same “SDK Tutorial” project:
+And, there you go - refresh your browser and verify that our cube is loading again. Only this time, the JSON is coming from Flux instead of a static file. Go ahead and try it out by selecting a different cell named "sphere" in the same “SDK Tutorial” project:
 
 ![image alt text](image_7.png)
 

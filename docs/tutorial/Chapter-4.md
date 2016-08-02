@@ -18,7 +18,7 @@
 
 In Chapter 3 we looked at an example of how to read JSON data from cells in a project data table. More specifically, we loaded JSON data into a viewport whenever it resembled geometry. 
 
-But how could we tell the difference between JSON that represents geometry, and arbitrary JSON values? Over time, Flux has built a core schema from the different types we’ve encountered. For example, our cube example is represented by a "block" primitive: 
+But how could we tell the difference between JSON that represents geometry, and arbitrary JSON values? Over time, Flux has built a core schema from the different types we've encountered. For example, our cube example is represented by a "block" primitive: 
 
 ```json
 {
@@ -52,21 +52,21 @@ Similarly, a point primitive is really just:
 }
 ```
 
-While it’s not required that you use Flux primitives, you’ll get a lot of mileage out of them since they’re recognized by our viewport and plugins. This chapter will cover the different primitives available in a bit more detail.
+While it's not required that you use Flux primitives, you'll get a lot of mileage out of them since they're recognized by our viewport and plugins. This chapter will cover the different primitives available in a bit more detail.
 
 ## <a id="types-of-flux-primitives"></a>Types of Flux Primitives
 
-There are many different Flux primitives. You’ll expect, and recognize most of them if you’ve worked with other design tools. For example, you’ll find points, lines, curves, meshes, BREPs, and many more. We actively maintain documentation of the different types here.
+There are many different Flux primitives. You'll expect, and recognize most of them if you've worked with other design tools. For example, you'll find points, lines, curves, meshes, BREPs, and many more. We actively maintain documentation of the different types here.
 
-It’s also very simple to create examples of primitives by using the data inspector on https://flux.io. When you view data, the bottom left corner of the data inspector provides a menu of alternative views. The eye in the bottom left corner exposes a menu. The "Raw View" menu item changes the display to show the raw JSON value that will help you understand how geometry (or other types) are constructed.
+It's also very simple to create examples of primitives by using the data inspector on https://flux.io. When you view data, the bottom left corner of the data inspector provides a menu of alternative views. The eye in the bottom left corner exposes a menu. The "Raw View" menu item changes the display to show the raw JSON value that will help you understand how geometry (or other types) are constructed.
 
 ![image alt text](image_8.png)
 
 ## <a id="data-not-files"></a>"Data, Not Files"
 
-The unofficial Flux mantra has been, "Data, not files." The design of primitives reflects this belief -- that a single model can be decomposed into smaller, reusable parts. 
+The unofficial Flux mantra has been, "Data, not files." The design of primitives reflects this belief - that a single model can be decomposed into smaller, reusable parts. 
 
-While it’s may be tempting to jam a base 64 encoded .dxf into a cell and route it through Flux, it sort of misses the point. Interoperability is more than just speaking a common language. When collaborating, you will greatly benefit by breaking your design down into discrete problems. You’ll see the solution to these problems become reusable in many different contexts.
+While it's may be tempting to jam a base 64 encoded .dxf into a cell and route it through Flux, it sort of misses the point. Interoperability is more than just speaking a common language. When collaborating, you will greatly benefit by breaking your design down into discrete problems. You'll see the solution to these problems become reusable in many different contexts.
 
 ## <a id="collections"></a>Collections
 
@@ -122,7 +122,7 @@ You could have added "hello" outside of the attributes section, but there is alw
 
 ## <a id="embedded-primitives"></a>Embedded Primitives
 
-If you really can’t live with extending a primitive, the next best thing is to nest a primitive in your own structure. For example, maybe you want to create your own "regularPolygon" primitive. You could embed a known primitive, like point:
+If you really can't live with extending a primitive, the next best thing is to nest a primitive in your own structure. For example, maybe you want to create your own "regularPolygon" primitive. You could embed a known primitive, like point:
 
 ```json
 {
@@ -140,7 +140,7 @@ If you really can’t live with extending a primitive, the next best thing is to
 }
 ```
 
-This approach is less preferred because some apps may not know what to do with the top-level primitive "regular-polygon", and ignore it (or even worse, crash). However, at least it’s still possible to extract the center value as a point and do something useful with the point.
+This approach is less preferred because some apps may not know what to do with the top-level primitive "regular-polygon", and ignore it (or even worse, crash). However, at least it's still possible to extract the center value as a point and do something useful with the point.
 
 ## <a id="units-of-measure"></a>Units of Measure
 
@@ -148,7 +148,7 @@ This approach is less preferred because some apps may not know what to do with t
 
 ## <a id="handling-non-geometric-primitives"></a>Handling Non-Geometric Primitives
 
-So far, our app only handles geometric primitives (using the viewport). The viewport does not render non-geometric types -- even the basic ones like numbers or strings. Let’s address that.
+So far, our app only handles geometric primitives (using the viewport). The viewport does not render non-geometric types - even the basic ones like numbers or strings. Let's address that.
 
 Add a new div to index.html for displaying general content without the use of the viewport:
 
@@ -167,7 +167,7 @@ Add a new div to index.html for displaying general content without the use of th
 </div>
 ```
 
-Then, we need to modify the render function in index.js to toggle displays based on type. If the general display is showing, we’ll do a bit of simple formatting:
+Then, we need to modify the render function in index.js to toggle displays based on type. If the general display is showing, we'll do a bit of simple formatting:
 
 ```js
 function render(data) {

@@ -10,13 +10,13 @@
 
 Flux requires all apps to use [OpenID Connect](http://openid.net/connect/) for authentication. OpenID Connect is an established, secure way for 3rd party developers like yourself to access data on behalf of a Flux user.
 
-Before you can begin working with the Flux API, you will need to have users authenticate with Flux and grant you access to their data in the form of a token. Fortunately, you won’t need a deep understanding of OpenID Connect. We’ll do most of the work for you by way of an optional "login helper", which is used throughout this tutorial.
+Before you can begin working with the Flux API, you will need to have users authenticate with Flux and grant you access to their data in the form of a token. Fortunately, you won't need a deep understanding of OpenID Connect. We'll do most of the work for you by way of an optional "login helper", which is used throughout this tutorial.
 
 ## <a id="the-user-login-flow"></a>The User Login Flow
 
 Your apps will need to prompt users to log in to Flux. Our tutorial will begin as an app with just a simple login button. When the button is pressed, a browser window will open and take your user to https://flux.io to enter their Flux username and password (or proceed as a previously authenticated user of Flux).
 
-When a user first loads your app, they’ll be asked to authorize access to Flux on their behalf. Once your app is authorized by your user, they’ll be redirected to a URL of your liking -- typically the same page that originally initiated login.
+When a user first loads your app, they'll be asked to authorize access to Flux on their behalf. Once your app is authorized by your user, they'll be redirected to a URL of your liking - typically the same page that originally initiated login.
 
 ## <a id="implementing-login"></a>Implementing Login
 
@@ -30,7 +30,7 @@ const config = {
 }
 ```
 
-You’ll need to set flux_client_id to the client ID you created for your app in [Before You Begin](#bookmark=id.yq0dw854u2un). For now, the config above assumes you will want to develop on localhost port 8080. If you’re using a different host or port, you’ll need to add it to the list of valid "post-authorization" URLs for your app (using the [Flux App Manager](https://flux.io/developer/apps)).
+You'll need to set flux_client_id to the client ID you created for your app in [Before You Begin](#bookmark=id.yq0dw854u2un). For now, the config above assumes you will want to develop on localhost port 8080. If you're using a different host or port, you'll need to add it to the list of valid "post-authorization" URLs for your app (using the [Flux App Manager](https://flux.io/developer/apps)).
 
 Now, add the following to a new file, "index.html":
 
@@ -68,14 +68,14 @@ Now, add the following to a new file, "index.html":
 Right now this is just HTML that exposes a login button for the user to click. We need to add some logic to bring this to life. First we need to create an instance of the Flux SDK and helper libraries for login. Copy the following code into a file "js/helpers.js":
 
 ```js
-// instantiate the Flux SDK with your app’d client id
+// instantiate the Flux SDK with your app'd client id
 var sdk = new FluxSdk(config.flux_client_id, { redirectUri: config.url, fluxUrl: config.flux_url })
 var helpers = new FluxHelpers(sdk)
 ```
 
-You’ll notice FluxSdk is instantiated using values from our config object, and FluxHelpers is created using an instance of the sdk. This separation makes it possible to use the SDK without helpers, in case you want more control over the login implementation. However, that is an advanced topic that will not be covered by this tutorial.
+You'll notice FluxSdk is instantiated using values from our config object, and FluxHelpers is created using an instance of the sdk. This separation makes it possible to use the SDK without helpers, in case you want more control over the login implementation. However, that is an advanced topic that will not be covered by this tutorial.
 
-Over the course of this tutorial, we’ll try to keep the logic for accessing Flux inside of helpers.js. The app’s controller logic (code that controls the user interface) will be in a separate file "js/index.js". Copy the following code into js/index.js:
+Over the course of this tutorial, we'll try to keep the logic for accessing Flux inside of helpers.js. The app's controller logic (code that controls the user interface) will be in a separate file "js/index.js". Copy the following code into js/index.js:
 
 ```js
 /**
@@ -123,7 +123,7 @@ window.onload = init
 
 The init function is triggered when the page loads, and immediately checks to see if the user has logged in (using the login helper). If the user has not logged in with Flux, the "login" div is revealed via showLogin and an event handler is added to let us know when the login button is clicked. Upon clicking the login button, your user will be taken to Flux to authenticate and authorize access to your app.
 
-You’re ready to run your app! For the purposes of this tutorial, we’ll use a simple command line server for Node called "http-server". However, you should feel free to run whatever you’re comfortable with. Assuming you have Node installed, use npm to install the server:
+You're ready to run your app! For the purposes of this tutorial, we'll use a simple command line server for Node called "http-server". However, you should feel free to run whatever you're comfortable with. Assuming you have Node installed, use npm to install the server:
 
 ```
 $ npm install http-server -g
@@ -141,7 +141,7 @@ Open a browser and navigate to [http://localhost:8080](http://localhost:8080). Y
 
 ## <a id="logging-out-of-flux"></a>Logging Out of Flux
 
-"You’re logged in!" -- that alert gets old pretty quickly. Let’s take it out, and replace it with a logout button. Add the following code below the login div in index.html:
+"You're logged in!" - that alert gets old pretty quickly. Let's take it out, and replace it with a logout button. Add the following code below the login div in index.html:
 
 ```html
 <!-- main container -->

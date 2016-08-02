@@ -6,9 +6,9 @@
 
 &nbsp;
 
-So much goodness -- but you still haven’t seen the truly compelling case for using the Flux SDK. When a cell value is written to by another application, your app can receive notifications and respond accordingly. For example, a user working in SketchUp could write a cell value using the Flux plugin, and immediately trigger a change in your app (assuming you let it).
+So much goodness - but you still haven't seen the truly compelling case for using the Flux SDK. When a cell value is written to by another application, your app can receive notifications and respond accordingly. For example, a user working in SketchUp could write a cell value using the Flux plugin, and immediately trigger a change in your app (assuming you let it).
 
-In this chapter, we’re going to:
+In this chapter, we're going to:
 
 * Add the ability to detect changes to a project/data table (outside of your app)
 
@@ -28,9 +28,9 @@ There are many types of changes that can occur at the project/data table level. 
 
 * CELL_CLIENT_METADATA_MODIFIED: Metadata for a specific cell, like timestamp, label or description was modified
 
-Again, types of notification types may change over time. It’s important to anticipate that in the code you write.
+Again, types of notification types may change over time. It's important to anticipate that in the code you write.
 
-To start things off, let’s add a new section to index.html at the bottom of the right column. This will create a textarea element that will be used like a console to print out notifications as they are received:
+To start things off, let's add a new section to index.html at the bottom of the right column. This will create a textarea element that will be used like a console to print out notifications as they are received:
 
 ```html
 <!-- right column -->
@@ -53,7 +53,7 @@ To start things off, let’s add a new section to index.html at the bottom of th
 </div>
 ```
 
-Now we’re going to add a helper function to helpers.js called createWebSocket. This will create a [WebSocket](https://en.wikipedia.org/wiki/WebSocket) that holds a persistent connection with Flux, so information can flow bidirectionally as needed. More specifically, Flux servers will send messages to your app through the WebSocket whenever something interesting happens.
+Now we're going to add a helper function to helpers.js called createWebSocket. This will create a [WebSocket](https://en.wikipedia.org/wiki/WebSocket) that holds a persistent connection with Flux, so information can flow bidirectionally as needed. More specifically, Flux servers will send messages to your app through the WebSocket whenever something interesting happens.
 
 ```js
 /**
@@ -78,7 +78,7 @@ function createWebSocket(project, notificationHandler){
 }
 ```
 
-Last, we need to create the WebSocket whenever the selected project changes. We’ll do this by modifying the change event handler in the fetchProjects function within index.js:
+Last, we need to create the WebSocket whenever the selected project changes. We'll do this by modifying the change event handler in the fetchProjects function within index.js:
 
 ```js
 function fetchProjects() {
@@ -118,7 +118,7 @@ function fetchProjects() {
 }
 ```
 
-The code above introduces a notificationHandler function that will be called whenever the WebSocket receives a message from Flux. For now, the handler will simply print the message type and relevant cell’s label to the app’s console. Refresh your browser window and select a project:
+The code above introduces a notificationHandler function that will be called whenever the WebSocket receives a message from Flux. For now, the handler will simply print the message type and relevant cell's label to the app's console. Refresh your browser window and select a project:
 
 ![image alt text](image_15.png)
 
@@ -126,13 +126,13 @@ Change the value of the sider for "Cube Opacity" and you should see messages pri
 
 ![image alt text](image_16.png)
 
-Also, notice that creating or deleting a cell on Flux (for the selected project) will also print a message in your console. You’ve just made your app responsive to the outside world!
+Also, notice that creating or deleting a cell on Flux (for the selected project) will also print a message in your console. You've just made your app responsive to the outside world!
 
 ## <a id="applying-changes"></a>Applying Changes
 
 The console is useful for you as a developer. You can see what is changing, and when. However, your users will probably expect your app to do something more relevant.
 
-As an example, we’re going to re-render the viewport when the CELL_MODIFIED notification is received. This is simple, since it requires only that we add a check inside of our notificationHandler function:
+As an example, we're going to re-render the viewport when the CELL_MODIFIED notification is received. This is simple, since it requires only that we add a check inside of our notificationHandler function:
 
 ```js
 var notificationHandler = function(msg) {
@@ -147,13 +147,13 @@ var notificationHandler = function(msg) {
 }
 ```
 
-This code block will ignore anything that isn’t related to a cell modification. Also, it will check to make sure the notification is for the same cell that is currently selected in the "From Flux" view by comparing cell ids.
+This code block will ignore anything that isn't related to a cell modification. Also, it will check to make sure the notification is for the same cell that is currently selected in the "From Flux" view by comparing cell ids.
 
 The SDK Tutorial project applies some server side magic with Flux, by assigning values written by your app slider to geometry. It will use the radius and color values set by the slider to dynamically create new geometry in a cell named "Sphere".
 
 ![image alt text](image_17.png)
 
-Select "Sphere" in your app’s viewport. When you change the color or radius cell values with your slider, the server based flow in your project will execute and generate a new sphere. Your app will refresh its viewport, and display the updated sphere every time it re-generates!
+Select "Sphere" in your app's viewport. When you change the color or radius cell values with your slider, the server based flow in your project will execute and generate a new sphere. Your app will refresh its viewport, and display the updated sphere every time it re-generates!
 
 ![image alt text](image_18.gif)
 

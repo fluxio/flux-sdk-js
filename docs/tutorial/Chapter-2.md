@@ -48,13 +48,13 @@ We also need to create a placeholder for the viewport in our index.html, just be
 </div>
 ```
 
-Let’s declare a variable for our viewport at the very top of index.js before anything else:
+Let's declare a variable for our viewport at the very top of index.js before anything else:
 
 ```js
 var viewport
 ```
 
-Also inside of index.js, add a new function named initViewport. The initViewport function instantiates the viewport, passing it an element it can use to append its own content -- in our case, the div we just added to index.html.
+Also inside of index.js, add a new function named initViewport. The initViewport function instantiates the viewport, passing it an element it can use to append its own content - in our case, the div we just added to index.html.
 
 ```js
 /**
@@ -95,7 +95,7 @@ Refresh the browser, and you should see a screen similar to the following:
 
 ## <a id="viewing-3d-data-in-the-viewport"></a>Viewing 3D Data in the Viewport
 
-The viewport we just added is empty, and it needs some data to render. For now, let’s keep things simple by pointing it to a static blob of JSON that represents a solid box. Add the following  code to a new file "js/box.js", but don’t worry much about what it means for now:
+The viewport we just added is empty, and it needs some data to render. For now, let's keep things simple by pointing it to a static blob of JSON that represents a solid box. Add the following  code to a new file "js/box.js", but don't worry much about what it means for now:
 
 ```js
 var box_data = [
@@ -130,7 +130,7 @@ Add a new script tag for box.js below the stylesheet reference in index.html:
 ...
 ```
 
-Now, set the viewport’s geometry to the variable we declared in box.js as "box_data":
+Now, set the viewport's geometry to the variable we declared in box.js as "box_data":
 
 ```js
 function init() {
@@ -151,7 +151,7 @@ Refresh the browser, and you should see something similar to the following:
 
 ## <a id="customizing-the-viewport"></a>Customizing the Viewport
 
-Eww -- that grey. We’re going to make some simple adjustments to the default viewport configuration. You can find more advanced examples in the [viewport ](https://github.com/fluxio/flux-viewport/tree/master/demo)[documentation](https://github.com/fluxio/flux-viewport/tree/master/demo).
+Eww - that grey. We're going to make some simple adjustments to the default viewport configuration. You can find more advanced examples in the [viewport ](https://github.com/fluxio/flux-viewport/tree/master/demo)[documentation](https://github.com/fluxio/flux-viewport/tree/master/demo).
 
 Update the initViewport function we created, by setting the clear (unrendered) area to white:
 
