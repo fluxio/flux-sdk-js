@@ -15,7 +15,7 @@ In particular, the following are breaking changes:
 [`exchangeCredentials`](./api/FluxSdk.md#exchangecredentials). You are now
 responsible for storing credentials yourself.
   * Please see the
-  [Implicit Flow guide](./authentication-authorization/ImplicitFlow.md) for more
+  [Implicit Flow guide](./advanced/authentication-authorization/ImplicitFlow.md) for more
   details on how to set this up
 * `User.getwhoami` is now [`User.fetchProfile`](./api/User.md#fetchprofile)
 * `Datatable` has been renamed to [`DataTable`](./api/DataTable.md). Similarly
@@ -37,9 +37,8 @@ to [`Project.getDataTable`](./api/Project.md#getdatatable)
   [`DataTable.updateCell`](./api/DataTable.md#updatecell)
 * Web socket handling has been changed, so that accessing a data table no longer
 automatically opens a web socket. Please see
-[`DataTable.openWebSocket`](./api/DataTable.md#openwebsocket),
-[`DataTable.addWebSocketHandler`](./api/DataTable.md#addwebsockethandler), and
-the [Web Socket guide](./advanced/WebSockets.md) for more details.
+[`DataTable.openWebSocket`](./api/DataTable.md#openwebsocket) and
+[`DataTable.addWebSocketHandler`](./api/DataTable.md#addwebsockethandler) for more details.
 
 Note that there may be additional breaking changes.
 

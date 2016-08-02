@@ -1,9 +1,12 @@
 {
-  "gitbook": "2.5.x",
+  "gitbook": "3.2.x",
   "title": "Flux JavaScript SDK",
   "description": "Documentation for the Flux JS SDK",
   "author": "Flux Factory, Inc.",
-  "structure": {
-    "summary": "docs/README.md"
+  "root": "docs",
+  "pluginsConfig": {
+    "theme-default": {
+      "showLevel": true
+    }
   }
 }
