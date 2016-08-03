@@ -23,7 +23,7 @@ TBD
 
 ## <a id="accessing-projects"></a>Accessing Projects
 
-We're going to add some code that displays projects for the logged in user as a dropdown list. Inside of index.html, insert a new div containing a select element just before the logout div (as shown below):
+We're going to add some code that displays projects for the logged in user as a dropdown list. Inside of `index.html`, insert a new div containing a select element just before the logout div (as shown below):
 
 {% label %}index.html{% endlabel %}
 ```html

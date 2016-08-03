@@ -208,7 +208,7 @@ Go ahead and type the name of your cell, then submit your request using the "CRE
 You'll need to be careful when attempting to write values to a cell. There are two conditions in which a cell may be read-only:
 
 1. The cell exists within a project that your user is only allowed to read from.
-1. The cell is marked as "protected".
+2. The cell is marked as "protected".
 
 When your user attempts writing to write values to a cell without permission, the SDK will throw an exception. At the very least, you'll want to anticipate an exception and handle it accordingly.
 

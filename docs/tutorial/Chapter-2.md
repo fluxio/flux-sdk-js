@@ -24,7 +24,7 @@ In order to create a viewport, we will need to include a reference to the viewpo
 ...
 ```
 
-We also need to create a placeholder for the viewport in our index.html, just below the header div:
+We also need to create a placeholder for the viewport in our `index.html`, just below the header div:
 
 {% label %}index.html{% endlabel %}
 ```html

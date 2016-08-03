@@ -62,7 +62,7 @@ It's also very simple to create examples of primitives by using the data inspect
 
 The unofficial Flux mantra has been, "Data, not files." The design of primitives reflects this belief - that a single model can be decomposed into smaller, reusable parts. 
 
-While it's may be tempting to jam a base 64 encoded .dxf into a cell and route it through Flux, it sort of misses the point. Interoperability is more than just speaking a common language. When collaborating, you will greatly benefit by breaking your design down into discrete problems. You'll see the solution to these problems become reusable in many different contexts.
+While it may be tempting to jam a base 64 encoded .dxf into a cell and route it through Flux, it sort of misses the point. Interoperability is more than just speaking a common language. When collaborating, you will greatly benefit by breaking your design down into discrete problems. You'll see the solution to these problems become reusable in many different contexts.
 
 ## <a id="collections"></a>Collections
 
@@ -94,7 +94,7 @@ And, keep in mind JSON arrays are not type enforced. The same array may contain 
 Your app may require detail beyond what is communicated by a Flux primitive. Before you create an entirely new type, consider that there are two ways you can extend Flux primitives beyond their prescribed form:
 
 1. Add your own custom attributes under a designated "attributes" member
-1. Embed Flux primitives within your own custom structures
+2. Embed Flux primitives within your own custom structures
 
 ## <a id="custom-attributes"></a>Custom Attributes
 

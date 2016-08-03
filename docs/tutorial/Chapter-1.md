@@ -8,7 +8,7 @@
 
 ## <a id="openid-connect"></a>OpenID Connect
 
-Flux requires all apps to use [OpenID Connect](http://openid.net/connect/) for authentication. OpenID Connect is an established, secure way for 3rd party developers like yourself to access data on behalf of a Flux user.
+Flux requires all apps to use [OpenID Connect](http://openid.net/connect/) for authentication (even the ones we build). OpenID Connect is an established, secure way for 3rd party developers like yourself to access data on behalf of a Flux user.
 
 Before you can begin working with the Flux API, you will need to have users authenticate with Flux and grant you access to their data in the form of a token. Fortunately, you won't need a deep understanding of OpenID Connect. We'll do most of the work for you by way of an optional "login helper", which is used throughout this tutorial.
 
@@ -20,7 +20,7 @@ When a user first loads your app, they'll be asked to authorize access to Flux o
 
 ## <a id="implementing-login"></a>Implementing Login
 
-Create a new file with the path `/js/config.js` containing the contents below. This will declare a constant named `config` that can be used throughout your app:
+Create a new file with the path `js/config.js` containing the contents below. This will declare a constant named `config` that can be used throughout your app:
 
 {% label %}js/config.js{% endlabel %}
 ```js
@@ -33,7 +33,7 @@ const config = {
 
 You'll need to set `flux_client_id` to the client ID you created for your app in [Before You Begin](../README.md#before-you-begin). For now, the config above assumes you will want to develop on localhost port 8080. If you're using a different host or port, you'll need to add it to the list of valid "post-authorization" URLs for your app (using the [Flux App Manager](https://flux.io/developer/apps)).
 
-Now, add the following to a new file, `index.html`:
+Now, add the following to a new file, `js/index.html`:
 
 {% label %}index.html{% endlabel %}
 ```html
