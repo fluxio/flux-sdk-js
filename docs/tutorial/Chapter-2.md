@@ -135,7 +135,7 @@ Add a new script tag for `js/box.js` below the stylesheet reference in `index.ht
 {% label %}index.html{% endlabel %}
 ```html
 ...
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/flux-labs/flux-seed/master/src/css/style.css">
 <script src="js/box.js"></script>
 <!-- nice font -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
