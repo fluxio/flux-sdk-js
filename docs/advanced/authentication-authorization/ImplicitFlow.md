@@ -8,7 +8,7 @@
 ### <a id="step-1"></a>1. Initialize the Flux SDK
 
 Initialize an instance of the Flux SDK using its
-[constructor](../api/FluxSdk.md#constructor). You must provide the `clientId`
+[constructor](../../api/FluxSdk.md#constructor). You must provide the `clientId`
 that you received when you registered your app with Flux.
 
 **IMPORTANT:** Do not provide your app's `clientSecret`! Secrets should never be
@@ -89,7 +89,7 @@ or a package from npm.
 Next, send the user to Flux to give your app consent to access their information.
 
 We provide the helper method
-[`getAuthorizeUrl`](../api/FluxSdk.md#getauthorizeurl) to facilitate this
+[`getAuthorizeUrl`](../../api/FluxSdk.md#getauthorizeurl) to facilitate this
 process. This method requires the state and nonce values generated in the
 previous step as well as an HTTP endpoint (`redirectUri`) that is configured to
 handle Flux's response. If you supplied a `redirectUri` when you initialized the
@@ -110,14 +110,14 @@ if (!credentials) {
 ### <a id="step-5"></a>5. Retrieve an access token and user information
 
 From the endpoint specified as the `redirectUri` by the previous step, use the
-helper method [`exchangeCredentials`](../api/FluxSdk.md#exchangecredentials) to
+helper method [`exchangeCredentials`](../../api/FluxSdk.md#exchangecredentials) to
 exchange the data returned by Flux from the previous step for an access token
 and user information. You must again provide the state and nonce from
 [step 2](./ServerFlow.md#step-2). If you specified a `redirectUri` in
 [step 3](./ServerFlow.md#step-3), you must specify it again here.
 
 In return, you should receive a promise that resolves to the user's
-[credentials](../Glossary.md#credentials), including the access token, their
+credentials](../../Glossary.md#credentials), including the access token, their
 basic information, their refresh token, and when the token expires. Most parts
 of the returned credentials are required by subsequent requests and should be
 stored, e.g., in the user's session.

@@ -21,6 +21,9 @@
   "license": "MIT",
   "devDependencies": {
     "gitbook-cli": "^2.1.2",
+    "gitbook-plugin-anchors": "^0.7.1",
+    "gitbook-plugin-back-to-top-button": "^0.1.2",
+    "gitbook-plugin-codeblock-label": "^1.0.1",
     "rimraf": "^2.5.2"
   }
 }

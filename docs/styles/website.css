@@ -1,0 +1,12 @@
+/* We need the extra specificity to override the default style */
+.markdown-section .doc-img,
+.markdown-section .doc-img-bordered {
+  max-width: 80%;
+  display: block;
+  margin: 0 auto;
+}
+
+.markdown-section .doc-img-bordered {
+  /* Same colour as the GitBook navigation arrows */
+  border: 3px solid #ccc;
+}

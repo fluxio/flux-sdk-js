@@ -18,5 +18,5 @@ more information on the details.
 
 The JavaScript SDK provides helper methods to simplify the
 authentication/authorization process:
-[#getAuthorizationUrl](../api/FluxSdk.md#getauthorizeurl) and
-[#exchangeCredentials](../api/FluxSdk.md#exchangecredentials).
+[#getAuthorizationUrl](../../api/FluxSdk.md#getauthorizeurl) and
+[#exchangeCredentials](../../api/FluxSdk.md#exchangecredentials).

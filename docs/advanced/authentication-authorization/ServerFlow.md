@@ -16,7 +16,7 @@ All snippets below use [Express](https://expressjs.com).
 
 ### <a id="step-1"></a>1. Initialize the Flux SDK
 
-Initialize an instance of the Flux SDK using its [constructor](../api/FluxSdk.md#constructor). You must provide the `clientId` and `clientSecret` that you received when you signed up as a Flux developer.
+Initialize an instance of the Flux SDK using its [constructor](../../api/FluxSdk.md#constructor). You must provide the `clientId` and `clientSecret` that you received when you signed up as a Flux developer.
 
 You may also provide a `redirectUri` here, which is required in subsequent steps. It can be provided or overridden later if need be, but in most cases, it is enough to provide it at this stage.
 
@@ -54,7 +54,7 @@ app.use('/auth', function(req, res, next) {
 
 Next, send the user to Flux to give your app consent to access their information.
 
-We provide the helper method [`getAuthorizeUrl`](../api/FluxSdk.md#getauthorizeurl) to facilitate this process. This method requires the state and nonce values generated in the previous step as well as an HTTP endpoint (`redirectUri`) that is configured to handle Flux's response. If you supplied a `redirectUri` when you initialized the SDK and don't need to override it, you do not need to provide it again.
+We provide the helper method [`getAuthorizeUrl`](../../api/FluxSdk.md#getauthorizeurl) to facilitate this process. This method requires the state and nonce values generated in the previous step as well as an HTTP endpoint (`redirectUri`) that is configured to handle Flux's response. If you supplied a `redirectUri` when you initialized the SDK and don't need to override it, you do not need to provide it again.
 
 ```js
 app.use('/auth', function(req, res, next) {
@@ -66,9 +66,9 @@ app.use('/auth', function(req, res, next) {
 
 ### <a id="step-4"></a>4. Retrieve an access token and user information
 
-From the endpoint specified as the `redirectUri` by the previous step, use the helper method [`exchangeCredentials`](../api/FluxSdk.md#exchangecredentials) to exchange the data returned by Flux from the previous step for an access token and user information. You must again provide the state and nonce from [step 2](./ServerFlow.md#step-2) as well as the `code`, `state`, and `flux_token` from the response's query parameters. If you specified a `redirectUri` in [step 3](./ServerFlow.md#step-3), you must specify it again here.
+From the endpoint specified as the `redirectUri` by the previous step, use the helper method [`exchangeCredentials`](../../api/FluxSdk.md#exchangecredentials) to exchange the data returned by Flux from the previous step for an access token and user information. You must again provide the state and nonce from [step 2](./ServerFlow.md#step-2) as well as the `code`, `state`, and `flux_token` from the response's query parameters. If you specified a `redirectUri` in [step 3](./ServerFlow.md#step-3), you must specify it again here.
 
-In return, you should receive a promise that resolves to the user's [credentials](../Glossary.md#credentials), including the access token, their basic information, their refresh token, and when the token expires. Most parts of the returned credentials are required by subsequent requests and should be stored, e.g., in the user's session.
+In return, you should receive a promise that resolves to the user's [credentials](../../Glossary.md#credentials), including the access token, their basic information, their refresh token, and when the token expires. Most parts of the returned credentials are required by subsequent requests and should be stored, e.g., in the user's session.
 
 Note that `exchangeCredentials` handles details such as confirming that the response contains the correct state, nonce, and an appropriately signed ID token for you. We will throw an error if we encounter anything suspicious. If you have any questions or concerns about this, please let us know!
 
