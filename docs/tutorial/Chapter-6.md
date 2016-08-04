@@ -118,11 +118,21 @@ function fetchProjects() {
 
 The code above introduces a `notificationHandler` function that will be called whenever the WebSocket receives a message from Flux. For now, the handler will simply print the message type and relevant cell's label to the app's console. Refresh your browser window and select a project:
 
-![image alt text](image_15.png)
+<img
+  src="./image_15.png"
+  alt="Chapter 6.1: Listening for Changes"
+  title="Chapter 6.1: Listening for Changes"
+  class="doc-img-bordered"
+/>
 
 Change the value of the sider for "Cube Opacity" and you should see messages printed in the app console:
 
-![image alt text](image_16.png)
+<img
+  src="./image_16.png"
+  alt="Chapter 6.2: Listening for Changes"
+  title="Chapter 6.2: Listening for Changes"
+  class="doc-img-bordered"
+/>
 
 Also, notice that creating or deleting a cell on Flux (for the selected project) will also print a message in your console. You've just made your app responsive to the outside world!
 
@@ -150,11 +160,21 @@ This code block will ignore anything that isn't related to a cell modification. 
 
 The SDK Tutorial project applies some server side magic with Flux, by assigning values written by your app slider to geometry. It will use the radius and color values set by the slider to dynamically create new geometry in a cell named "Sphere".
 
-![image alt text](image_17.png)
+<img
+  src="./image_17.png"
+  alt="Chapter 6.3: Applying Changes"
+  title="Chapter 6.3: Applying Changes"
+  class="doc-img-bordered"
+/>
 
 Select "Sphere" in your app's viewport. When you change the color or radius cell values with your slider, the server based flow in your project will execute and generate a new sphere. Your app will refresh its viewport, and display the updated sphere every time it re-generates!
 
-![image alt text](image_18.gif)
+<img
+  src="./image_18.gif"
+  alt="Chapter 6.4: Applying Changes"
+  title="Chapter 6.4: Applying Changes"
+  class="doc-img"
+/>
 
 ## <a id="download-chapter-6-source-code"></a>Download Chapter 6 Source Code
 

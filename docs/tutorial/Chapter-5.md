@@ -30,7 +30,12 @@ We're going to add a new section to the app that allows your user to write value
 
 When you refresh your browser, you'll see that a slider and a select list (with cells!) has been added:
 
-![image alt text](image_10.png)
+<img
+  src="./image_10.png"
+  alt="Figure 5.1: Writing Values to a Cell"
+  title="Figure 5.1: Writing Values to a Cell"
+  class="doc-img-bordered"
+/>
 
 Now we can add some code to write to "Slider Value" cell (or any other cell you select). First, add a new function `updateCellValue` to your `js/helpers.js` file. This will do the work of actually sending the value to Flux:
 
@@ -97,11 +102,21 @@ This adds an event handler to the list that chooses a cell. The handler is calle
 
 Refresh your browser, and choose the "Slider Value" cell from the list of options. Then, change the slider value:
 
-![image alt text](image_11.png)
+<img
+  src="./image_11.png"
+  alt="Figure 5.2: Writing Values to a Cell"
+  title="Figure 5.2: Writing Values to a Cell"
+  class="doc=img-bordered"
+/>
 
 When you log in to flux.io and inspect the value of "Slider Value" (double click on it), you'll notice that the value updates as you change it in your app:
 
-![image alt text](image_12.png)
+<img
+  src="./image_12.png"
+  alt="Figure 5.3: Writing Values to a Cell"
+  title="Figure 5.3: Writing Values to a Cell"
+  class="doc=img"
+/>
 
 ## <a id="creating-cells"></a>Creating Cells
 
@@ -197,11 +212,21 @@ function init() {
 
 Refresh your browser, and you should see the input field and button:
 
-![image alt text](image_13.png)
+<img
+  src="./image_13.png"
+  alt="Figure 5.4: Creating Cells"
+  title="Figure 5.4: Creating Cells"
+  class="doc-img-bordered"
+/>
 
 Go ahead and type the name of your cell, then submit your request using the "CREATE KEY" button. It might seem like nothing happened, but you should see that the “key” was created when you log into [https://flux.io](https://flux.io) and view the data table for your project.
 
-![image alt text](image_14.png)
+<img
+  src="./image_14.png"
+  alt="Figure 5.5: Creating Cells"
+  title="Figure 5.5: Creating Cells"
+  class="doc-img-bordered"
+/>
 
 ## <a id="write-permissions"></a>Write Permissions
 

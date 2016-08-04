@@ -56,7 +56,12 @@ There are many different Flux primitives. You'll expect, and recognize most of t
 
 It's also very simple to create examples of primitives by using the data inspector on https://flux.io. When you view data, the bottom left corner of the data inspector provides a menu of alternative views. The eye in the bottom left corner exposes a menu. The "Raw View" menu item changes the display to show the raw JSON value that will help you understand how geometry (or other types) are constructed.
 
-![image alt text](image_8.png)
+<img
+  src="./image_8.png"
+  alt="Figure 4.1: Types of Flux Primitives"
+  title="Figure 4.1: Types of Flux Primitives"
+  class="doc-img"
+/>
 
 ## <a id="data-not-files"></a>"Data, Not Files"
 
@@ -212,7 +217,12 @@ function render(data) {
 
 Refresh your browser and select one of the cells holding a non-geometric type (like "Color Slider"). You should see it respond by swapping the viewport with a readout of the cell value:
 
-![image alt text](image_9.gif)
+<img
+  src="./image_9.gif"
+  alt="Figure 4.2: Handling Non-Geometric Primitives"
+  title="Figure 4.2: Handling Non-Geometric Primitives"
+  class="doc-img-bordered"
+/>
 
 ## <a id="download-chapter-4-source-code"></a>Download Chapter 4 Source Code
 

@@ -96,7 +96,12 @@ function init() {
 
 Refresh the browser, and you should see a screen similar to the following:
 
-![image alt text](image_2.png)
+<img
+  src="./image_2.png"
+  alt="Figure 2.1: Instantiating the Viewport"
+  title="Figure 2.1: Instantiating the Viewport"
+  class="doc-img-bordered"
+/>
 
 ## <a id="viewing-3d-data-in-the-viewport"></a>Viewing 3D Data in the Viewport
 
@@ -155,7 +160,12 @@ function init() {
 
 Refresh the browser, and you should see something similar to the following:
 
-![image alt text](image_3.png)
+<img
+  src="./image_3.png"
+  alt="Figure 2.2: Viewing 3D Data in the Viewport"
+  title="Figure 2.2: Viewing 3D Data in the Viewport"
+  class="doc-img-bordered"
+/>
 
 ## <a id="customizing-the-viewport"></a>Customizing the Viewport
 
@@ -177,7 +187,12 @@ function initViewport() {
 
 Refresh your browser, and you should see something similar to the following:
 
-![image alt text](image_4.png)
+<img
+  src="./image_4.png"
+  alt="Figure 2.3: Customizing the Viewport"
+  title="Figure 2.3: Customizing the Viewport"
+  class="doc-img-bordered"
+/>
 
 ## <a id="download-chapter-2-source-code"></a>Download Chapter 2 Source Code
 

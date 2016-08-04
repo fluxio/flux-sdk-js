@@ -107,7 +107,12 @@ function init() {
 
 Refresh the page, and you should see your new drop down list populated with all projects for the currently logged in user:
 
-![image alt text](image_5.png)
+<img
+  src="./image_5.png"
+  alt="Figure 3.1: Accessing Projects"
+  title="Figure 3.1: Accessing Projects"
+  class="doc-img-bordered"
+/>
 
 ## <a id="the-project-data-table"></a>The Project Data Table
 
@@ -218,7 +223,12 @@ function fetchProjects() {
 
 Refresh your browser, and you should see a drop down list below the viewport. The list of cells should update each time you change the selected project:
 
-![image alt text](image_6.png)
+<img
+  src="./image_6.png"
+  alt="Figure 3.2: The Project Data Table"
+  title="Figure 3.2: The Project Data Table"
+  class="doc-img-bordered"
+/>
 
 ## <a id="reading-a-cell-value"></a>Reading a Cell Value
 
@@ -326,7 +336,12 @@ function init() {
 
 And, there you go - refresh your browser and verify that our cube is loading again. Only this time, the JSON is coming from Flux instead of a static file. Go ahead and try it out by selecting a different cell named "sphere" in the same “SDK Tutorial” project:
 
-![image alt text](image_7.png)
+<img
+  src="./image_7.png"
+  alt="Figure 3.3: Reading a Cell Value"
+  title="Figure 3.3: Reading a Cell Value"
+  class="doc-img-bordered"
+/>
 
 That was a bit of work, but consider what you now have access to. Your users can now view 3D models in a browser, shared from any other app using Flux. That includes professional-grade tools like 3ds Max, SketchUp, Revit, AutoCAD, Grasshopper and Dynamo.
 

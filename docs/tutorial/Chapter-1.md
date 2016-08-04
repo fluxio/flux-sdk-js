@@ -141,7 +141,12 @@ $ http-server
 
 Open a browser and navigate to [http://localhost:8080](http://localhost:8080). You should see a screen similar to the following:
 
-![image alt text](image_0.png)
+<img
+  src="./image_0.png"
+  alt="Figure 1.1: Implementing Login"
+  title="Figure 1.1: Implementing Login"
+  class="doc-img"
+/> 
 
 ## <a id="logging-out-of-flux"></a>Logging Out of Flux
 
@@ -192,7 +197,12 @@ if (isLoggedIn) {
 
 Refresh your browser, and you should see something similar to the screenshot below. Press the logout button, and see what happens.
 
-![image alt text](image_1.png)
+<img
+  src="./image_1.png"
+  alt="Figure 1.2: Logging Out of Flux"
+  title="Figure 1.2: Logging Out of Flux"
+  class="doc-img-bordered"
+/>
 
 ## <a id="download-chapter-1-source-code"></a>Download Chapter 1 Source Code
 
