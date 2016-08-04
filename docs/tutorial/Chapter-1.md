@@ -43,7 +43,7 @@ Now, add the following to a new file, `js/index.html`:
     <title>Flux: Seed</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/flux-labs/flux-seed/master/src/css/style.css">
     <!-- nice font -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <!-- who doesn't love jQuery... -->
