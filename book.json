@@ -12,6 +12,9 @@
   "pluginsConfig": {
     "theme-default": {
       "showLevel": true
+    },
+    "fontsettings": {
+      "theme": "night"
     }
   },
   "styles": {

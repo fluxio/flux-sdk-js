@@ -10,7 +10,7 @@ Welcome Flux developer! The [Flux SDK](https://github.com/fluxio/flux-sdk-js) co
 
 By connecting to Flux, your app will have direct access to projects and data created by Flux users (once they've logged in with their Flux credentials and authorized your app). This tutorial is designed to teach you how to do exactly that. We're going to start simple, and work up to a fully-functional app chapter by chapter. By the end of the tutorial, you'll have a clear understanding of how to leverage the most powerful features of Flux.
 
-## <a id="before-you-begin"></a>Before You Begin
+## Before You Begin
 
 To get started, you'll need to register your own Flux account, and create an app in the [App Manager](https://flux.io/developer/apps). 
 
@@ -18,11 +18,11 @@ Each app you create will be assigned a unique client ID and secret. The client I
 
 You can use your client ID with the tutorial code, or skip ahead to writing your own code by grabbing the SDK from our [GitHub repo](https://github.com/fluxio/flux-sdk-js).
 
-## <a id="software-license"></a>Software License
+## Software License
 
 You own your code. You're also welcome to redistribute and modify Flux SDK libraries in your own apps under the MIT software license, which is further explained in [LICENSE.md](https://github.com/fluxio/flux-sdk-js/blob/master/LICENSE.md).
 
-## <a id="troubleshooting-and-help"></a>Troubleshooting and Help
+## Troubleshooting and Help
 
 As you become more familiar with the sample code, have a look at [API Reference](./api/README.md) for more in-depth detail.
 
