@@ -19,7 +19,10 @@ Once a user has has logged in and authorized your app, you'll be able to access 
 
 ## <a id="create-an-sdk-tutorial-project"></a>Create An SDK Tutorial Project
 
-TBD
+To help get you started, we've created a Flux template project that you can use throughout this tutorial. Clicking on the link below will create a project named "SDK Tutorial" in your account, with keys and data pre-populated:
+
+> [Create Your SDK Tutorial Project](https://flux.io/template/SDK-Tutorial)
+
 
 ## <a id="accessing-projects"></a>Accessing Projects
 
