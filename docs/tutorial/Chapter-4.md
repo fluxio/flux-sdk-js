@@ -144,7 +144,11 @@ This approach is less preferred because some apps may not know what to do with t
 
 ## <a id="units-of-measure"></a>Units of Measure
 
-[https://community.flux.io/articles/2029/units-of-measure.html](https://community.flux.io/articles/2029/units-of-measure.html)
+Most design tools control units of measure by setting the units of measure for an entire document. As long as all physical quantities of the same dimension are always in the same units, nothing can go wrong when you try to combine them.
+
+Flux's users, who are collaborating with each other across disciplinary and national boundaries,  maintain the same units of measure across all of their tools. Our approach allows each user to operate in their preferred units of measure. We attach unit meta-data to geometric entities when they are sent To Flux from a plugin, or when they are created in the flow using our Geometry blocks. Plugins that support units will automatically convert geometric entities into the correct units when they are imported.
+
+You can learn more about the technique and current extent of our support here: [https://community.flux.io/articles/2029/units-of-measure.html](https://community.flux.io/articles/2029/units-of-measure.html)
 
 ## <a id="handling-non-geometric-primitives"></a>Handling Non-Geometric Primitives
 
