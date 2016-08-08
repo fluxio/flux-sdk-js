@@ -269,24 +269,43 @@ describe('Cell', function() {
     });
 
     describe('#delete', function() {
-      beforeAll(function(done) {
-        this.dataTable.createCell('cell to be deleted')
-          .then(({ transformed }) => {
-            this.deleteCell = this.dataTable.getCell(transformed.id);
-          })
-          .then(done, done.fail);
+      describe('when the cell is unlocked', function() {
+        beforeAll(function(done) {
+          this.dataTable.createCell('cell to be deleted')
+            .then(({ transformed }) => {
+              this.deleteCell = this.dataTable.getCell(transformed.id);
+            })
+            .then(done, done.fail);
+        });
+
+        it('should delete the cell', function(done) {
+          this.deleteCell.delete()
+            .catch(done.fail)
+            .then(this.deleteCell.fetch)
+            .then(done.fail)
+            .catch(err => {
+              expect(err.status).toEqual(404);
+
+              done();
+            });
+        });
       });
 
-      it('should delete the cell', function(done) {
-        this.deleteCell.delete()
-          .catch(done.fail)
-          .then(this.deleteCell.fetch)
-          .then(done.fail)
-          .catch(err => {
-            expect(err.status).toEqual(500);
+      describe('when the cell is locked', function() {
+        beforeAll(function(done) {
+          this.cell.update({ locked: true }).then(done, done.fail);
+        });
 
-            done();
-          });
+        afterAll(function(done) {
+          this.cell.update({ locked: false }).then(done, done.fail);
+        });
+
+        it('should not delete the cell', function() {
+          this.cell.delete()
+            .catch(err => {
+              expect(err.status).toEqual(403);
+            });
+        });
       });
     });
 
