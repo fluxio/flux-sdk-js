@@ -54,7 +54,11 @@ function DataTable(credentials, id) {
 
   function handleMessage(message) {
     const { type, body } = DataTable.serializeMessage(message);
-    handlers[type].forEach(handler => handler(body));
+
+    if (handlers[type]) {
+      handlers[type].forEach(handler => handler(body));
+    }
+
     handlers[DATA_TABLE_ALL].forEach(handler => handler({ type, body }));
   }
 
@@ -89,14 +93,23 @@ function DataTable(credentials, id) {
 
   function addWebSocketHandler(handler, notificationTypes) {
     const types = [].concat(notificationTypes || DATA_TABLE_ALL);
-    types.forEach(type => { handlers[type].push(handler); });
+
+    types.forEach(type => {
+      if (!handlers[type]) {
+        handlers[type] = [];
+      }
+
+      handlers[type].push(handler);
+    });
   }
 
   function removeWebSocketHandler(handler, notificationTypes) {
     const types = notificationTypes ? [].concat(notificationTypes) : notificationTypeKeys;
     types.forEach(type => {
-      const index = handlers[type].indexOf(handler);
-      if (index !== -1) { handlers[type].splice(index, 1); }
+      if (handlers[type]) {
+        const index = handlers[type].indexOf(handler);
+        if (index !== -1) { handlers[type].splice(index, 1); }
+      }
     });
   }
 
