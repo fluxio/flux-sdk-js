@@ -105,7 +105,7 @@ Refresh the browser, and you should see a screen similar to the following:
 
 ## <a id="viewing-3d-data-in-the-viewport"></a>Viewing 3D Data in the Viewport
 
-The viewport we just added is empty, and it needs some data to render. For now, let's keep things simple by pointing it to a static blob of JSON that represents a solid box. Add the following  code to a new file `js/box.js`, but don't worry much about what it means for now:
+The viewport we just added is empty, and it needs some data to render. For now, let's keep things simple by pointing it to a static blob of JSON that represents a solid box. Add the following code to a new file `js/box.js`, but don't worry much about what it means for now. If you are curious you can read about other [geometry primitives](https://community.flux.io/content/kbentry/2579/geometric-primitives.html).
 
 {% label %}js/box.js{% endlabel %}
 ```js
@@ -169,7 +169,7 @@ Refresh the browser, and you should see something similar to the following:
 
 ## <a id="customizing-the-viewport"></a>Customizing the Viewport
 
-Eww - that grey. We're going to make some simple adjustments to the default viewport configuration. You can find more advanced examples in the [viewport ](https://github.com/fluxio/flux-viewport/tree/master/demo)[documentation](https://github.com/fluxio/flux-viewport/tree/master/demo).
+Eww - that grey. We're going to make some simple adjustments to the default viewport configuration. You can find more advanced examples in the [flux-viewport](https://bitbucket.org/vannevartech/flux-viewport/src/master/demo/) repository or read its [API Reference](https://flux-viewport-reference.herokuapp.com/FluxViewport.html).
 
 Update the `initViewport` function we created, by setting the clear (unrendered) area to white:
 
