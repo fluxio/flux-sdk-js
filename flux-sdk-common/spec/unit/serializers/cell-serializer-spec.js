@@ -22,6 +22,7 @@ describe('serializer.cellSerializer', function() {
       expect(serializedCell.authorName).toEqual('USERNAME_100');
       expect(serializedCell.clientId).toEqual('CLIENT_ID_100');
       expect(serializedCell.clientName).toEqual('CLIENT NAME 100');
+      expect(serializedCell.fileName).toEqual('some-file.csv');
     });
 
     describe('when the cell has a value', function() {
