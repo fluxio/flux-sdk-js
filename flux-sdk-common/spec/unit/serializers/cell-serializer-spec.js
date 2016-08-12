@@ -68,6 +68,11 @@ describe('serializer.cellSerializer', function() {
       const serializedResponse = serializeDelete(cellResponse);
 
       expect(serializedResponse.id).toEqual(555);
+      expect(serializedResponse.authorId).toEqual('USER_ID_555');
+      expect(serializedResponse.authorName).toEqual('USERNAME_555');
+      expect(serializedResponse.clientId).toEqual('CLIENT_ID_555');
+      expect(serializedResponse.clientName).toEqual('CLIENT NAME 555');
+      expect(serializedResponse.fileName).toEqual('web');
     });
   });
 
