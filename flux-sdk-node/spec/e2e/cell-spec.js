@@ -104,7 +104,7 @@ describe('Cell', function() {
           });
 
           it('should change only the label', function(done) {
-            // Must use fetch in order to check the value
+            // Must use fetch in order to check the value.
             this.cell.fetch()
               .then(({ transformed }) => {
                 expect(transformed.label).toEqual('new label');
