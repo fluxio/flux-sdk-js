@@ -29,7 +29,7 @@ function cellFactory(id, overrides) {
           ClientName: `CLIENT NAME ${id}`,
           ClientVersion: '',
           AdditionalClientData: {
-            HostProgramMainFile: '',
+            HostProgramMainFile: 'some-file.csv',
             HostProgramVersion: '',
           },
           SDKName: '',

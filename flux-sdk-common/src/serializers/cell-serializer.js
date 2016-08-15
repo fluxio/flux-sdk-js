@@ -4,6 +4,7 @@ function serialize(entity) {
   const lastModification = metadata.Modify || metadata.Create || {};
   const clientInfo = Object(lastModification.ClientInfo);
   const valueKey = entity.value !== undefined ? { value: entity.value } : null;
+  const additionalClientData = Object(clientInfo.AdditionalClientData);
 
   return {
     id: entity.CellId,
@@ -16,6 +17,7 @@ function serialize(entity) {
     authorName: clientInfo.UserName,
     clientId: clientInfo.ClientId,
     clientName: clientInfo.ClientName,
+    fileName: additionalClientData.HostProgramMainFile,
     ...valueKey,
   };
 }

@@ -65,6 +65,10 @@ describe('Cell', function() {
         expect(clientInfo.ClientId).toEqual(this.CLIENT_ID);
         expect(clientInfo.ClientName).toEqual(jasmine.any(String));
 
+        expect(clientInfo.AdditionalClientData).toEqual(jasmine.objectContaining({
+          HostProgramMainFile: jasmine.any(String),
+        }));
+
         expect(cell.value).toEqual([10, 'something']);
       });
 
@@ -73,6 +77,7 @@ describe('Cell', function() {
         const clientMetadata = original.ClientMetadata;
         const lastModification = original.Metadata.Modify;
         const clientInfo = lastModification.ClientInfo;
+        const additionalClientData = clientInfo.AdditionalClientData;
 
         expect(this.transformed.id).toEqual(original.CellId);
         expect(this.transformed.label).toEqual(clientMetadata.Label);
@@ -84,6 +89,7 @@ describe('Cell', function() {
         expect(this.transformed.authorName).toEqual(clientInfo.UserName);
         expect(this.transformed.clientId).toEqual(clientInfo.ClientId);
         expect(this.transformed.clientName).toEqual(clientInfo.ClientName);
+        expect(this.transformed.fileName).toEqual(additionalClientData.HostProgramMainFile);
         expect(this.transformed.value).toEqual(original.value);
       });
     });
