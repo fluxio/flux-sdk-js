@@ -21,8 +21,18 @@ function serialize(entity) {
 }
 
 function serializeDelete(entity) {
+  const metadata = Object(entity.Metadata);
+  const lastModification = metadata.Modify || metadata.Create || {};
+  const clientInfo = Object(lastModification.ClientInfo);
+  const additionalClientData = Object(clientInfo.AdditionalClientData);
+
   return {
     id: entity.CellId,
+    authorId: clientInfo.UserId,
+    authorName: clientInfo.UserName,
+    clientId: clientInfo.ClientId,
+    clientName: clientInfo.ClientName,
+    fileName: additionalClientData.HostProgramMainFile,
   };
 }
 
