@@ -55,8 +55,8 @@ function DataTable(credentials, id) {
   function handleMessage(message) {
     const { type, body } = DataTable.serializeMessage(message);
 
-    // TODO: Somehow notify the application layer that a message has
-    // been dropped if there is no matching handler.
+    // TODO(isobel): Somehow notify the application layer that a message
+    // has been dropped if there is no matching handler.
     if (handlers[type]) {
       handlers[type].forEach(handler => handler(body));
     }
