@@ -2,15 +2,15 @@
 
 # Instructions for publishing the JS SDK to NPM.
 #
-# 1. Run all the tests!!
+# 1. Run all the tests!!!!!
 # 2. Update all references to the version, e.g.:
-#      `grep —exclude-dir=_book —exclude-dir=node_modules -rl <old version> | grep -v .map | grep -v shrink-wrap | grep -v list` to find references
+#      `grep -—exclude-dir=_book -—exclude-dir=node_modules -rl <old version> | grep -v .map | grep -v shrink-wrap | grep -v list` to find references
 # 3. Update CHANGELOG.md to include the new changes
 # 4. Run this script: `./publish.sh`.
 # 5. Add a commit to bump the version.
 # 6. Tag the commit with `v<version #>`.
 # 7. Push the commit and tag:
-#      `git push upstream master && git push upstream master —tags`
+#      `git push upstream master && git push upstream master —-tags`
 #   (assuming fluxio/flux-sdk-js is set as the `upstream` remote).
 #
 # NOTE: If `npm install` fails, try running `npm link flux-sdk-common`
