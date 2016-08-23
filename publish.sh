@@ -41,3 +41,4 @@ case $response in
     echo "You must first update the version!"
     ;;
 esac
+
