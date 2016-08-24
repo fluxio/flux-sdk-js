@@ -12,7 +12,7 @@ By connecting to Flux, your app will have direct access to projects and data cre
 
 ## Before You Begin
 
-To get started, you'll need to register your own Flux account, and create an app in the [App Manager](https://flux.io/developer/apps). 
+To get started, you will need to register your own Flux account, and create an app in the [App Manager](https://flux.io/developer/apps).
 
 Each app you create will be assigned a unique client ID and secret. The client ID is used to identify API requests made by your app. It is important that each app has its own client ID, since your users will be prompted to authorize access to their data. The client secret is used to sign API requests made by your app. You will only be required to use your client secret in certain cases. For example, server to server communications.
 
