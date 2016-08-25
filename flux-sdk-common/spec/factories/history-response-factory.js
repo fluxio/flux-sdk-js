@@ -8,7 +8,7 @@ function historyQueryFactory(limit, cursor) {
 }
 
 function historyResponseFactory(options = {}) {
-  const { limit, cursor, fileName } = options;
+  const { limit, cursor, fileName, totalCount } = options;
   const historyQuery = historyQueryFactory(limit, cursor);
   return {
     historyQuery,
@@ -37,6 +37,7 @@ function historyResponseFactory(options = {}) {
         Size: 4,
       },
     }],
+    totalCount: totalCount
   };
 }
 
