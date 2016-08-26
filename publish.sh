@@ -3,8 +3,7 @@
 # Instructions for publishing the JS SDK to NPM.
 #
 # 1. Run all the tests!!!!!
-# 2. Update all references to the version, e.g.:
-#      `grep -—exclude-dir=_book -—exclude-dir=node_modules -rl <old version> | grep -v .map | grep -v shrink-wrap | grep -v list` to find references
+# 2. Update all references to the version, e.g.: `git grep <old_version> | grep -v shrinkwrap`
 # 3. Update CHANGELOG.md to include the new changes
 # 4. Run this script: `./publish.sh`.
 # 5. Add a commit to bump the version.

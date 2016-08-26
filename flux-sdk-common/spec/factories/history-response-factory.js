@@ -37,7 +37,7 @@ function historyResponseFactory(options = {}) {
         Size: 4,
       },
     }],
-    totalCount: totalCount
+    totalCount,
   };
 }
 

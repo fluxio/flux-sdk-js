@@ -23,7 +23,7 @@ function serialize({ historyEvents, historyQuery, totalCount }) {
     entities: (historyEvents || []).map(event => serializeEvent(event.Event)),
     cursor: query.Cursor || null,
     limit: query.Limit || 0,
-    totalCount
+    totalCount,
   };
 }
 
