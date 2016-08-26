@@ -16,13 +16,14 @@ function serializeEvent(event) {
   };
 }
 
-function serialize({ historyEvents, historyQuery }) {
+function serialize({ historyEvents, historyQuery, totalCount }) {
   const query = historyQuery || {};
 
   return {
     entities: (historyEvents || []).map(event => serializeEvent(event.Event)),
     cursor: query.Cursor || null,
     limit: query.Limit || 0,
+    totalCount
   };
 }
 

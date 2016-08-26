@@ -49,5 +49,16 @@ describe('serializers.historySerializer', function() {
         expect(this.serializedHistory.cursor).toEqual('FOO_CURSOR');
       });
     });
+
+    describe('with totalCount', function() {
+      beforeEach(function() {
+        const historyResponse = historyFactory({ totalCount: 100 });
+        this.serializedHistory = serialize(historyResponse);
+      });
+
+      it('should set the totalCount field', function() {
+        expect(this.serializedHistory.totalCount).toEqual(100);
+      });
+    });
   });
 });
