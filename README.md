@@ -28,7 +28,7 @@ From the root directory (`flux-sdk-js`):
 From the root directory (`flux-sdk-js`), run:
 
 ```
-`npm install`
+npm install
 ```
 
 This will build the source code for all versions of the JavaScript SDK
@@ -62,6 +62,14 @@ Once the source code has been built, the built files are structured as follows:
     * For use in production
   * `flux-sdk-js/flux-sdk-browser/dist/flux-sdk-apps-script.js`
     * Same as above, but meant for use in development
+
+If you want to use the latest pre-publish version of the SDK in your project,
+you should `npm link` from the subdirectory containing the platform-specific
+SDK you want to use, and then run `npm link flux-sdk-xxxxxx` in the package
+that depends on the SDK. For example, if you are a Flux internal developer
+working on the client, you should clone and build this repo, then `cd
+flux-sdk-browser` and `npm link`.  Finally, go back to wherever you depend on
+the SDK (perhaps `client/web/src/maker-tools`) and `npm link flux-sdk-browser`.
 
 ## <a id="directory-structure"></a>Directory Structure
 
