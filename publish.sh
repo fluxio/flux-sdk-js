@@ -43,6 +43,7 @@ publish () {
         npm publish
       popd > /dev/null
     done
+    npm run ignore-shrinkwrap
   popd > /dev/null
 }
 
