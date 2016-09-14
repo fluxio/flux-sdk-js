@@ -12,9 +12,7 @@
     "docs:publish": "npm run docs:build",
     "prepublish": "npm run build && npm run docs:build",
     "test": "bash ./test.sh",
-    "test:genie": "bash ./test-genie.sh",
-    "ignore-shrinkwrap": "bash ./shrinkwrap.sh ignore",
-    "obey-shrinkwrap": "bash ./shrinkwrap.sh obey"
+    "test:genie": "bash ./test-genie.sh"
   },
   "author": "Flux Factory, Inc. (https://flux.io)",
   "contributors": [
