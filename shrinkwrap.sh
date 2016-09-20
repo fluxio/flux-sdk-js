@@ -68,7 +68,7 @@ shrinkwrap-all () {
       npm shrinkwrap
       if [ "$1" == "publish" ]; then
           echo "Publishing flux-sdk-common"
-        #   npm publish
+          npm publish
       fi
       mv $NSW $NSW.prod
       cp $NSW.dev $NSW
@@ -85,7 +85,7 @@ shrinkwrap-all () {
         npm shrinkwrap
         if [ "$1" == "publish" ]; then
             echo "Publishing $SDK_TYPE"
-            # npm publish
+            npm publish
         fi
         mv $NSW $NSW.prod
         cp $NSW.dev $NSW
