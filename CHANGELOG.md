@@ -7,6 +7,21 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.4.5] - 9/22/2016
+
+* Removes developer dependencies from published shrinkwrap. npm installing any
+  of the SDKs will no longer download build tools like Babel.
+* Adds a helper script for manage shrinkwrapping and moves the publish functions
+  to it.
+* Use unpkg.com instead of npmcdn.com in the documentation.
+
+## [0.4.4] - 8/25/2016
+
+* Increments version to publish a minor change to the history serializer needed
+  by internal Flux developers.
+* Add handling for CELL\_READ notifications.
+* Fix base64 encoding for Google Apps Script SDK.
+
 ## [0.4.3] - 7/28/2016
 
 * Updates `dataTable.fetchHistory` and `cell.fetchHistory` to enable

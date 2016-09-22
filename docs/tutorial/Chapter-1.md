@@ -51,8 +51,8 @@ Now, add the following to a new file, `js/index.html`:
     <!-- configuration variables -->
     <script src="js/config.js"></script>
     <!-- the Flux JS SDK and helpers-->
-    <script src="https://npmcdn.com/flux-sdk-browser@0.4/dist/flux-sdk-min.js"></script>
-    <script src="https://npmcdn.com/flux-sdk-helpers@0.1/dist/flux-sdk-helpers.min.js"></script>
+    <script src="https://unpkg.com/flux-sdk-browser@0.4/dist/flux-sdk-min.js"></script>
+    <script src="https://unpkg.com/flux-sdk-helpers@0.1/dist/flux-sdk-helpers.min.js"></script>
     <!-- helper functions for using the Flux SDK -->
     <script src="js/helpers.js"></script>
     <!-- main application logic -->

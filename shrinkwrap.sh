@@ -26,7 +26,6 @@ activate () {
     if [ "$1" != "dev" ] && [ "$1" != "prod" ]; then
         echo "Specify which shrinkwrap to execute. Options: dev, prod"
     else
-        SDK_TYPES+=(".")
         SDK_TYPES+=("flux-sdk-common")
         pushd `dirname $0` > /dev/null
             for SDK_TYPE in ${SDK_TYPES[*]}; do
@@ -39,7 +38,6 @@ activate () {
 }
 
 deactivate () {
-    SDK_TYPES+=(".")
     SDK_TYPES+=("flux-sdk-common")
     pushd `dirname $0` > /dev/null
         for SDK_TYPE in ${SDK_TYPES[*]}; do
@@ -95,7 +93,6 @@ shrinkwrap-all () {
   rm -rf npm-shrinkwrap.json node_modules
   npm install
   npm shrinkwrap --dev
-  cp $NSW $NSW.dev
 }
 
 usage () {

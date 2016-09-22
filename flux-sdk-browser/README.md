@@ -29,13 +29,13 @@ This makes the SDK available as `window.FluxSdk`.
 Production version:
 
 ```
-<script src="https://npmcdn.com/flux-sdk-browser@<version>/dist/flux-sdk-min.js"></script>
+<script src="https://unpkg.com/flux-sdk-browser@<version>/dist/flux-sdk-min.js"></script>
 ```
 
 Development version:
 
 ```
-<script src="https://npmcdn.com/flux-sdk-browser@<version>/dist/flux-sdk.js"></script>
+<script src="https://unpkg.com/flux-sdk-browser@<version>/dist/flux-sdk.js"></script>
 ```
 
 The development version is unminified and provides additional debugging
