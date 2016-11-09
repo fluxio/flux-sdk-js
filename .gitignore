@@ -3,3 +3,4 @@ dist
 es
 lib
 _book
+**/npm-debug.log
