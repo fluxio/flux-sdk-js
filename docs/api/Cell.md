@@ -6,6 +6,8 @@ Instance methods:
 * [fetch](./Cell.md#fetch)
 * [update](./Cell.md#update)
 * [delete](./Cell.md#delete)
+* [publish](./Cell.md#publish)
+* [unpublish](./Cell.md#unpublish)
 
 Static methods and properties:
 
@@ -64,6 +66,18 @@ response
 #### Returns
 
 TODO
+
+### <a id="publish"></a>`publish()`
+
+#### Returns
+
+`(Promise --> Object)` Resolves to { link: public\_url, ... }.
+
+_NOTE:_ Node SDK only.
+
+### <a id="unpublish"></a>`unpublish()`
+
+_NOTE:_ Node SDK only.
 
 ## Static Methods and Properties
 

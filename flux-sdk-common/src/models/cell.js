@@ -5,6 +5,7 @@ import { authenticatedRequest } from '../utils/request';
 import {
   cellsPath,
   cellPath,
+  publishCellPath,
 } from '../constants/paths';
 import { checkCell } from '../utils/schema-validators';
 import {
@@ -103,10 +104,24 @@ function Cell(credentials, dataTableId, id) {
     });
   }
 
+  function publish() {
+    return authenticatedRequest(credentials, publishCellPath(dataTableId, id), {
+      method: 'post',
+    });
+  }
+
+  function unpublish() {
+    return authenticatedRequest(credentials, publishCellPath(dataTableId, id), {
+      method: 'delete',
+    });
+  }
+
   this.fetch = fetch;
   this.update = update;
   this.delete = deleteCell;
   this.fetchHistory = fetchHistory;
+  this.publish = publish;
+  this.unpublish = unpublish;
 }
 
 Cell.listCells = listCells;

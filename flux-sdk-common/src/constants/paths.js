@@ -8,6 +8,8 @@ export const ACCESS_TOKEN_PATH = 'api/token/';
 export const PROJECTS_PATH = 'api/projects/';
 export const projectPath = id => `p/${id}/`;
 export const projectMetaPath = id => `${projectPath(id)}api/meta/`;
+export const projectUsersPath = id => `api/v1/projects/${id}/users/`;
+export const removeUserPath = (id, userId) => `${projectUsersPath(id)}${userId}`;
 
 const dataTablePath = id => `${projectPath(id)}api/datatable/v1/`;
 export const dataTableCapabilityPath = id => `${dataTablePath(id)}capability/`;
@@ -18,3 +20,5 @@ export const cellsPath = dataTableId => `${dataTablePath(dataTableId)}cells/`;
 export const cellPath = (dataTableId, id) => (
   `${cellsPath(dataTableId)}${id ? `${id}/` : ''}`
 );
+export const publishCellPath = (projectId, cellId) =>
+`api/v1/projects/${projectId}/sharedata/${cellId}/`;

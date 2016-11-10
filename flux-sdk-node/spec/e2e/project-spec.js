@@ -15,6 +15,55 @@ describe('Project', function() {
       this.project.delete().then(done, done.fail);
     });
 
+    describe('#listUsers', function() {
+      beforeAll(function(done) {
+        this.project.listUsers()
+          .then(entities => {
+            this.projectUsers = entities;
+          }).then(done, done.fail);
+      });
+
+      it('should receive the list of users on the project', function(done) {
+        expect(this.projectUsers).toEqual(jasmine.any(Array));
+        expect(this.projectUsers.length).toBeGreaterThan(0);
+        this.user.fetchProfile(profile => {
+          expect(this.projectUsers[0].id).toEqual(profile.id);
+        }).then(done, done.fail);
+      });
+    });
+
+    describe('#share/#unshare', function() {
+      beforeAll(function(done) {
+        let otherUser = '';
+        if (this.userProfile.email.includes('+camper@flux.io')) {
+          otherUser = `${this.userProfile.email.split('+')[0]}@flux.io`;
+        } else {
+          otherUser = `${this.userProfile.email.split('@')[0]}+camper@flux.io`;
+        }
+        // The following line throws an error if it fails.
+        this.project.share(otherUser, 'collaborator')
+          .then(done, done.fail);
+      });
+
+      afterAll(function(done) {
+        this.project.listUsers()
+          .then(entities => {
+            for (let i = 0, len = entities.length; i < len; i++) {
+              (entity => {
+                if (entity.permission === 'collaborator') {
+                  this.project.unshare(entity.id);
+                }
+              })(entities[i]);
+            }
+          })
+          .then(done, done.fail);
+      });
+
+      it('should work', function() {
+        expect(true).toBe(true);
+      });
+    });
+
     describe('#fetch', function() {
       beforeAll(function(done) {
         this.project.fetch()

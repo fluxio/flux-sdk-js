@@ -5,6 +5,9 @@ Instance methods:
 * [constructor](Project.md#constructor)
 * [getDataTable](Project.md#getdatatable)
 * [delete](Project.md#delete)
+* [listUsers](Project.md#listusers)
+* [share](Project.md#share)
+* [unshare](Project.md#share)
 
 Static methods and properties:
 
@@ -19,8 +22,7 @@ Static methods and properties:
 
 #### Arguments
 
-1. `credentials` *([Credentials](../Glossary.md#credentials))*: Vali
-
+1. `credentials` *([Credentials](../Glossary.md#credentials))*: Valid
 credentials corresponding to the current user
 1. `id` *(String)*: The project's ID
 
@@ -47,6 +49,32 @@ new DataTable(credentials, id)
 #### Returns
 
 TODO
+
+### <a id="listusers"></a>`listUsers()`
+
+#### Returns
+
+`(Promise --> Object)` Resolves to the [serialized](User.md#serializeList)
+API response
+
+### <a id="share"></a>`share(email, permission)`
+
+### Arguments
+
+1. `email` *(String)*: Email address of the user to share with
+1. `permission` *([Permission](../Glossary.md#permissions))*: Level of
+access to grant the user
+
+_NOTE:_ Node SDK only.
+
+### <a id="unshare"></a>`unshare(userId)`
+
+### Arguments
+
+1. `userId` *(String)*: User ID (see [User.fetchProfile](User.md#fetchProfile)).
+Not the Maker ID or email address.
+
+_NOTE:_ Node SDK only.
 
 ## Static Methods and Properties
 

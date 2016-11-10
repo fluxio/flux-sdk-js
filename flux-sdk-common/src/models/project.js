@@ -1,11 +1,18 @@
 import { checkProject } from '../utils/schema-validators';
 import { authenticatedRequest } from '../utils/request';
 import DataTable from './data-table';
+import User from './user';
 import {
   PROJECTS_PATH,
   projectPath,
   projectMetaPath,
+  projectUsersPath,
+  removeUserPath,
 } from '../constants/paths';
+import {
+    COLLABORATOR,
+    VALID_PERMISSIONS,
+} from '../constants/permissions';
 import { serialize, serializeList } from '../serializers/project-serializer';
 
 function listProjects(credentials) {
@@ -54,11 +61,44 @@ function Project(credentials, id) {
     getDataTable().closeWebSocket();
   }
 
+  function listUsers() {
+    return User.listUsers(credentials, id);
+  }
+
+  function validate(permission) {
+    if (VALID_PERMISSIONS.indexOf(permission) < 0) {
+      throw new Error([
+        'Invalid permission:',
+        permission,
+        'Valid permissions are',
+        VALID_PERMISSIONS.join(','),
+      ].join(' '));
+    }
+    return permission;
+  }
+
+  function share(email, permission) {
+    const validPerm = permission === undefined ? COLLABORATOR : validate(permission);
+    return authenticatedRequest(credentials, projectUsersPath(id), {
+      method: 'post',
+      form: `email=${email}&permission=${validPerm}`,
+    });
+  }
+
+  function unshare(userId) {
+    return authenticatedRequest(credentials, removeUserPath(id, userId), {
+      method: 'delete',
+    });
+  }
+
   this.fetch = fetch;
   this.delete = deleteProject;
   this.getDataTable = getDataTable;
   this.openWebSocket = openWebSocket;
   this.closeWebSocket = closeWebSocket;
+  this.listUsers = listUsers;
+  this.share = share;
+  this.unshare = unshare;
 }
 
 Project.listProjects = listProjects;

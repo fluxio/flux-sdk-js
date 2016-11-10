@@ -189,4 +189,30 @@ describe('models.User.static', function() {
       });
     });
   });
+
+  describe('#listUsers', function() {
+    beforeEach(function() {
+      spyOn(typeCheckers, 'checkUser');
+    });
+
+    describe('when the credentials are valid', function() {
+      beforeEach(function() {
+        spyOn(User, 'serializeProfile').and.returnValue('SERIALIZED');
+        spyOn(requestUtils, 'authenticatedRequest');
+
+        this.credentials = credentialsFactory();
+      });
+
+      it('should try to get their profile', function(done) {
+        requestUtils.authenticatedRequest.and.returnValue(Promise.resolve({}));
+
+        User.listUsers(this.credentials, 'PROJECT_ID')
+          .then(() => {
+            expect(requestUtils.authenticatedRequest)
+              .toHaveBeenCalledWith(this.credentials, 'api/v1/projects/PROJECT_ID/users/');
+          })
+          .then(done, done.fail);
+      });
+    });
+  });
 });

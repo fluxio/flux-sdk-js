@@ -64,9 +64,16 @@ function handleResponse(response) {
 }
 
 function request(path, options = {}) {
-  const { query, body, headers, ...others } = options;
-  const payload = body === undefined ? null : { body: JSON.stringify(body) };
-  const contentType = payload ? { 'Content-Type': 'application/json' } : null;
+  const { query, body, headers, form, ...others } = options;
+  let payload;
+  let contentType;
+  if (form && form.constructor === String) {
+    payload = { body: form };
+    contentType = { 'Content-Type': 'application/x-www-form-urlencoded' };
+  } else {
+    payload = body === undefined ? null : { body: JSON.stringify(body) };
+    contentType = payload ? { 'Content-Type': 'application/json' } : null;
+  }
   const search = query ? stringifyQuery(query) : '';
 
   return fetch(joinUrl(others.fluxUrl || fluxUrl, path, search), {
