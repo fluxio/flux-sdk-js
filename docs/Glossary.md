@@ -5,6 +5,7 @@
 * [IdToken](./Glossary.md#idtoken)
 * [Project](./Glossary.md#project)
 * [User](./Glossary.md#user)
+* [Permission](./Glossay.md#permission)
 
 We use syntax based on
 [Flow syntax](http://flowtype.org/docs/quick-reference.html) to document types.
@@ -43,3 +44,9 @@ TODO
 ### User
 
 TODO
+
+### Permission
+
+```
+string "collaborator" | "owner" | "viewer"
+```

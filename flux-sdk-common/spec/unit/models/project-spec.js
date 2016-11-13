@@ -77,6 +77,56 @@ describe('models.Project', function() {
       expect(this.dataTableSpy.closeWebSocket).toHaveBeenCalled();
     });
   });
+
+  describe('#listUsers', function() {
+    beforeEach(function(done) {
+      this.request = this.project.listUsers()
+        .then(response => {
+          this.response = response;
+        })
+        .then(done, done.fail);
+    });
+
+    it('should list the project\'s users', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/PROJECT_ID/users/');
+    });
+  });
+
+  describe('#share', function() {
+    beforeEach(function(done) {
+      this.request = this.project.share('test@flux.io', 'collaborator')
+        .then(response => {
+          this.response = response;
+        })
+        .then(done, done.fail);
+    });
+
+    it('should share the project with the given user', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/PROJECT_ID/users/', {
+          method: 'post',
+          form: 'email=test@flux.io&permission=collaborator',
+        });
+    });
+  });
+
+  describe('#unshare', function() {
+    beforeEach(function(done) {
+      this.request = this.project.unshare('USER_ID')
+        .then(response => {
+          this.response = response;
+        })
+        .then(done, done.fail);
+    });
+
+    it('should unshare the project with the given user', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/PROJECT_ID/users/USER_ID', {
+          method: 'delete',
+        });
+    });
+  });
 });
 
 describe('models.Project.static', function() {

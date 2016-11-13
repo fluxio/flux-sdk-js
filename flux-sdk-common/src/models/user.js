@@ -4,8 +4,9 @@ import Cell from './cell';
 import { checkUser } from '../utils/schema-validators';
 import deprecated from '../utils/deprecated';
 import { authenticatedRequest } from '../utils/request';
-import { PROFILE_PATH } from '../constants/paths';
+import { PROFILE_PATH, projectUsersPath } from '../constants/paths';
 import serializeProfile from '../serializers/profile-serializer';
+import serializeList from '../serializers/user-serializer';
 
 function isLoggedIn(credentials = {}) {
   let response = null;
@@ -18,6 +19,11 @@ function isLoggedIn(credentials = {}) {
     response = Promise.resolve(false);
   }
   return response;
+}
+
+function listUsers(credentials, projectId) {
+  return authenticatedRequest(credentials, projectUsersPath(projectId))
+    .then(User.serializeList);
 }
 
 function User(credentials = {}) {
@@ -71,5 +77,7 @@ function User(credentials = {}) {
 
 User.isLoggedIn = isLoggedIn;
 User.serializeProfile = serializeProfile;
+User.serializeList = serializeList;
+User.listUsers = listUsers;
 
 export default User;

@@ -12,6 +12,8 @@ Instance methods:
 Static properties:
 
 * [serializeProfile](User.md#serializeprofile)
+* [serializeList](User.md#serializelist)
+* [listUsers](User.md#listusers)
 
 ## Instance Methods
 
@@ -100,3 +102,38 @@ type ProfileResponse = {
 ```
 
 See [Serialization](../advanced/Serialization.md) for more information.
+
+### <a id="serializelist"></a>`serializeList`
+
+Set to override how the SDK serializes multiple-entity user API responses,
+such as `listUsers`.
+
+By default, this will return an `Object` with the structure:
+
+```js
+type UsersResponse = {
+  entities: UserResponse[],
+}
+
+type UserResponse = {
+  id: String,
+  displayName: String,
+  permission: 'collaborator' | 'owner' | 'viewer',
+}
+```
+
+See [Serialization](../advanced/Serialization.md) for more information.
+
+### <a id="listusers"></a>`listUsers(credentials, projectId)`
+
+#### Arguments
+
+1. `credentials` *([Credentials](../Glossary.md#credentials))*: Valid
+credentials corresponding to the current user
+1. `projectId` *(String)*
+
+#### Returns
+
+`(Promise --> Object)` Resolves to the [serialized](User.md#serializelist)
+API response
+

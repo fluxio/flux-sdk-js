@@ -339,6 +339,52 @@ describe('Cell', function() {
         });
       });
     });
+
+    describe('#publish', function() {
+      describe('when the cell is unpublished', function() {
+        afterAll(function(done) {
+          this.cell.unpublish().then(done, done.fail);
+        });
+
+        it('should return the public link', function(done) {
+          this.cell.publish()
+            .then(({ link, exposure }) => {
+              const get = require('https').get;
+              expect(link).toBeDefined();
+              expect(exposure).toBeDefined();
+              expect(link).toContain(this.dataTableId);
+              get(link, response => {
+                expect(response.statusCode).toEqual(200);
+              });
+            })
+            .then(done, done.fail);
+        });
+      });
+    });
+
+    describe('#unpublish', function() {
+      describe('when the cell is published', function() {
+        beforeAll(function(done) {
+          this.cell.publish()
+            .then(({ link, exposure }) => {
+              this.publicCellLink = link;
+              this.exposure = exposure;
+            })
+            .then(done, done.fail);
+        });
+
+        it('should unpublish the cell', function(done) {
+          this.cell.unpublish()
+            .then(() => {
+              const get = require('https').get;
+              get(this.publicCellLink, response => {
+                expect(response.statusCode).toBeGreaterThan(399);
+              });
+            })
+            .then(done, done.fail);
+        });
+      });
+    });
   });
 
   describe('static methods', function() {

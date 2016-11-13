@@ -196,6 +196,36 @@ describe('models.Cell', function() {
       expect(historyResponse).toEqual('HISTORY_RESPONSE');
     });
   });
+
+  describe('#publish', function() {
+    beforeEach(function(done) {
+      this.cell.publish().then(response => { this.response = response; })
+        .then(done, done.fail);
+    });
+
+    it('should publish the cell', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/DATA_TABLE_ID/sharedata/CELL_ID/', {
+          method: 'post',
+        }
+      );
+    });
+  });
+
+  describe('#unpublish', function() {
+    beforeEach(function(done) {
+      this.cell.unpublish().then(response => { this.response = response; })
+        .then(done, done.fail);
+    });
+
+    it('should unpublish the cell', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/DATA_TABLE_ID/sharedata/CELL_ID/', {
+          method: 'delete',
+        }
+      );
+    });
+  });
 });
 
 describe('models.Cell.static', function() {
