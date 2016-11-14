@@ -2560,7 +2560,7 @@
                 },
                 "domutils": {
                   "version": "1.5.1",
-                  "from": "domutils@>=1.5.1 <2.0.0",
+                  "from": "domutils@1.5.1",
                   "resolved": "https://registry.npmjs.org/domutils/-/domutils-1.5.1.tgz",
                   "dependencies": {
                     "domelementtype": {
@@ -2625,9 +2625,9 @@
                   "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz"
                 },
                 "readable-stream": {
-                  "version": "2.1.5",
+                  "version": "2.2.2",
                   "from": "readable-stream@>=2.0.2 <3.0.0",
-                  "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.1.5.tgz",
+                  "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.2.tgz",
                   "dependencies": {
                     "buffer-shims": {
                       "version": "1.0.0",

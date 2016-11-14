@@ -7,6 +7,13 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.4.6] - 11/14/2016
+
+* Adds several new methods to the Node SDK: `project.share`, `project.unshare`,
+  `cell.publish`, `cell.unpublish`.
+* Adds `User.listUsers` and `project.listUsers`.
+* Implements form handling in the `authenticatedRequest` helper.
+
 ## [0.4.5] - 9/22/2016
 
 * Removes developer dependencies from published shrinkwrap. npm installing any
