@@ -106,7 +106,10 @@ describe('models.Project', function() {
       expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
         this.credentials, 'api/v1/projects/PROJECT_ID/users/', {
           method: 'post',
-          form: 'email=test@flux.io&permission=collaborator',
+          form: {
+            email: 'test@flux.io',
+            permission: 'collaborator',
+          },
         });
     });
   });

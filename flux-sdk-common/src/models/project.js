@@ -81,7 +81,10 @@ function Project(credentials, id) {
     const validPerm = permission === undefined ? COLLABORATOR : validate(permission);
     return authenticatedRequest(credentials, projectUsersPath(id), {
       method: 'post',
-      form: `email=${email}&permission=${validPerm}`,
+      form: {
+        email,
+        permission: validPerm,
+      },
     });
   }
 

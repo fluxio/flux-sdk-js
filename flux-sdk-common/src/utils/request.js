@@ -67,8 +67,9 @@ function request(path, options = {}) {
   const { query, body, headers, form, ...others } = options;
   let payload;
   let contentType;
-  if (form && form.constructor === String) {
-    payload = { body: form };
+  if (form) {
+    const formEnc = form.constructor === Object ? urlEncodeObject(form) : form;
+    payload = { body: formEnc };
     contentType = { 'Content-Type': 'application/x-www-form-urlencoded' };
   } else {
     payload = body === undefined ? null : { body: JSON.stringify(body) };
@@ -88,6 +89,15 @@ function request(path, options = {}) {
     ...others,
   })
     .then(handleResponse);
+}
+
+function urlEncodeObject(obj) {
+  const result = [];
+  const keys = Object.keys(obj);
+  for (let i = 0, len = keys.length; i < len; i++) {
+    result.push([encodeURIComponent(keys[i]), encodeURIComponent(obj[keys[i]])].join('='));
+  }
+  return result.join('&');
 }
 
 function createFluxOptionsHeader({ clientInfo }, fluxOptions) {
