@@ -43,24 +43,99 @@ describe('Project', function() {
         // The following line throws an error if it fails.
         this.project.share(otherUser, 'collaborator')
           .then(done, done.fail);
+        this.otherUser = otherUser;
       });
 
       afterAll(function(done) {
-        this.project.listUsers()
-          .then(entities => {
-            for (let i = 0, len = entities.length; i < len; i++) {
-              (entity => {
-                if (entity.permission === 'collaborator') {
-                  this.project.unshare(entity.id);
-                }
-              })(entities[i]);
-            }
-          })
+        this.project.unshare(this.otherUser)
           .then(done, done.fail);
       });
 
       it('should work', function() {
         expect(true).toBe(true);
+      });
+    });
+
+    describe('#unshareById', function() {
+      beforeAll(function(done) {
+        let otherUser = '';
+        if (this.userProfile.email.includes('+camper@flux.io')) {
+          otherUser = `${this.userProfile.email.split('+')[0]}@flux.io`;
+        } else {
+          otherUser = `${this.userProfile.email.split('@')[0]}+camper@flux.io`;
+        }
+        // The following line throws an error if it fails.
+        this.project.share(otherUser, 'viewer')
+          .then(done, done.fail);
+      });
+
+      it('should remove the user from the project', function(done) {
+        const removedIds = [];
+        this.project.listUsers()
+          .then(entities => {
+            const changes = [];
+            for (let i = 0, len = entities.length; i < len; i++) {
+              (entity => {
+                if (entity.permission === 'viewer') {
+                  changes.push(this.project.unshareById(entity.id));
+                  removedIds.push(entity.id);
+                }
+              })(entities[i]);
+            }
+            return Promise.all(changes);
+          })
+          .then(this.project.listUsers)
+          .then(entities => {
+            for (let i = 0, len = entities.length; i < len; i++) {
+              (entity => {
+                expect(removedIds).not.toContain(entity.id);
+              })(entities[i]);
+            }
+          })
+          .then(done, done.fail);
+      });
+    });
+
+    describe('#changePermissionById', function() {
+      beforeAll(function(done) {
+        let otherUser = '';
+        if (this.userProfile.email.includes('+camper@flux.io')) {
+          otherUser = `${this.userProfile.email.split('+')[0]}@flux.io`;
+        } else {
+          otherUser = `${this.userProfile.email.split('@')[0]}+camper@flux.io`;
+        }
+        // The following line throws an error if it fails.
+        this.project.share(otherUser, 'viewer')
+          .then(done, done.fail);
+      });
+
+      it('should change user permission', function(done) {
+        const changedIds = [];
+        this.project.listUsers()
+          .then(entities => {
+            const changes = [];
+            for (let i = 0, len = entities.length; i < len; i++) {
+              (entity => {
+                if (entity.permission === 'viewer') {
+                  changes.push(this.project.changePermissionById(entity.id, 'collaborator'));
+                  changedIds.push(entity.id);
+                }
+              })(entities[i]);
+            }
+            return Promise.all(changes);
+          })
+          .then(this.project.listUsers)
+          .then(entities => {
+            for (let i = 0, len = entities.length; i < len; i++) {
+              (entity => {
+                expect(entity.permission).not.toBe('viewer');
+                if (entity.permission === 'collaborator') {
+                  expect(changedIds).toContain(entity.id);
+                }
+              })(entities[i]);
+            }
+          })
+          .then(done, done.fail);
       });
     });
 

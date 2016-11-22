@@ -116,7 +116,7 @@ describe('models.Project', function() {
 
   describe('#unshare', function() {
     beforeEach(function(done) {
-      this.request = this.project.unshare('USER_ID')
+      this.request = this.project.unshare('test@flux.io')
         .then(response => {
           this.response = response;
         })
@@ -125,8 +125,49 @@ describe('models.Project', function() {
 
     it('should unshare the project with the given user', function() {
       expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/PROJECT_ID/users/', {
+          method: 'post',
+          form: {
+            email: 'test@flux.io',
+            permission: 'none',
+          },
+        });
+    });
+  });
+
+  describe('#unshareById', function() {
+    beforeEach(function(done) {
+      this.request = this.project.unshareById('USER_ID')
+        .then(response => {
+          this.response = response;
+        })
+        .then(done, done.fail);
+    });
+
+    it('should DELETE to the modify user permission endpoint', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
         this.credentials, 'api/v1/projects/PROJECT_ID/users/USER_ID', {
           method: 'delete',
+        });
+    });
+  });
+
+  describe('#changePermissionById', function() {
+    beforeEach(function(done) {
+      this.request = this.project.changePermissionById('USER_ID', 'viewer')
+        .then(response => {
+          this.response = response;
+        })
+        .then(done, done.fail);
+    });
+
+    it('should POST to the modify user permission endpoint', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'api/v1/projects/PROJECT_ID/users/USER_ID', {
+          method: 'post',
+          form: {
+            permission: 'viewer',
+          },
         });
     });
   });

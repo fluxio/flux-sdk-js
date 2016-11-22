@@ -7,10 +7,10 @@ import {
   projectPath,
   projectMetaPath,
   projectUsersPath,
-  removeUserPath,
+  modifyUserPath,
 } from '../constants/paths';
 import {
-    COLLABORATOR,
+    VIEWER,
     VALID_PERMISSIONS,
 } from '../constants/permissions';
 import { serialize, serializeList } from '../serializers/project-serializer';
@@ -78,7 +78,7 @@ function Project(credentials, id) {
   }
 
   function share(email, permission) {
-    const validPerm = permission === undefined ? COLLABORATOR : validate(permission);
+    const validPerm = permission === undefined ? VIEWER : validate(permission);
     return authenticatedRequest(credentials, projectUsersPath(id), {
       method: 'post',
       form: {
@@ -88,9 +88,23 @@ function Project(credentials, id) {
     });
   }
 
-  function unshare(userId) {
-    return authenticatedRequest(credentials, removeUserPath(id, userId), {
+  function unshare(email) {
+    return share(email, 'none');
+  }
+
+  function unshareById(userId) {
+    return authenticatedRequest(credentials, modifyUserPath(id, userId), {
       method: 'delete',
+    });
+  }
+
+  function changePermissionById(userId, permission) {
+    const validPerm = permission === undefined ? VIEWER : validate(permission);
+    return authenticatedRequest(credentials, modifyUserPath(id, userId), {
+      method: 'post',
+      form: {
+        permission: validPerm,
+      },
     });
   }
 
@@ -102,6 +116,8 @@ function Project(credentials, id) {
   this.listUsers = listUsers;
   this.share = share;
   this.unshare = unshare;
+  this.unshareById = unshareById;
+  this.changePermissionById = changePermissionById;
 }
 
 Project.listProjects = listProjects;
