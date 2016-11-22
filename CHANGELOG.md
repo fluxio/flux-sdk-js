@@ -7,6 +7,11 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.4.7] - 11/22/2016
+
+* Improves form handling and adds url encoding of objects.
+* Removes shrinkwraps.
+
 ## [0.4.6] - 11/14/2016
 
 * Adds several new methods to the Node SDK: `project.share`, `project.unshare`,
