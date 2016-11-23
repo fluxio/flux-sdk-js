@@ -15,6 +15,24 @@ describe('Project', function() {
       this.project.delete().then(done, done.fail);
     });
 
+    describe('#executeFlow', function() {
+      beforeAll(function(done) {
+        this.project.executeFlow({})
+        .then(outputs => {
+          this.outputs = outputs;
+        }).catch(err => {
+          this.errors = err.messages;
+          this.outputs = err.outputs;
+        })
+        .then(done, done.fail);
+      });
+
+      it('should receive no outputs and no errors', function() {
+        expect(this.outputs).toEqual({});
+        expect(this.errors).toBe(undefined);
+      });
+    });
+
     describe('#listUsers', function() {
       beforeAll(function(done) {
         this.project.listUsers()

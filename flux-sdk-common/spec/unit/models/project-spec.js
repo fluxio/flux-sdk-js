@@ -130,6 +130,27 @@ describe('models.Project', function() {
         });
     });
   });
+
+
+  describe('#executeFlow', function() {
+    beforeEach(function(done) {
+      this.request = this.project.executeFlow({ INPUT_NAME: 'INPUT_VALUE' })
+        .then(response => {
+          this.response = response;
+        })
+        .then(done, done.fail);
+    });
+
+    it('should hit the execute flow endpoint', function() {
+      expect(requestUtils.authenticatedRequest).toHaveBeenCalledWith(
+        this.credentials, 'p/PROJECT_ID/api/flowexec', {
+          method: 'post',
+          body: {
+            inputs: { INPUT_NAME: 'INPUT_VALUE' },
+          },
+        });
+    });
+  });
 });
 
 describe('models.Project.static', function() {
