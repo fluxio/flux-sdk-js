@@ -96,6 +96,8 @@ function Project(credentials, id) {
   }
 
   function executeFlow(inputs) {
+    // Currently only for Flux internal use. Project must be whitelisted by a
+    // Flux engineer for this method to work.
     return authenticatedRequest(credentials, execFlowPath(id), {
       method: 'post',
       body: {
