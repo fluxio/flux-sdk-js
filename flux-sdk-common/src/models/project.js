@@ -95,10 +95,11 @@ function Project(credentials, id) {
     });
   }
 
-  function executeFlow(inputs) {
+  function executeFlow(inputs, options) {
     // Currently only for Flux internal use. Project must be whitelisted by a
     // Flux engineer for this method to work.
-    return authenticatedRequest(credentials, execFlowPath(id), {
+    const computeEndpoint = (options && options.computeEndpoint) || execFlowPath(id);
+    return authenticatedRequest(credentials, computeEndpoint, {
       method: 'post',
       body: {
         inputs,
