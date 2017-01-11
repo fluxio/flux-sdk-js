@@ -7,6 +7,10 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.4.8] - 1/11/2017
+
+* Add Flow-as-a-Service execution capabilities.
+
 ## [0.4.7] - 11/22/2016
 
 * Improves form handling and adds url encoding of objects.
