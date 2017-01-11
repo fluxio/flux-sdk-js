@@ -8,6 +8,7 @@ import {
   projectMetaPath,
   projectUsersPath,
   removeUserPath,
+  execFlowPath,
 } from '../constants/paths';
 import {
     COLLABORATOR,
@@ -94,6 +95,28 @@ function Project(credentials, id) {
     });
   }
 
+  function executeFlow(inputs, options) {
+    // Currently only for Flux internal use. Project must be whitelisted by a
+    // Flux engineer for this method to work.
+    const computeEndpoint = (options && options.computeEndpoint) || execFlowPath(id);
+    return authenticatedRequest(credentials, computeEndpoint, {
+      method: 'post',
+      body: {
+        inputs,
+      },
+    }).then(resp => {
+      const errors = resp.Errors;
+      const outputs = resp.Outputs;
+      if (errors && errors.length && errors.length > 0) {
+        const error = new Error(`${errors.length} flow errors occurred.`);
+        error.messages = errors;
+        error.outputs = outputs;
+        throw error;
+      }
+      return outputs;
+    });
+  }
+
   this.fetch = fetch;
   this.delete = deleteProject;
   this.getDataTable = getDataTable;
@@ -102,6 +125,7 @@ function Project(credentials, id) {
   this.listUsers = listUsers;
   this.share = share;
   this.unshare = unshare;
+  this.executeFlow = executeFlow;
 }
 
 Project.listProjects = listProjects;

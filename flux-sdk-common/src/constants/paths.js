@@ -10,6 +10,7 @@ export const projectPath = id => `p/${id}/`;
 export const projectMetaPath = id => `${projectPath(id)}api/meta/`;
 export const projectUsersPath = id => `api/v1/projects/${id}/users/`;
 export const removeUserPath = (id, userId) => `${projectUsersPath(id)}${userId}`;
+export const execFlowPath = id => `p/${id}/api/flowexec`;
 
 const dataTablePath = id => `${projectPath(id)}api/datatable/v1/`;
 export const dataTableCapabilityPath = id => `${dataTablePath(id)}capability/`;
