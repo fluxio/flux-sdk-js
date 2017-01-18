@@ -340,6 +340,14 @@ describe('Cell', function() {
       });
     });
 
+    function getStatusCode(url) {
+      const get = require('https').get;
+      return new Promise((resolve, reject) => {
+        get(url, response => resolve(response.statusCode))
+          .on('error', err => reject(err));
+      });
+    };
+
     describe('#publish', function() {
       describe('when the cell is unpublished', function() {
         afterAll(function(done) {
@@ -349,14 +357,12 @@ describe('Cell', function() {
         it('should return the public link', function(done) {
           this.cell.publish()
             .then(({ link, exposure }) => {
-              const get = require('https').get;
               expect(link).toBeDefined();
               expect(exposure).toBeDefined();
               expect(link).toContain(this.dataTableId);
-              get(link, response => {
-                expect(response.statusCode).toEqual(200);
-              });
+              return getStatusCode(link);
             })
+            .then(code => expect(code).toEqual(200))
             .then(done, done.fail);
         });
       });
@@ -375,12 +381,8 @@ describe('Cell', function() {
 
         it('should unpublish the cell', function(done) {
           this.cell.unpublish()
-            .then(() => {
-              const get = require('https').get;
-              get(this.publicCellLink, response => {
-                expect(response.statusCode).toBeGreaterThan(399);
-              });
-            })
+            .then(() => getStatusCode(this.publicCellLink))
+            .then(code => expect(code).toBeGreaterThan(399))
             .then(done, done.fail);
         });
       });
