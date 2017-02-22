@@ -142,7 +142,7 @@ The console is useful for you as a developer. You can see what is changing, and 
 
 As an example, we're going to re-render the viewport when the `CELL_MODIFIED` notification is received. This is simple, since it requires only that we add a check inside of our `notificationHandler` function:
 
-{% label %}js/helpers.js{% endlabel %}
+{% label %}js/index.js{% endlabel %}
 ```js
 var notificationHandler = function(msg) {
   //write all events to the app console
