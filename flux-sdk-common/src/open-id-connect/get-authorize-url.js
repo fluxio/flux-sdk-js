@@ -18,7 +18,7 @@ function createAuthorizeUrl(responseType, state, nonce, clientId, redirectUri, {
     scope: SCOPE,
   });
 
-  return joinUrl(fluxUrl || FLUX_URL, AUTHORIZE_PATH, search);
+  return joinUrl([fluxUrl || FLUX_URL, AUTHORIZE_PATH, search]);
 }
 
 function getAuthorizeUrl(state, nonce, clientId, redirectUri, options = {}) {

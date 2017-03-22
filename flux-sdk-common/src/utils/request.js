@@ -75,9 +75,12 @@ function request(path, options = {}) {
     payload = body === undefined ? null : { body: JSON.stringify(body) };
     contentType = payload ? { 'Content-Type': 'application/json' } : null;
   }
-  const search = query ? stringifyQuery(query) : '';
-
-  return fetch(joinUrl(others.fluxUrl || fluxUrl, path, search), {
+  let urlItems = [others.fluxUrl || fluxUrl, path];
+  // Avoid trailing slash by only adding query when it is non-empty
+  if (query) {
+    urlItems.push(stringifyQuery(query));
+  }
+  return fetch(joinUrl(urlItems), {
     credentials: 'include',
     headers: {
       ...headers,

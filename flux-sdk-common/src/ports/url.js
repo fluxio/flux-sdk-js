@@ -6,8 +6,8 @@ function setUrlParse(parseFn) {
 
 function parseUrl(url) { return parse(url); }
 
-function joinUrl(...args) {
-  return args.join('/')
+function joinUrl(items) {
+  return items.join('/')
     .replace(/([^:])\/([\/|#|\?])/g, (match, p1, p2) => `${p1}${p2}`)
     .replace(/\/*(#|\?)\/*/g, (match, p1) => p1);
 }

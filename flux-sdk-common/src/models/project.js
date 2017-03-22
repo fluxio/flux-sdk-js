@@ -7,6 +7,7 @@ import {
   projectPath,
   projectMetaPath,
   projectUsersPath,
+  projectTessellatePath,
   removeUserPath,
   execFlowPath,
 } from '../constants/paths';
@@ -37,6 +38,7 @@ function Project(credentials, id) {
   checkProject({ credentials, id });
 
   const path = projectPath(id);
+  const tessPath = projectTessellatePath(id);
   const metaPath = projectMetaPath(id);
   let dataTable = null;
 
@@ -47,6 +49,13 @@ function Project(credentials, id) {
 
   function deleteProject() {
     return authenticatedRequest(credentials, path, { method: 'delete' });
+  }
+
+  function tessellate(body) {
+    return authenticatedRequest(credentials, tessPath, {
+      method: 'post',
+      body: body,
+    });
   }
 
   function getDataTable() {
@@ -119,6 +128,7 @@ function Project(credentials, id) {
 
   this.fetch = fetch;
   this.delete = deleteProject;
+  this.tessellate = tessellate;
   this.getDataTable = getDataTable;
   this.openWebSocket = openWebSocket;
   this.closeWebSocket = closeWebSocket;
