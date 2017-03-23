@@ -44,7 +44,7 @@ describe('utils.request', function() {
       it('should use the default flux URL', function() {
         request('SOME_PATH');
 
-        expect(url.joinUrl).toHaveBeenCalledWith('https://flux.io/', 'SOME_PATH', '');
+        expect(url.joinUrl).toHaveBeenCalledWith(['https://flux.io/', 'SOME_PATH']);
         expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', jasmine.objectContaining({
           credentials: 'include',
         }));
@@ -63,7 +63,7 @@ describe('utils.request', function() {
       it('should override the default flux URL', function() {
         request('SOME_PATH');
 
-        expect(url.joinUrl).toHaveBeenCalledWith('BASE_URL', 'SOME_PATH', '');
+        expect(url.joinUrl).toHaveBeenCalledWith(['BASE_URL', 'SOME_PATH']);
         expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', jasmine.objectContaining({
           credentials: 'include',
         }));
@@ -79,7 +79,7 @@ describe('utils.request', function() {
         request('SOME_PATH', { query: { foo: 'bar' } });
 
         expect(url.joinUrl)
-          .toHaveBeenCalledWith('https://flux.io/', 'SOME_PATH', 'STRINGIFIED_QUERY');
+          .toHaveBeenCalledWith(['https://flux.io/', 'SOME_PATH', 'STRINGIFIED_QUERY']);
       });
     });
 
@@ -113,7 +113,7 @@ describe('utils.request', function() {
       it('should add them to the fetch request', function() {
         request('SOME_PATH', { headers: { a: 'b' }, foo: 'bar' });
 
-        expect(url.joinUrl).toHaveBeenCalledWith('https://flux.io/', 'SOME_PATH', '');
+        expect(url.joinUrl).toHaveBeenCalledWith(['https://flux.io/', 'SOME_PATH']);
         expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', {
           credentials: 'include',
           headers: {
@@ -242,7 +242,7 @@ describe('utils.request', function() {
     it('should make a request with headers from the credentials', function() {
       authenticatedRequest(this.credentials, 'AUTHENTICATED_PATH');
 
-      expect(url.joinUrl).toHaveBeenCalledWith('https://flux.io/', 'AUTHENTICATED_PATH', '');
+      expect(url.joinUrl).toHaveBeenCalledWith(['https://flux.io/', 'AUTHENTICATED_PATH']);
       expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', {
         credentials: 'include',
         headers: {
@@ -326,7 +326,7 @@ describe('utils.request', function() {
         foo: 'bar',
       });
 
-      expect(url.joinUrl).toHaveBeenCalledWith('https://flux.io/', 'AUTHENTICATED_PATH', '');
+      expect(url.joinUrl).toHaveBeenCalledWith(['https://flux.io/', 'AUTHENTICATED_PATH']);
       expect(fetchPort.fetch).toHaveBeenCalledWith('JOINED_URL', {
         credentials: 'include',
         headers: {

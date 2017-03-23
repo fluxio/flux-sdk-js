@@ -54,7 +54,7 @@ function Project(credentials, id) {
   function tessellate(body) {
     return authenticatedRequest(credentials, tessPath, {
       method: 'post',
-      body: body,
+      body,
     });
   }
 

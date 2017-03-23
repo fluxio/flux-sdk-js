@@ -75,7 +75,7 @@ function request(path, options = {}) {
     payload = body === undefined ? null : { body: JSON.stringify(body) };
     contentType = payload ? { 'Content-Type': 'application/json' } : null;
   }
-  let urlItems = [others.fluxUrl || fluxUrl, path];
+  const urlItems = [others.fluxUrl || fluxUrl, path];
   // Avoid trailing slash by only adding query when it is non-empty
   if (query) {
     urlItems.push(stringifyQuery(query));
