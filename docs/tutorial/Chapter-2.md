@@ -18,7 +18,7 @@ In order to create a viewport, we will need to include a reference to the viewpo
 ...
 <script src="js/config.js"></script>
 <!-- the Flux Viewport -->
-<script src="https://unpkg.com/flux-viewport@0.33.2"></script>
+<script src="https://unpkg.com/flux-viewport@0.34.2"></script>
 <!-- the Flux JS SDK and helpers-->
 <script src="https://unpkg.com/flux-sdk-browser@0.4/dist/flux-sdk-min.js"></script>
 ...
