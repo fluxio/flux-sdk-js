@@ -3,6 +3,8 @@
 * [Installation](#installation)
 * [Environment Configuration](#environment-configuration)
 * [Development](#development)
+* [Testing](#testing)
+* [Environment](#environment)
 * [Documentation](https://flux.gitbooks.io/flux-javascript-sdk/content/)
 * [Example](https://github.com/fluxio/flux-sdk-js/tree/master/flux-sdk-node/example)
 
@@ -57,3 +59,10 @@ existing session.
 
 **FLUX_TOKEN**: Set if using `SKIP_AUTH_FLOW` is `true`. Must be a valid token that corresponds
 to the provided `ACCESS_TOKEN`.
+
+### Environment
+To run the tests you can use the flux command line client to set the required environment variables:
+* Get the flux command line client. [bitbucket/command-line-client](https://bitbucket.org/vannevartech/command-line-client)
+* Run `eval $(flux env test --clientId=f219b172-7264-429a-a23b-25db4bfd2e48 --clientSecret=894602ce-ac99-4a5e-86b6-ee99365d67a5)`
+* Follow the auth flow to log in. Allow "SDK Tests" to access your account.
+* This will have set the appropriate environment variables. To verify you can run `echo $FLUX_TOKEN` and it should print the value.

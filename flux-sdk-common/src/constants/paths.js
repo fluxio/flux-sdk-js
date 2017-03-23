@@ -9,8 +9,7 @@ export const PROJECTS_PATH = 'api/projects/';
 export const projectPath = id => `p/${id}/`;
 export const projectMetaPath = id => `${projectPath(id)}api/meta/`;
 export const projectUsersPath = id => `api/v1/projects/${id}/users/`;
-export const projectTessellatePath = id =>
-    `p/${id}/api/blockexec?block=flux-internal/parasolid/Parasolid`;
+export const projectBlockExecPath = id => `p/${id}/api/blockexec`;
 export const removeUserPath = (id, userId) => `${projectUsersPath(id)}${userId}`;
 export const execFlowPath = id => `p/${id}/api/flowexec`;
 
