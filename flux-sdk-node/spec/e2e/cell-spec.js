@@ -346,7 +346,7 @@ describe('Cell', function() {
         get(url, response => resolve(response.statusCode))
           .on('error', err => reject(err));
       });
-    };
+    }
 
     describe('#publish', function() {
       describe('when the cell is unpublished', function() {
