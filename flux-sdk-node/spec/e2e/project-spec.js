@@ -1,9 +1,10 @@
 const DataTable = require('flux-sdk-common/lib/models/data-table');
+const projectName = 'JS SDK TEST PROJECT';
 
 describe('Project', function() {
   describe('instance methods', function() {
     beforeAll(function(done) {
-      this.sdk.Project.createProject(this.credentials, 'ORIGINAL NAME')
+      this.sdk.Project.createProject(this.credentials, projectName)
         .then(({ original: { id } }) => {
           this.projectId = id;
           this.project = new this.sdk.Project(this.credentials, id);
@@ -76,7 +77,7 @@ describe('Project', function() {
 
       it('should receive a valid project', function() {
         expect(this.original.id).toEqual(this.projectId);
-        expect(this.original.name).toEqual('ORIGINAL NAME');
+        expect(this.original.name).toEqual(projectName);
         expect(this.original.creator_id).toEqual(this.userProfile.id);
         expect(this.original.creator).toEqual(this.userFullName);
         expect(this.original.created_at).toEqual(jasmine.any(String));

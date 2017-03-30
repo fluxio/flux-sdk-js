@@ -3,6 +3,8 @@
 * [Installation](#installation)
 * [Environment Configuration](#environment-configuration)
 * [Development](#development)
+* [Testing](#testing)
+* [Environment](#environment)
 * [Documentation](https://flux.gitbooks.io/flux-javascript-sdk/content/)
 * [Example](https://github.com/fluxio/flux-sdk-js/tree/master/flux-sdk-node/example)
 
@@ -57,3 +59,7 @@ existing session.
 
 **FLUX_TOKEN**: Set if using `SKIP_AUTH_FLOW` is `true`. Must be a valid token that corresponds
 to the provided `ACCESS_TOKEN`.
+
+### Environment
+Step by step instructions for Flux employees on how to set up the environment are here:
+https://docs.google.com/document/d/1joaFumoetcAfN9xCU-ND7vr2dMUXPGaNqa6syz_EqyU/edit#

@@ -526,6 +526,9 @@ describe('Cell', function() {
       });
 
       it('should transform the cells correctly', function() {
+        // NOTE: If this and many other tests are failing you need to update the command line
+        // environment to include an updated ACCESS_TOKEN and FLUX_TOKEN. For instructions
+        // see flux-sdk-js/flux-sdk-node/README.md#environment
         expect(this.transformed.entities.length).toEqual(this.original.length);
 
         expect(this.transformed.entities)

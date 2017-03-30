@@ -7,6 +7,7 @@ import {
   projectPath,
   projectMetaPath,
   projectUsersPath,
+  projectBlockExecPath,
   removeUserPath,
   execFlowPath,
 } from '../constants/paths';
@@ -37,6 +38,7 @@ function Project(credentials, id) {
   checkProject({ credentials, id });
 
   const path = projectPath(id);
+  const blockPath = projectBlockExecPath(id);
   const metaPath = projectMetaPath(id);
   let dataTable = null;
 
@@ -47,6 +49,19 @@ function Project(credentials, id) {
 
   function deleteProject() {
     return authenticatedRequest(credentials, path, { method: 'delete' });
+  }
+
+  /**
+   * Experimental function to execute queries against geometry worker.
+   * Can be used to tessellate brep models.
+   * NOTE: This function is not guaranteed to be stable, and could change at any time.
+   */
+  function parasolid(body) {
+    return authenticatedRequest(credentials, blockPath, {
+      method: 'post',
+      query: { block: 'flux-internal/parasolid/Parasolid' },
+      body,
+    });
   }
 
   function getDataTable() {
@@ -119,6 +134,7 @@ function Project(credentials, id) {
 
   this.fetch = fetch;
   this.delete = deleteProject;
+  this.parasolid = parasolid;
   this.getDataTable = getDataTable;
   this.openWebSocket = openWebSocket;
   this.closeWebSocket = closeWebSocket;
