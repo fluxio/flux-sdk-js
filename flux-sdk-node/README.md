@@ -61,8 +61,5 @@ existing session.
 to the provided `ACCESS_TOKEN`.
 
 ### Environment
-To run the tests you can use the flux command line client to set the required environment variables:
-* Get the flux command line client. [bitbucket/command-line-client](https://bitbucket.org/vannevartech/command-line-client)
-* Run `eval $(flux env test --clientId=f219b172-7264-429a-a23b-25db4bfd2e48 --clientSecret=894602ce-ac99-4a5e-86b6-ee99365d67a5)`
-* Follow the auth flow to log in. Allow "SDK Tests" to access your account.
-* This will have set the appropriate environment variables. To verify you can run `echo $FLUX_TOKEN` and it should print the value.
+Step by step instructions for Flux employees on how to set up the environment are here:
+https://docs.google.com/document/d/1joaFumoetcAfN9xCU-ND7vr2dMUXPGaNqa6syz_EqyU/edit#
