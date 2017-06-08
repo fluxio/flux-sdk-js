@@ -52,9 +52,9 @@ function Project(credentials, id) {
   }
 
   /**
-   * Experimental function to execute queries against geometry worker.
-   * Can be used to tessellate brep models.
-   * NOTE: This function is not guaranteed to be stable, and could change at any time.
+   * Execute queries against geometry worker.
+   * Can be used to tessellate solid and surface models to mesh.
+   * NOTE: This function is used by https://terra.flux.kitchen/
    */
   function parasolid(body) {
     return authenticatedRequest(credentials, blockPath, {
