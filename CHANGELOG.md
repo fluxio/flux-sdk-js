@@ -7,6 +7,10 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.4.9] - 6/8/2017
+
+* Add geometry block execution capabilities.
+
 ## [0.4.8] - 1/11/2017
 
 * Add Flow-as-a-Service execution capabilities.
