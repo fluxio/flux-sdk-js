@@ -4,8 +4,9 @@ import Cell from './cell';
 import { checkUser } from '../utils/schema-validators';
 import deprecated from '../utils/deprecated';
 import { authenticatedRequest } from '../utils/request';
-import { PROFILE_PATH, projectUsersPath } from '../constants/paths';
+import { COLLABORATORS_PATH, PROFILE_PATH, projectUsersPath } from '../constants/paths';
 import serializeProfile from '../serializers/profile-serializer';
+import serializeCollaborators from '../serializers/collaborators-serializer';
 import serializeList from '../serializers/user-serializer';
 
 function isLoggedIn(credentials = {}) {
@@ -34,6 +35,11 @@ function User(credentials = {}) {
   function fetchProfile() {
     return authenticatedRequest(credentials, PROFILE_PATH)
       .then(User.serializeProfile);
+  }
+
+  function fetchCollaborators() {
+    return authenticatedRequest(credentials, COLLABORATORS_PATH)
+      .then(User.serializeCollaborators);
   }
 
   function getProject(projectId) {
@@ -66,6 +72,7 @@ function User(credentials = {}) {
   }
 
   this.fetchProfile = fetchProfile;
+  this.fetchCollaborators = fetchCollaborators;
   this.getProject = getProject;
   this.getDataTable = getDataTable;
   this.getCell = getCell;
@@ -77,6 +84,7 @@ function User(credentials = {}) {
 
 User.isLoggedIn = isLoggedIn;
 User.serializeProfile = serializeProfile;
+User.serializeCollaborators = serializeCollaborators;
 User.serializeList = serializeList;
 User.listUsers = listUsers;
 
