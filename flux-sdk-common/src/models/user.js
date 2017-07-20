@@ -6,7 +6,7 @@ import deprecated from '../utils/deprecated';
 import { authenticatedRequest } from '../utils/request';
 import { COLLABORATORS_PATH, PROFILE_PATH, projectUsersPath } from '../constants/paths';
 import serializeProfile from '../serializers/profile-serializer';
-import serializeCollaborators from '../serializers/collaborators-serializer';
+import { serializeObject as serializeCollaborators } from '../serializers/collaborator-serializer';
 import serializeList from '../serializers/user-serializer';
 
 function isLoggedIn(credentials = {}) {
