@@ -14,13 +14,19 @@ import {
   UNIFIED,
   SUBSCRIBE,
   DATA_TABLE_SUBCHANNEL,
+  ISSUE_SUBCHANNEL,
 } from '../constants/web-sockets';
+import {
+  ISSUE_CREATED,
+  ISSUE_UPDATED,
+} from '../constants/issue-notification-types';
 import { authenticatedRequest } from '../utils/request';
 import { serializeDataTableMessage } from '../serializers/message-serializer';
 import serializeHistory from '../serializers/history-serializer';
 
 const notificationTypeKeys = Object.keys(dataTableNotificationTypes)
-  .map(key => dataTableNotificationTypes[key]);
+  .map(key => dataTableNotificationTypes[key])
+  .concat([ ISSUE_CREATED, ISSUE_UPDATED ]);
 
 function initializeHandlers() {
   return notificationTypeKeys.reduce((acc, key) => {
@@ -52,16 +58,25 @@ function DataTable(credentials, id) {
       .then(path => path.wsAddr);
   }
 
-  function handleMessage(message) {
-    const { type, body } = DataTable.serializeMessage(message);
+  function handleDataTableMessage(message) {
+    const msg = DataTable.serializeMessage(message);
 
     // TODO(isobel): Somehow notify the application layer that a message
     // has been dropped if there is no matching handler.
+    handleMessage(handlers, msg);
+
+    handlers[DATA_TABLE_ALL].forEach(handler => handler({ type, body }));
+  }
+
+  function handleIssueMessage(message) {
+    handleMessage(handlers, message);
+  }
+
+  function handleMessage(handlers, message) {
+    const { type, body } = message;
     if (handlers[type]) {
       handlers[type].forEach(handler => handler(body));
     }
-
-    handlers[DATA_TABLE_ALL].forEach(handler => handler({ type, body }));
   }
 
   function openWebSocket(options = {}) {
@@ -75,7 +90,8 @@ function DataTable(credentials, id) {
       ...others,
       credentials,
     });
-    webSocket.addHandler(DATA_TABLE_SUBCHANNEL, handleMessage);
+    webSocket.addHandler(DATA_TABLE_SUBCHANNEL, handleDataTableMessage);
+    webSocket.addHandler(ISSUE_SUBCHANNEL, handleIssueMessage);
     return webSocket;
   }
 

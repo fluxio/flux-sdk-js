@@ -1,5 +1,7 @@
 import validator from 'is-my-json-valid';
-
+import topicSchema from '../schemas/bcf/topic';
+import viewpointSchema from '../schemas/bcf/viewpoint';
+import commentSchema from '../schemas/bcf/comment';
 import { DEBUG } from '../config';
 
 const verbose = DEBUG;
@@ -15,6 +17,22 @@ function validate(type, schemaValidator, data) {
       throw new Error(baseMessage);
     }
   }
+}
+
+const validateBCFTopic = validator(topicSchema);
+const validateBCFViewpoint = validator(viewpointSchema);
+const validateBCFComment = validator(commentSchema);
+
+function checkBCFTopic(topic) {
+  validate('topic', validateBCFTopic, topic);
+}
+
+function checkBCFViewpoint(viewpoint) {
+  validate('viewpoint', validateBCFViewpoint, viewpoint);
+}
+
+function checkBCFComment(comment) {
+  validate('comment', validateBCFComment, comment);
 }
 
 const credentialsSchema = {
@@ -98,4 +116,7 @@ export {
   checkProject,
   checkDataTable,
   checkCell,
+  checkBCFTopic,
+  checkBCFViewpoint,
+  checkBCFComment,
 };

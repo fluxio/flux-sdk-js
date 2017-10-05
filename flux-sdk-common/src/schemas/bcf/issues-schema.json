@@ -1,0 +1,510 @@
+{
+    "definitions": {
+        "pb.NotificationsRequest": {
+            "title": "NotificationsRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                }
+            }
+        },
+        "pb.XYZ": {
+            "title": "XYZ",
+            "type": "object",
+            "properties": {
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "z": {
+                    "type": "number"
+                }
+            }
+        },
+        "pb.CreateViewpointsRequest": {
+            "title": "CreateViewpointsRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "viewpoints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.Viewpoint"
+                    }
+                }
+            }
+        },
+        "pb.ViewpointsRequest": {
+            "title": "ViewpointsRequest",
+            "type": "object",
+            "properties": {
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "viewpoint_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "pb.Viewpoint": {
+            "title": "Viewpoint",
+            "type": "object",
+            "properties": {
+                "guid": {
+                    "type": "string"
+                },
+                "clipping_planes": {
+                    "type": "array",
+                    "items": {
+                        "title": "ClippingPlane",
+                        "type": "object",
+                        "properties": {
+                            "location": {
+                                "$ref": "#/definitions/pb.XYZ"
+                            },
+                            "direction": {
+                                "$ref": "#/definitions/pb.XYZ"
+                            }
+                        }
+                    }
+                },
+                "perspective_camera": {
+                    "title": "PerspectiveCamera",
+                    "type": "object",
+                    "properties": {
+                        "camera_view_point": {
+                            "$ref": "#/definitions/pb.XYZ"
+                        },
+                        "camera_direction": {
+                            "$ref": "#/definitions/pb.XYZ"
+                        },
+                        "camera_up_vector": {
+                            "$ref": "#/definitions/pb.XYZ"
+                        },
+                        "field_of_view": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "orthogonal_camera": {
+                    "title": "OrthogonalCamera",
+                    "type": "object",
+                    "properties": {
+                        "camera_view_point": {
+                            "$ref": "#/definitions/pb.XYZ"
+                        },
+                        "camera_direction": {
+                            "$ref": "#/definitions/pb.XYZ"
+                        },
+                        "camera_up_vector": {
+                            "$ref": "#/definitions/pb.XYZ"
+                        },
+                        "view_to_world_scale": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "snapshot": {
+                    "title": "Snapshot",
+                    "type": "object",
+                    "properties": {
+                        "snapshot_type": {
+                            "type": "string"
+                        },
+                        "snapshot_data": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "flux_properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "pb.ViewpointsResponse": {
+            "title": "ViewpointsResponse",
+            "type": "object",
+            "properties": {
+                "viewpoints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.Viewpoint"
+                    }
+                }
+            }
+        },
+        "pb.UpdateViewpointRequest": {
+            "title": "UpdateViewpointRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "viewpoint_id": {
+                    "type": "string"
+                },
+                "viewpoint": {
+                    "$ref": "#/definitions/pb.Viewpoint"
+                }
+            }
+        },
+        "pb.UpdateViewpointResponse": {
+            "title": "UpdateViewpointResponse",
+            "type": "object",
+            "properties": {
+                "viewpoint": {
+                    "$ref": "#/definitions/pb.Viewpoint"
+                },
+                "previous": {
+                    "$ref": "#/definitions/pb.Viewpoint"
+                }
+            }
+        },
+        "google.protobuf.Timestamp": {
+            "title": "Timestamp",
+            "type": "object",
+            "properties": {
+                "seconds": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "nanos": {
+                    "type": "integer",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647
+                }
+            }
+        },
+        "pb.CreateCommentsRequest": {
+            "title": "CreateCommentsRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.Comment"
+                    }
+                }
+            }
+        },
+        "pb.CommentsRequest": {
+            "title": "CommentsRequest",
+            "type": "object",
+            "properties": {
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "comment_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "pb.Comment": {
+            "title": "Comment",
+            "type": "object",
+            "properties": {
+                "guid": {
+                    "type": "string"
+                },
+                "topic_guid": {
+                    "type": "string"
+                },
+                "date": {
+                    "$ref": "#/definitions/google.protobuf.Timestamp"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "modified_date": {
+                    "$ref": "#/definitions/google.protobuf.Timestamp"
+                },
+                "modified_author": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "viewpoint_guid": {
+                    "type": "string"
+                },
+                "reply_to_comment_guid": {
+                    "type": "string"
+                },
+                "flux_properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "pb.CommentsResponse": {
+            "title": "CommentsResponse",
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.Comment"
+                    }
+                }
+            }
+        },
+        "pb.UpdateCommentRequest": {
+            "title": "UpdateCommentRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "comment_id": {
+                    "type": "string"
+                },
+                "comment": {
+                    "$ref": "#/definitions/pb.Comment"
+                }
+            }
+        },
+        "pb.UpdateCommentResponse": {
+            "title": "UpdateCommentResponse",
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "$ref": "#/definitions/pb.Comment"
+                },
+                "previous": {
+                    "$ref": "#/definitions/pb.Comment"
+                }
+            }
+        },
+        "pb.CreateTopicsRequest": {
+            "title": "CreateTopicsRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.Topic"
+                    }
+                }
+            }
+        },
+        "pb.TopicsRequest": {
+            "title": "TopicsRequest",
+            "type": "object",
+            "properties": {
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "pb.Topic": {
+            "title": "Topic",
+            "type": "object",
+            "properties": {
+                "guid": {
+                    "type": "string"
+                },
+                "creation_date": {
+                    "$ref": "#/definitions/google.protobuf.Timestamp"
+                },
+                "creation_author": {
+                    "type": "string"
+                },
+                "modified_date": {
+                    "$ref": "#/definitions/google.protobuf.Timestamp"
+                },
+                "modified_author": {
+                    "type": "string"
+                },
+                "topic_type": {
+                    "title": "TopicType",
+                    "type": "string",
+                    "enum": [
+                        "ISSUE",
+                        "REQUEST",
+                        "COMMENT",
+                        "SOLUTION"
+                    ]
+                },
+                "topic_status": {
+                    "title": "TopicStatus",
+                    "type": "string",
+                    "enum": [
+                        "OPEN",
+                        "IN_PROGRESS",
+                        "RESOLVED",
+                        "CLOSED"
+                    ]
+                },
+                "priority": {
+                    "title": "BCFPriority",
+                    "type": "string",
+                    "enum": [
+                        "TRIAGE",
+                        "MINOR",
+                        "MAJOR",
+                        "CRITICAL"
+                    ]
+                },
+                "due_date": {
+                    "$ref": "#/definitions/google.protobuf.Timestamp"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "assigned_to": {
+                    "type": "string"
+                },
+                "labels": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "bim_snippet": {
+                    "title": "BIMSnippet",
+                    "type": "object",
+                    "properties": {
+                        "reference": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "flux_properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "pb.TopicsResponse": {
+            "title": "TopicsResponse",
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pb.Topic"
+                    }
+                }
+            }
+        },
+        "pb.UpdateTopicRequest": {
+            "title": "UpdateTopicRequest",
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                },
+                "topic_id": {
+                    "type": "string"
+                },
+                "topic": {
+                    "$ref": "#/definitions/pb.Topic"
+                }
+            }
+        },
+        "pb.UpdateTopicResponse": {
+            "title": "UpdateTopicResponse",
+            "type": "object",
+            "properties": {
+                "topic": {
+                    "$ref": "#/definitions/pb.Topic"
+                },
+                "previous": {
+                    "$ref": "#/definitions/pb.Topic"
+                }
+            }
+        },
+        "pb.DeleteTopicsResponse": {
+            "title": "DeleteTopicsResponse",
+            "type": "object",
+            "properties": {}
+        }
+    }
+}
