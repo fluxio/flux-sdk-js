@@ -12,7 +12,7 @@ import {
 
 
 function hydrate(credentials, projectId, topicId, comment) {
-  const c = new Topic(credentials, projectId, topicId, comment.guid);
+  const c = new Comment(credentials, projectId, topicId, comment.guid);
   copyFields(c, comment);
   return c;
 }
@@ -47,7 +47,7 @@ function Comment(credentials, projectId, topicId, commentId) {
   const path = bcfCommentPath(projectId, topicId, commentId);
 
   function fetch() {
-    let self = this;
+    const self = this;
     return authenticatedRequest(credentials, path)
     .then(Comment.serialize)
     .then((comment) => copyFields(self, comment));

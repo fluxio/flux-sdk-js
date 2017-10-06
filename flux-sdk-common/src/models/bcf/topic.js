@@ -36,12 +36,12 @@ function listTopics(credentials, projectId) {
 }
 
 function createTopic(credentials, projectId, newTopic) {
-  return createTopics(credentials, projectId, [ newTopic ])
+  return createTopics(credentials, projectId, [newTopic])
   .then((topics) => topics[0]);
 }
 
 function createTopics(credentials, projectId, newTopics) {
-  for (let i=0, len=newTopics.length; i<len; i++) {
+  for (let i = 0, len = newTopics.length; i < len; i++) {
     checkTopic(newTopics[i]);
   }
   return authenticatedRequest(credentials, bcfTopicsPath(projectId), {
@@ -56,10 +56,10 @@ function Topic(credentials, projectId, id) {
   const path = bcfTopicPath(projectId, id);
 
   function fetch() {
-    let self = this;
+    const self = this;
     return authenticatedRequest(credentials, path)
     .then(Topic.serialize)
-    .then((topic) => copyFields(self, topic))
+    .then((topic) => copyFields(self, topic));
   }
 
   function update(newTopic) {
@@ -71,7 +71,7 @@ function Topic(credentials, projectId, id) {
   }
 
   function createViewpoint(newViewpoint) {
-    return Viewpoint.createViewpoint(createImageBitmap, projectId, id, newViewpoint);
+    return Viewpoint.createViewpoint(credentials, projectId, id, newViewpoint);
   }
 
   function getComments() {
@@ -84,6 +84,10 @@ function Topic(credentials, projectId, id) {
 
   this.fetch = fetch;
   this.update = update;
+  this.getViewpoints = getViewpoints;
+  this.createViewpoint = createViewpoint;
+  this.getComments = getComments;
+  this.createComment = createComment;
 }
 
 Topic.listTopics = listTopics;

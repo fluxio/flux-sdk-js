@@ -26,7 +26,7 @@ import serializeHistory from '../serializers/history-serializer';
 
 const notificationTypeKeys = Object.keys(dataTableNotificationTypes)
   .map(key => dataTableNotificationTypes[key])
-  .concat([ ISSUE_CREATED, ISSUE_UPDATED ]);
+  .concat([ISSUE_CREATED, ISSUE_UPDATED]);
 
 function initializeHandlers() {
   return notificationTypeKeys.reduce((acc, key) => {
@@ -65,17 +65,17 @@ function DataTable(credentials, id) {
     // has been dropped if there is no matching handler.
     handleMessage(handlers, msg);
 
-    handlers[DATA_TABLE_ALL].forEach(handler => handler({ type, body }));
+    handlers[DATA_TABLE_ALL].forEach(handler => handler(msg));
   }
 
   function handleIssueMessage(message) {
     handleMessage(handlers, message);
   }
 
-  function handleMessage(handlers, message) {
+  function handleMessage(msgHandlers, message) {
     const { type, body } = message;
-    if (handlers[type]) {
-      handlers[type].forEach(handler => handler(body));
+    if (msgHandlers[type]) {
+      msgHandlers[type].forEach(handler => handler(body));
     }
   }
 

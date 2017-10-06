@@ -13,7 +13,7 @@ import {
 
 
 function hydrate(credentials, projectId, topicId, viewpoint) {
-  const v = new Topic(credentials, projectId, topicId, viewpoint.guid);
+  const v = new Viewpoint(credentials, projectId, topicId, viewpoint.guid);
   copyFields(v, viewpoint);
   return v;
 }
@@ -52,7 +52,7 @@ function Viewpoint(credentials, projectId, topicId, viewpointId) {
   const path = bcfViewpointPath(projectId, topicId, viewpointId);
 
   function fetch() {
-    let self = this;
+    const self = this;
     return authenticatedRequest(credentials, path)
     .then(Viewpoint.serialize)
     .then((viewpoint) => copyFields(self, viewpoint));
@@ -71,7 +71,7 @@ function Viewpoint(credentials, projectId, topicId, viewpointId) {
   this.getSnapshot = getSnapshot;
 }
 
-Viewpoint.listViewpoints = listViewpoint;
+Viewpoint.listViewpoints = listViewpoints;
 Viewpoint.createViewpoint = createViewpoint;
 Viewpoint.serialize = serialize;
 Viewpoint.serializeList = serializeList;
