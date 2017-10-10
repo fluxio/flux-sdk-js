@@ -19,6 +19,10 @@ pushd `dirname $0`
   pushd flux-sdk-browser
     npm link flux-sdk-common
     npm link
+    pushd example
+      cp ../dist/flux-sdk.js .
+      cp ../dist/flux-sdk.js.map .
+    popd
   popd
 
   pushd flux-sdk-apps-script

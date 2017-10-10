@@ -1,6 +1,7 @@
-var CLIENT_ID = 'replace-with-your-client-id';
+var CLIENT_ID = 'f61a840c-5434-424d-896b-732a71bf6888';
 
 var sdk = new FluxSdk(CLIENT_ID, {
+  fluxUrl: 'https://localhost:8443',
   redirectUri: window.location.origin
 });
 
@@ -58,4 +59,31 @@ function setCredentials(credentials) {
 
 function resetCredentials() {
   localStorage.clear();
+}
+
+function getTopics() {
+  var state = {
+    user: sdk.getUser(getCredentials()),
+    project: null,
+    topics: null,
+  };
+  return getAProject(state)
+  .then(listTopics);
+}
+
+function getAProject(state) {
+  return state.user.listProjects()
+  .then(function(projects) {
+    var projectId = projects.entities[0].id;
+    state.project = state.user.getProject(projectId);
+    return state;
+  });
+}
+
+function listTopics(state) {
+  return state.project.getTopics()
+  .then(function(topics) {
+    state.topics = topics;
+    return state;
+  })
 }

@@ -51,7 +51,7 @@ export default {
       ],
     },
     dueDate: {
-      type: 'string',
+      type: ['string', null],
       format: 'date-time',
     },
     title: {
@@ -71,7 +71,7 @@ export default {
     },
     bimSnippet: {
       title: 'BIMSnippet',
-      type: 'object',
+      type: ['object', 'null'],
       properties: {
         reference: {
           type: 'array',
@@ -83,9 +83,6 @@ export default {
     },
     fluxProperties: {
       type: 'object',
-      additionalProperties: {
-        type: 'string',
-      },
     },
   },
 };

@@ -29,7 +29,7 @@ function updateTopic(credentials, projectId, topicId, newTopic) {
   .then((topic) => hydrate(credentials, projectId, topic));
 }
 
-function listTopics(credentials, projectId) {
+function getTopics(credentials, projectId) {
   return authenticatedRequest(credentials, bcfTopicsPath(projectId))
   .then(Topic.serializeList)
   .then((topics) => topics.map((t) => hydrate(credentials, projectId, t)));
@@ -90,7 +90,7 @@ function Topic(credentials, projectId, id) {
   this.createComment = createComment;
 }
 
-Topic.listTopics = listTopics;
+Topic.getTopics = getTopics;
 Topic.createTopics = createTopics;
 Topic.createTopic = createTopic;
 Topic.serialize = serialize;

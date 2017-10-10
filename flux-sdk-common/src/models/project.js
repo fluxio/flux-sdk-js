@@ -133,8 +133,8 @@ function Project(credentials, id) {
     });
   }
 
-  function listTopics() {
-    return Topic.listTopics(credentials, id);
+  function getTopics() {
+    return Topic.getTopics(credentials, id);
   }
 
   function createTopic(newTopic) {
@@ -155,7 +155,7 @@ function Project(credentials, id) {
   this.share = share;
   this.unshare = unshare;
   this.executeFlow = executeFlow;
-  this.listTopics = listTopics;
+  this.getTopics = getTopics;
   this.createTopic = createTopic;
   this.createTopics = createTopics;
 }

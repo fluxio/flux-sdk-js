@@ -167,9 +167,6 @@ export default {
     },
     fluxProperties: {
       type: 'object',
-      additionalProperties: {
-        type: 'string',
-      },
     },
   },
 };

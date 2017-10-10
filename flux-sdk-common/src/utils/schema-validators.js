@@ -19,20 +19,20 @@ function validate(type, schemaValidator, data) {
   }
 }
 
-const validateBCFTopic = validator(topicSchema);
-const validateBCFViewpoint = validator(viewpointSchema);
-const validateBCFComment = validator(commentSchema);
+const validateTopic = validator(topicSchema);
+const validateViewpoint = validator(viewpointSchema);
+const validateComment = validator(commentSchema);
 
-function checkBCFTopic(topic) {
-  validate('topic', validateBCFTopic, topic);
+function checkTopic(topic) {
+  validate('topic', validateTopic, topic);
 }
 
-function checkBCFViewpoint(viewpoint) {
-  validate('viewpoint', validateBCFViewpoint, viewpoint);
+function checkViewpoint(viewpoint) {
+  validate('viewpoint', validateViewpoint, viewpoint);
 }
 
-function checkBCFComment(comment) {
-  validate('comment', validateBCFComment, comment);
+function checkComment(comment) {
+  validate('comment', validateComment, comment);
 }
 
 const credentialsSchema = {
@@ -116,7 +116,7 @@ export {
   checkProject,
   checkDataTable,
   checkCell,
-  checkBCFTopic,
-  checkBCFViewpoint,
-  checkBCFComment,
+  checkTopic,
+  checkViewpoint,
+  checkComment,
 };
