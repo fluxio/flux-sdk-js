@@ -4,7 +4,7 @@ describe('Comment', function() {
     .then(({ transformed: { id } }) => {
       this.project = this.user.getProject(id);
       return this.project.createTopic({
-        title: 'test comments'
+        title: 'test comments',
       })
       .then((newTopic) => {
         this.topic = newTopic;
@@ -51,7 +51,7 @@ describe('Comment', function() {
     describe('#update', function() {
       it('should update the comment', function(done) {
         const commentText = 'this should get updated';
-        const updatedText = 'it was!'
+        const updatedText = 'it was!';
         this.topic.createComment({
           comment: commentText,
         })

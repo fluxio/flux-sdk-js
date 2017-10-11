@@ -11,7 +11,7 @@ describe('Topic', function() {
         return this.user.fetchProfile()
         .then(({ transformed: { email } }) => {
           this.email = email;
-        })
+        });
       })
       .then(done, done.fail);
   });
@@ -22,7 +22,7 @@ describe('Topic', function() {
 
   describe('instance methods', function() {
     beforeAll(function() {
-      this.topicTitle = 'JS SDK Test'
+      this.topicTitle = 'JS SDK Test';
       this.topicDescription = 'a test topic';
       this.topicAssignedTo = this.email;
       this.topic = null;
@@ -91,7 +91,7 @@ describe('Topic', function() {
         .then((newTopic) => {
           state.topic = newTopic;
         })
-        .then(done, done.fail)
+        .then(done, done.fail);
       });
       it('should fetch a topic', function(done) {
         state.topic.fetch()

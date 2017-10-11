@@ -24,8 +24,11 @@ function createAuthHeaders({ tokenType, accessToken, fluxToken, clientId }) {
 }
 
 function handleJson(response) {
-  return response.json()
-    .catch(() => EMPTY_BODY);
+  const jsonPromise = response.json();
+  if (jsonPromise) {
+    return jsonPromise.catch(() => EMPTY_BODY);
+  }
+  return new Promise((resolve) => { resolve(EMPTY_BODY); });
 }
 
 function handleAuxiliaryResponse(response) {
@@ -38,6 +41,7 @@ function handleAuxiliaryResponse(response) {
     })) : handleJson(response);
 }
 
+// Returns the response body as a stream.
 function handleImage(response) {
   return response.body;
 }
@@ -71,7 +75,11 @@ function handleResponse(response) {
 }
 
 function request(path, options = {}) {
-  const { query, body, headers, form, ...others } = options;
+  const { query, body, form, headers: _, ...others } = options;
+  let headers = options.headers;
+  if (!headers) {
+    headers = {};
+  }
   let payload;
   if (form) {
     const formEnc = form.constructor === Object ? urlEncodeObject(form) : form;
@@ -88,16 +96,15 @@ function request(path, options = {}) {
     }
   }
   const search = query ? stringifyQuery(query) : '';
-
   return fetch(joinUrl(others.fluxUrl || fluxUrl, path, search), {
+    ...others,
     credentials: 'include',
     headers: {
-      ...headers,
       'User-Agent': USER_AGENT,
       'Flux-Plugin-Platform': PLATFORM,
+      ...headers,
     },
     ...payload,
-    ...others,
   })
     .then(handleResponse);
 }

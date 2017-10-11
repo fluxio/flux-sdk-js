@@ -13,9 +13,9 @@ import {
 } from '../../serializers/bcf/viewpoint';
 
 const snapshotMimeTypes = {
-  'png': 'image/png',
-  'jpg': 'image/jpeg',
-  'jpeg': 'image/jpeg',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
 };
 
 function hydrate(credentials, projectId, topicId, viewpoint) {
@@ -43,13 +43,14 @@ function createViewpoint(credentials, projectId, topicId, newViewpoint) {
 function _createSnapshot(credentials, projectId, topicId, viewpointId, snapshot) {
   const contentType = snapshotMimeTypes[snapshot.snapshotType];
   if (!contentType) {
-    throw new Error(`${contentType} is not a valid snapshot type. It must be one of ${Object.keys(snapshotMimeTypes)}`);
+    throw new Error(`${contentType} is not a valid snapshot type.` +
+      `It must be one of ${Object.keys(snapshotMimeTypes)}`);
   }
   // TODO(alcorn) BCF snapshot validator
   return authenticatedRequest(credentials, bcfSnapshotPath(projectId, topicId, viewpointId), {
     body: snapshot.snapshotData,
     headers: {
-      "Content-Type": contentType,
+      'Content-Type': contentType,
     },
     method: 'post',
   });

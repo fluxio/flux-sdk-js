@@ -9,6 +9,11 @@
     "space-before-function-paren": [2, "never"],
     "no-use-before-define": ["error", { "functions": false }],
     "max-len": 1,
-    "no-param-reassign": 0
+    "no-param-reassign": 0,
+    "no-unused-vars": ["error", {
+      // Ignore any variables that begin with an underscore
+      "varsIgnorePattern": "_",
+      "argsIgnorePattern": "_"
+    }]
   }
 }
