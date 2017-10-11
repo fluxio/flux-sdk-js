@@ -24,8 +24,11 @@ function createAuthHeaders({ tokenType, accessToken, fluxToken, clientId }) {
 }
 
 function handleJson(response) {
-  return response.json()
-    .catch(() => EMPTY_BODY);
+  const jsonPromise = response.json();
+  if (jsonPromise) {
+    return jsonPromise.catch(() => EMPTY_BODY);
+  }
+  return new Promise((resolve) => { resolve(EMPTY_BODY); });
 }
 
 function handleAuxiliaryResponse(response) {
@@ -38,8 +41,16 @@ function handleAuxiliaryResponse(response) {
     })) : handleJson(response);
 }
 
+// Returns the response body as a stream.
+function handleImage(response) {
+  return response.body;
+}
+
 function handleSuccess(response) {
   const headers = response.headers;
+  if (headers.has('content-type') && headers.get('content-type').slice(0, 5) === 'image') {
+    return handleImage(response);
+  }
   return headers.has('flux-auxiliary-return') ?
     handleAuxiliaryResponse(response) : handleJson(response);
 }
@@ -64,29 +75,36 @@ function handleResponse(response) {
 }
 
 function request(path, options = {}) {
-  const { query, body, headers, form, ...others } = options;
+  const { query, body, form, headers: _, ...others } = options;
+  let headers = options.headers;
+  if (!headers) {
+    headers = {};
+  }
   let payload;
-  let contentType;
   if (form) {
     const formEnc = form.constructor === Object ? urlEncodeObject(form) : form;
     payload = { body: formEnc };
-    contentType = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
   } else {
-    payload = body === undefined ? null : { body: JSON.stringify(body) };
-    contentType = payload ? { 'Content-Type': 'application/json' } : null;
+    if (Object.keys(headers).map((h) => h.toLowerCase()).indexOf('content-type') < 0) {
+      payload = body === undefined ? null : { body: JSON.stringify(body) };
+      if (payload) {
+        headers['Content-Type'] = 'application/json';
+      }
+    } else {
+      payload = { body };
+    }
   }
   const search = query ? stringifyQuery(query) : '';
-
   return fetch(joinUrl(others.fluxUrl || fluxUrl, path, search), {
+    ...others,
     credentials: 'include',
     headers: {
-      ...headers,
-      ...contentType,
       'User-Agent': USER_AGENT,
       'Flux-Plugin-Platform': PLATFORM,
+      ...headers,
     },
     ...payload,
-    ...others,
   })
     .then(handleResponse);
 }

@@ -24,3 +24,15 @@ export const cellPath = (dataTableId, id) => (
 );
 export const publishCellPath = (projectId, cellId) =>
 `api/v1/projects/${projectId}/sharedata/${cellId}/`;
+
+export const BCF_PATH = 'api/bcf/2.1/';
+export const bcfProjectsPath = `${BCF_PATH}projects/`;
+export const bcfProjectPath = projectId => `${bcfProjectsPath}${projectId}/`;
+export const bcfTopicsPath = projectId => `${bcfProjectPath(projectId)}topics/`;
+export const bcfTopicPath = (projectId, topicId) => `${bcfTopicsPath(projectId)}${topicId}/`;
+export const bcfViewpointsPath = (projectId, topicId) => `${bcfTopicPath(projectId, topicId)}viewpoints/`;
+export const bcfViewpointPath = (projectId, topicId, viewpointId) => `${bcfViewpointsPath(projectId, topicId)}${viewpointId}/`;
+export const bcfSnapshotPath = (projectId, topicId, viewpointId) => `${bcfViewpointPath(projectId, topicId, viewpointId)}snapshot`;
+export const bcfCommentsPath = (projectId, topicId) => `${bcfTopicPath(projectId, topicId)}comments/`;
+export const bcfCommentPath = (projectId, topicId, commentId) => `${bcfCommentsPath(projectId, topicId)}${commentId}/`;
+

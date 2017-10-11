@@ -2,6 +2,7 @@ import { checkProject } from '../utils/schema-validators';
 import { authenticatedRequest } from '../utils/request';
 import DataTable from './data-table';
 import User from './user';
+import Topic from './bcf/topic';
 import {
   PROJECTS_PATH,
   projectPath,
@@ -132,6 +133,18 @@ function Project(credentials, id) {
     });
   }
 
+  function getTopics() {
+    return Topic.getTopics(credentials, id);
+  }
+
+  function createTopic(newTopic) {
+    return Topic.createTopic(credentials, id, newTopic);
+  }
+
+  function createTopics(newTopics) {
+    return Topic.createTopics(credentials, id, newTopics);
+  }
+
   this.fetch = fetch;
   this.delete = deleteProject;
   this.parasolid = parasolid;
@@ -142,6 +155,9 @@ function Project(credentials, id) {
   this.share = share;
   this.unshare = unshare;
   this.executeFlow = executeFlow;
+  this.getTopics = getTopics;
+  this.createTopic = createTopic;
+  this.createTopics = createTopics;
 }
 
 Project.listProjects = listProjects;
