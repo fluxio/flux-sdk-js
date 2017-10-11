@@ -39,7 +39,7 @@ function createComment(credentials, projectId, topicId, newComment) {
     body: newComment,
     method: 'post',
   })
-  .then(Comment.serializeList)
+  .then(Comment.serialize)
   .then((comment) => hydrate(credentials, projectId, topicId, comment));
 }
 
@@ -54,7 +54,13 @@ function Comment(credentials, projectId, topicId, commentId) {
   }
 
   function update(newComment) {
-    return updateComment(credentials, projectId, topicId, commentId, newComment);
+    const self = this;
+    copyFields(self, newComment);
+    return updateComment(credentials, projectId, topicId, commentId, this)
+    .then((updatedComment) => {
+      copyFields(self, updatedComment);
+      return self;
+    });
   }
 
   this.fetch = fetch;

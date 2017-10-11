@@ -63,7 +63,13 @@ function Topic(credentials, projectId, id) {
   }
 
   function update(newTopic) {
-    return updateTopic(credentials, projectId, id, newTopic);
+    const self = this;
+    copyFields(self, newTopic);
+    return updateTopic(credentials, projectId, id, self)
+    .then((updatedTopic) => {
+      copyFields(self, updatedTopic);
+      return self;
+    });
   }
 
   function getViewpoints() {

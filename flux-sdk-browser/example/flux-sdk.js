@@ -58,13 +58,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	__webpack_require__(86);
+	__webpack_require__(89);
 	
-	var _queryString = __webpack_require__(74);
+	var _queryString = __webpack_require__(77);
 	
 	var _queryString2 = _interopRequireDefault(_queryString);
 	
-	var _fluxSdkCommon = __webpack_require__(91);
+	var _fluxSdkCommon = __webpack_require__(94);
 	
 	var _fluxSdkCommon2 = _interopRequireDefault(_fluxSdkCommon);
 	
@@ -135,8 +135,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(54)
-	var ieee754 = __webpack_require__(55)
+	var base64 = __webpack_require__(57)
+	var ieee754 = __webpack_require__(58)
 	var isArray = __webpack_require__(34)
 	
 	exports.Buffer = Buffer
@@ -2190,7 +2190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _paths = __webpack_require__(4);
 	
-	var _fetch = __webpack_require__(48);
+	var _fetch = __webpack_require__(51);
 	
 	var _url = __webpack_require__(28);
 	
@@ -2241,8 +2241,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }) : handleJson(response);
 	}
 	
+	function handleImage(response) {
+	  return response.body;
+	}
+	
 	function handleSuccess(response) {
 	  var headers = response.headers;
+	  if (headers.has('content-type') && headers.get('content-type').slice(0, 5) === 'image') {
+	    return handleImage(response);
+	  }
 	  return headers.has('flux-auxiliary-return') ? handleAuxiliaryResponse(response) : handleJson(response);
 	}
 	
@@ -2274,20 +2281,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      others = _objectWithoutProperties(options, ['query', 'body', 'headers', 'form']);
 	
 	  var payload = void 0;
-	  var contentType = void 0;
 	  if (form) {
 	    var formEnc = form.constructor === Object ? urlEncodeObject(form) : form;
 	    payload = { body: formEnc };
-	    contentType = { 'Content-Type': 'application/x-www-form-urlencoded' };
+	    headers['Content-Type'] = 'application/x-www-form-urlencoded';
 	  } else {
-	    payload = body === undefined ? null : { body: JSON.stringify(body) };
-	    contentType = payload ? { 'Content-Type': 'application/json' } : null;
+	    if (Object.keys(headers).map(function (h) {
+	      return h.toLowerCase();
+	    }).indexOf('content-type') < 0) {
+	      payload = body === undefined ? null : { body: JSON.stringify(body) };
+	      if (payload) {
+	        headers['Content-Type'] = 'application/json';
+	      }
+	    } else {
+	      payload = { body: body };
+	    }
 	  }
 	  var search = query ? (0, _querystring.stringifyQuery)(query) : '';
 	
 	  return (0, _fetch.fetch)((0, _url.joinUrl)(others.fluxUrl || fluxUrl, path, search), _extends({
 	    credentials: 'include',
-	    headers: _extends({}, headers, contentType, {
+	    headers: _extends({}, headers, {
 	      'User-Agent': _config.USER_AGENT,
 	      'Flux-Plugin-Platform': _config.PLATFORM
 	    })
@@ -2864,7 +2878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	exports.isPrimitive = isPrimitive;
 	
-	exports.isBuffer = __webpack_require__(85);
+	exports.isBuffer = __webpack_require__(88);
 	
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -2908,7 +2922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(84);
+	exports.inherits = __webpack_require__(87);
 	
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -3225,11 +3239,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var inherits = __webpack_require__(3);
 	
 	inherits(Stream, EE);
-	Stream.Readable = __webpack_require__(78);
-	Stream.Writable = __webpack_require__(80);
-	Stream.Duplex = __webpack_require__(75);
-	Stream.Transform = __webpack_require__(79);
-	Stream.PassThrough = __webpack_require__(77);
+	Stream.Readable = __webpack_require__(81);
+	Stream.Writable = __webpack_require__(83);
+	Stream.Duplex = __webpack_require__(78);
+	Stream.Transform = __webpack_require__(82);
+	Stream.PassThrough = __webpack_require__(80);
 	
 	// Backwards-compat with node 0.4.x
 	Stream.Stream = Stream;
@@ -3760,7 +3774,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.PLATFORM = exports.USER_AGENT = exports.VERSION = exports.DEBUG = undefined;
 	
-	var _package = __webpack_require__(56);
+	var _package = __webpack_require__(59);
 	
 	var DEBUG = exports.DEBUG = (undefined) !== 'production';
 	var VERSION = exports.VERSION = _package.version;
@@ -3812,7 +3826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _dataTableNotificationTypes2 = _interopRequireDefault(_dataTableNotificationTypes);
 	
-	var _webSockets = __webpack_require__(90);
+	var _webSockets = __webpack_require__(93);
 	
 	var _issueNotificationTypes = __webpack_require__(46);
 	
@@ -4819,7 +4833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/*<replacement>*/
 	var internalUtil = {
-	  deprecate: __webpack_require__(83)
+	  deprecate: __webpack_require__(86)
 	};
 	/*</replacement>*/
 	
@@ -5344,7 +5358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(72).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(75).setImmediate))
 
 /***/ },
 /* 24 */
@@ -5399,7 +5413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _schemaValidators = __webpack_require__(2);
 	
-	var _cellSerializer = __webpack_require__(50);
+	var _cellSerializer = __webpack_require__(53);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -5536,7 +5550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _project = __webpack_require__(47);
+	var _project = __webpack_require__(50);
 	
 	var _project2 = _interopRequireDefault(_project);
 	
@@ -5748,7 +5762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var bufferEqual = __webpack_require__(119);
 	var base64url = __webpack_require__(16);
 	var Buffer = __webpack_require__(30).Buffer;
-	var crypto = __webpack_require__(62);
+	var crypto = __webpack_require__(65);
 	var formatEcdsa = __webpack_require__(120);
 	var util = __webpack_require__(6);
 	
@@ -6169,10 +6183,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(68)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(71)
 	
-	var md5 = toConstructor(__webpack_require__(63))
-	var rmd160 = toConstructor(__webpack_require__(66))
+	var md5 = toConstructor(__webpack_require__(66))
+	var rmd160 = toConstructor(__webpack_require__(69))
 	
 	function toConstructor (fn) {
 	  return function () {
@@ -6294,7 +6308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/*</replacement>*/
 	
-	var BufferList = __webpack_require__(76);
+	var BufferList = __webpack_require__(79);
 	var StringDecoder;
 	
 	util.inherits(Readable, Stream);
@@ -7435,6 +7449,334 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
+	var _request = __webpack_require__(5);
+	
+	var _copyFields = __webpack_require__(29);
+	
+	var _copyFields2 = _interopRequireDefault(_copyFields);
+	
+	var _paths = __webpack_require__(4);
+	
+	var _schemaValidators = __webpack_require__(2);
+	
+	var _comment = __webpack_require__(105);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function hydrate(credentials, projectId, topicId, comment) {
+	  var c = new Comment(credentials, projectId, topicId, comment.guid);
+	  (0, _copyFields2.default)(c, comment);
+	  return c;
+	}
+	
+	function updateComment(credentials, projectId, topicId, commentId, newComment) {
+	  (0, _schemaValidators.checkComment)(newComment);
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfCommentPath)(projectId, topicId, commentId), {
+	    body: newComment,
+	    method: 'put'
+	  }).then(Comment.serialize).then(function (comment) {
+	    return hydrate(credentials, projectId, topicId, comment);
+	  });
+	}
+	
+	function listComments(credentials, projectId, topicId) {
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfCommentsPath)(projectId, topicId)).then(Comment.serializeList).then(function (comments) {
+	    return comments.map(function (c) {
+	      return hydrate(credentials, projectId, topicId, c);
+	    });
+	  });
+	}
+	
+	function createComment(credentials, projectId, topicId, newComment) {
+	  (0, _schemaValidators.checkComment)(newComment);
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfCommentsPath)(projectId, topicId), {
+	    body: newComment,
+	    method: 'post'
+	  }).then(Comment.serialize).then(function (comment) {
+	    return hydrate(credentials, projectId, topicId, comment);
+	  });
+	}
+	
+	function Comment(credentials, projectId, topicId, commentId) {
+	  var path = (0, _paths.bcfCommentPath)(projectId, topicId, commentId);
+	
+	  function fetch() {
+	    var self = this;
+	    return (0, _request.authenticatedRequest)(credentials, path).then(Comment.serialize).then(function (comment) {
+	      return (0, _copyFields2.default)(self, comment);
+	    });
+	  }
+	
+	  function update(newComment) {
+	    var self = this;
+	    (0, _copyFields2.default)(self, newComment);
+	    return updateComment(credentials, projectId, topicId, commentId, this).then(function (updatedComment) {
+	      (0, _copyFields2.default)(self, updatedComment);
+	      return self;
+	    });
+	  }
+	
+	  this.fetch = fetch;
+	  this.update = update;
+	}
+	
+	Comment.listComments = listComments;
+	Comment.createComment = createComment;
+	Comment.serialize = _comment.serialize;
+	Comment.serializeList = _comment.serializeList;
+	
+	exports.default = Comment;
+	//# sourceMappingURL=comment.js.map
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _request = __webpack_require__(5);
+	
+	var _copyFields = __webpack_require__(29);
+	
+	var _copyFields2 = _interopRequireDefault(_copyFields);
+	
+	var _comment = __webpack_require__(47);
+	
+	var _comment2 = _interopRequireDefault(_comment);
+	
+	var _viewpoint = __webpack_require__(49);
+	
+	var _viewpoint2 = _interopRequireDefault(_viewpoint);
+	
+	var _paths = __webpack_require__(4);
+	
+	var _schemaValidators = __webpack_require__(2);
+	
+	var _topic = __webpack_require__(106);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function hydrate(credentials, projectId, topic) {
+	  var t = new Topic(credentials, projectId, topic.guid);
+	  (0, _copyFields2.default)(t, topic);
+	  return t;
+	}
+	
+	function updateTopic(credentials, projectId, topicId, newTopic) {
+	  (0, _schemaValidators.checkTopic)(newTopic);
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfTopicPath)(projectId, topicId), {
+	    body: newTopic,
+	    method: 'put'
+	  }).then(Topic.serialize).then(function (topic) {
+	    return hydrate(credentials, projectId, topic);
+	  });
+	}
+	
+	function getTopics(credentials, projectId) {
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfTopicsPath)(projectId)).then(Topic.serializeList).then(function (topics) {
+	    return topics.map(function (t) {
+	      return hydrate(credentials, projectId, t);
+	    });
+	  });
+	}
+	
+	function createTopic(credentials, projectId, newTopic) {
+	  return createTopics(credentials, projectId, [newTopic]).then(function (topics) {
+	    return topics[0];
+	  });
+	}
+	
+	function createTopics(credentials, projectId, newTopics) {
+	  for (var i = 0, len = newTopics.length; i < len; i++) {
+	    (0, _schemaValidators.checkTopic)(newTopics[i]);
+	  }
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfTopicsPath)(projectId), {
+	    body: newTopics,
+	    method: 'post'
+	  }).then(Topic.serializeList).then(function (topics) {
+	    return topics.map(function (t) {
+	      return hydrate(credentials, projectId, t);
+	    });
+	  });
+	}
+	
+	function Topic(credentials, projectId, id) {
+	  var path = (0, _paths.bcfTopicPath)(projectId, id);
+	
+	  function fetch() {
+	    var self = this;
+	    return (0, _request.authenticatedRequest)(credentials, path).then(Topic.serialize).then(function (topic) {
+	      return (0, _copyFields2.default)(self, topic);
+	    });
+	  }
+	
+	  function update(newTopic) {
+	    var self = this;
+	    (0, _copyFields2.default)(self, newTopic);
+	    return updateTopic(credentials, projectId, id, self).then(function (updatedTopic) {
+	      (0, _copyFields2.default)(self, updatedTopic);
+	      return self;
+	    });
+	  }
+	
+	  function getViewpoints() {
+	    return _viewpoint2.default.listViewpoints(credentials, projectId, id);
+	  }
+	
+	  function createViewpoint(newViewpoint) {
+	    return _viewpoint2.default.createViewpoint(credentials, projectId, id, newViewpoint);
+	  }
+	
+	  function getComments() {
+	    return _comment2.default.listComments(credentials, projectId, id);
+	  }
+	
+	  function createComment(newComment) {
+	    return _comment2.default.createComment(credentials, projectId, id, newComment);
+	  }
+	
+	  this.fetch = fetch;
+	  this.update = update;
+	  this.getViewpoints = getViewpoints;
+	  this.createViewpoint = createViewpoint;
+	  this.getComments = getComments;
+	  this.createComment = createComment;
+	}
+	
+	Topic.getTopics = getTopics;
+	Topic.createTopics = createTopics;
+	Topic.createTopic = createTopic;
+	Topic.serialize = _topic.serialize;
+	Topic.serializeList = _topic.serializeList;
+	
+	exports.default = Topic;
+	//# sourceMappingURL=topic.js.map
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _request = __webpack_require__(5);
+	
+	var _copyFields = __webpack_require__(29);
+	
+	var _copyFields2 = _interopRequireDefault(_copyFields);
+	
+	var _paths = __webpack_require__(4);
+	
+	var _schemaValidators = __webpack_require__(2);
+	
+	var _viewpoint = __webpack_require__(107);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var snapshotMimeTypes = {
+	  'png': 'image/png',
+	  'jpg': 'image/jpeg',
+	  'jpeg': 'image/jpeg'
+	};
+	
+	function hydrate(credentials, projectId, topicId, viewpoint) {
+	  var v = new Viewpoint(credentials, projectId, topicId, viewpoint.guid);
+	  (0, _copyFields2.default)(v, viewpoint);
+	  return v;
+	}
+	
+	function listViewpoints(credentials, projectId, topicId) {
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfViewpointsPath)(projectId, topicId)).then(Viewpoint.serializeList).then(function (viewpoints) {
+	    return viewpoints.map(function (v) {
+	      return hydrate(credentials, projectId, topicId, v);
+	    });
+	  });
+	}
+	
+	function createViewpoint(credentials, projectId, topicId, newViewpoint) {
+	  (0, _schemaValidators.checkViewpoint)(newViewpoint);
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfViewpointsPath)(projectId, topicId), {
+	    body: newViewpoint,
+	    method: 'post'
+	  }).then(Viewpoint.serialize).then(function (viewpoint) {
+	    return hydrate(credentials, projectId, topicId, viewpoint);
+	  });
+	}
+	
+	function _createSnapshot(credentials, projectId, topicId, viewpointId, snapshot) {
+	  var contentType = snapshotMimeTypes[snapshot.snapshotType];
+	  if (!contentType) {
+	    throw new Error(contentType + ' is not a valid snapshot type. It must be one of ' + Object.keys(snapshotMimeTypes));
+	  }
+	  // TODO(alcorn) BCF snapshot validator
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfSnapshotPath)(projectId, topicId, viewpointId), {
+	    body: snapshot.snapshotData,
+	    headers: {
+	      "Content-Type": contentType
+	    },
+	    method: 'post'
+	  });
+	  // TODO(alcorn) BCF snapshot serializer
+	}
+	
+	function _getSnapshot(credentials, projectId, topicId, viewpointId) {
+	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfSnapshotPath)(projectId, topicId, viewpointId));
+	  // TODO(alcorn) BCF snapshot serializer
+	}
+	
+	function Viewpoint(credentials, projectId, topicId, viewpointId) {
+	  var path = (0, _paths.bcfViewpointPath)(projectId, topicId, viewpointId);
+	
+	  function fetch() {
+	    var self = this;
+	    return (0, _request.authenticatedRequest)(credentials, path).then(Viewpoint.serialize).then(function (viewpoint) {
+	      return (0, _copyFields2.default)(self, viewpoint);
+	    });
+	  }
+	
+	  function createSnapshot(snapshot) {
+	    return _createSnapshot(credentials, projectId, topicId, viewpointId, snapshot);
+	  }
+	
+	  function getSnapshot() {
+	    return _getSnapshot(credentials, projectId, topicId, viewpointId);
+	  }
+	
+	  function getSnapshotURL() {
+	    return _paths.FLUX_URL + (0, _paths.bcfSnapshotPath)(projectId, topicId, viewpointId);
+	  }
+	
+	  this.fetch = fetch;
+	  this.replaceSnapshot = createSnapshot;
+	  this.getSnapshot = getSnapshot;
+	  this.getSnapshotURL = getSnapshotURL;
+	}
+	
+	Viewpoint.listViewpoints = listViewpoints;
+	Viewpoint.createViewpoint = createViewpoint;
+	Viewpoint.serialize = _viewpoint.serialize;
+	Viewpoint.serializeList = _viewpoint.serializeList;
+	
+	exports.default = Viewpoint;
+	//# sourceMappingURL=viewpoint.js.map
+
+/***/ },
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _schemaValidators = __webpack_require__(2);
 	
 	var _request = __webpack_require__(5);
@@ -7447,13 +7789,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _topic = __webpack_require__(93);
+	var _topic = __webpack_require__(48);
 	
 	var _topic2 = _interopRequireDefault(_topic);
 	
 	var _paths = __webpack_require__(4);
 	
-	var _permissions = __webpack_require__(89);
+	var _permissions = __webpack_require__(92);
 	
 	var _projectSerializer = __webpack_require__(111);
 	
@@ -7604,7 +7946,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=project.js.map
 
 /***/ },
-/* 48 */
+/* 51 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7627,7 +7969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=fetch.js.map
 
 /***/ },
-/* 49 */
+/* 52 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7654,7 +7996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=web-socket.js.map
 
 /***/ },
-/* 50 */
+/* 53 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7716,14 +8058,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=cell-serializer.js.map
 
 /***/ },
-/* 51 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/*global exports*/
-	var SignStream = __webpack_require__(52);
-	var VerifyStream = __webpack_require__(53);
+	var SignStream = __webpack_require__(55);
+	var VerifyStream = __webpack_require__(56);
 	
 	var ALGORITHMS = ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512'];
 	
@@ -7740,7 +8082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 52 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7814,7 +8156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = SignStream;
 
 /***/ },
-/* 53 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7938,7 +8280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = VerifyStream;
 
 /***/ },
-/* 54 */
+/* 57 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -8058,7 +8400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 55 */
+/* 58 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -8148,7 +8490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 56 */
+/* 59 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -8209,7 +8551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 57 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {var aes = __webpack_require__(18);
@@ -8333,7 +8675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 58 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {var aes = __webpack_require__(18);
@@ -8448,15 +8790,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 59 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (crypto, exports) {
 	  exports = exports || {};
-	  var ciphers = __webpack_require__(58)(crypto);
+	  var ciphers = __webpack_require__(61)(crypto);
 	  exports.createCipher = ciphers.createCipher;
 	  exports.createCipheriv = ciphers.createCipheriv;
-	  var deciphers = __webpack_require__(57)(crypto);
+	  var deciphers = __webpack_require__(60)(crypto);
 	  exports.createDecipher = deciphers.createDecipher;
 	  exports.createDecipheriv = deciphers.createDecipheriv;
 	  var modes = __webpack_require__(20);
@@ -8469,7 +8811,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 60 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {var createHash = __webpack_require__(42)
@@ -8519,7 +8861,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 61 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {var intSize = 4;
@@ -8560,10 +8902,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 62 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(65)
+	/* WEBPACK VAR INJECTION */(function(Buffer) {var rng = __webpack_require__(68)
 	
 	function error () {
 	  var m = [].slice.call(arguments).join(' ')
@@ -8576,7 +8918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.createHash = __webpack_require__(42)
 	
-	exports.createHmac = __webpack_require__(60)
+	exports.createHmac = __webpack_require__(63)
 	
 	exports.randomBytes = function(size, callback) {
 	  if (callback && callback.call) {
@@ -8597,10 +8939,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ['sha1', 'sha256', 'sha512', 'md5', 'rmd160']
 	}
 	
-	var p = __webpack_require__(64)(exports)
+	var p = __webpack_require__(67)(exports)
 	exports.pbkdf2 = p.pbkdf2
 	exports.pbkdf2Sync = p.pbkdf2Sync
-	__webpack_require__(59)(exports, module.exports);
+	__webpack_require__(62)(exports, module.exports);
 	
 	// the least I can do is make error messages for the rest of the node.js/crypto api.
 	each(['createCredentials'
@@ -8616,7 +8958,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 63 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -8628,7 +8970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * See http://pajhome.org.uk/crypt/md5 for more info.
 	 */
 	
-	var helpers = __webpack_require__(61);
+	var helpers = __webpack_require__(64);
 	
 	/*
 	 * Calculate the MD5 of an array of little-endian words, and a bit length
@@ -8777,10 +9119,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 64 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pbkdf2Export = __webpack_require__(73)
+	var pbkdf2Export = __webpack_require__(76)
 	
 	module.exports = function (crypto, exports) {
 	  exports = exports || {}
@@ -8795,7 +9137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 65 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, Buffer) {(function() {
@@ -8828,7 +9170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(1).Buffer))
 
 /***/ },
-/* 66 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {
@@ -9040,7 +9382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 67 */
+/* 70 */
 /***/ function(module, exports) {
 
 	module.exports = function (Buffer) {
@@ -9123,7 +9465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 68 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var exports = module.exports = function (alg) {
@@ -9133,15 +9475,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	var Buffer = __webpack_require__(1).Buffer
-	var Hash   = __webpack_require__(67)(Buffer)
+	var Hash   = __webpack_require__(70)(Buffer)
 	
-	exports.sha1 = __webpack_require__(69)(Buffer, Hash)
-	exports.sha256 = __webpack_require__(70)(Buffer, Hash)
-	exports.sha512 = __webpack_require__(71)(Buffer, Hash)
+	exports.sha1 = __webpack_require__(72)(Buffer, Hash)
+	exports.sha256 = __webpack_require__(73)(Buffer, Hash)
+	exports.sha512 = __webpack_require__(74)(Buffer, Hash)
 
 
 /***/ },
-/* 69 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -9285,7 +9627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 70 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -9438,7 +9780,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 71 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var inherits = __webpack_require__(6).inherits
@@ -9688,7 +10030,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 72 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var apply = Function.prototype.apply;
@@ -9741,13 +10083,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	// setimmediate attaches itself to the global object
-	__webpack_require__(81);
+	__webpack_require__(84);
 	exports.setImmediate = setImmediate;
 	exports.clearImmediate = clearImmediate;
 
 
 /***/ },
-/* 73 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {module.exports = function(crypto) {
@@ -9838,11 +10180,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).Buffer))
 
 /***/ },
-/* 74 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var strictUriEncode = __webpack_require__(82);
+	var strictUriEncode = __webpack_require__(85);
 	
 	exports.extract = function (str) {
 		return str.split('?')[1] || '';
@@ -9910,14 +10252,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 75 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(8)
 
 
 /***/ },
-/* 76 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9986,14 +10328,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 77 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(43)
 
 
 /***/ },
-/* 78 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var Stream = (function (){
@@ -10016,21 +10358,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
-/* 79 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(22)
 
 
 /***/ },
-/* 80 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(23)
 
 
 /***/ },
-/* 81 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -10223,7 +10565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(7)))
 
 /***/ },
-/* 82 */
+/* 85 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -10235,7 +10577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 83 */
+/* 86 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -10309,7 +10651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -10338,7 +10680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -10349,7 +10691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -10748,7 +11090,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10763,7 +11105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=flux-public-key.js.map
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10808,7 +11150,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -10831,7 +11173,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=permissions.js.map
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -10846,7 +11188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=web-sockets.js.map
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10874,306 +11216,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 92 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _request = __webpack_require__(5);
-	
-	var _copyFields = __webpack_require__(29);
-	
-	var _copyFields2 = _interopRequireDefault(_copyFields);
-	
-	var _paths = __webpack_require__(4);
-	
-	var _schemaValidators = __webpack_require__(2);
-	
-	var _comment = __webpack_require__(105);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function hydrate(credentials, projectId, topicId, comment) {
-	  var c = new Comment(credentials, projectId, topicId, comment.guid);
-	  (0, _copyFields2.default)(c, comment);
-	  return c;
-	}
-	
-	function updateComment(credentials, projectId, topicId, commentId, newComment) {
-	  (0, _schemaValidators.checkComment)(newComment);
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfCommentPath)(projectId, topicId, commentId), {
-	    body: newComment,
-	    method: 'put'
-	  }).then(Comment.serialize).then(function (comment) {
-	    return hydrate(credentials, projectId, topicId, comment);
-	  });
-	}
-	
-	function listComments(credentials, projectId, topicId) {
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfCommentsPath)(projectId, topicId)).then(Comment.serializeList).then(function (comments) {
-	    return comments.map(function (c) {
-	      return hydrate(credentials, projectId, topicId, c);
-	    });
-	  });
-	}
-	
-	function createComment(credentials, projectId, topicId, newComment) {
-	  (0, _schemaValidators.checkComment)(newComment);
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfCommentsPath)(projectId, topicId), {
-	    body: newComment,
-	    method: 'post'
-	  }).then(Comment.serializeList).then(function (comment) {
-	    return hydrate(credentials, projectId, topicId, comment);
-	  });
-	}
-	
-	function Comment(credentials, projectId, topicId, commentId) {
-	  var path = (0, _paths.bcfCommentPath)(projectId, topicId, commentId);
-	
-	  function fetch() {
-	    var self = this;
-	    return (0, _request.authenticatedRequest)(credentials, path).then(Comment.serialize).then(function (comment) {
-	      return (0, _copyFields2.default)(self, comment);
-	    });
-	  }
-	
-	  function update(newComment) {
-	    return updateComment(credentials, projectId, topicId, commentId, newComment);
-	  }
-	
-	  this.fetch = fetch;
-	  this.update = update;
-	}
-	
-	Comment.listComments = listComments;
-	Comment.createComment = createComment;
-	Comment.serialize = _comment.serialize;
-	Comment.serializeList = _comment.serializeList;
-	
-	exports.default = Comment;
-	//# sourceMappingURL=comment.js.map
-
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _request = __webpack_require__(5);
-	
-	var _copyFields = __webpack_require__(29);
-	
-	var _copyFields2 = _interopRequireDefault(_copyFields);
-	
-	var _comment = __webpack_require__(92);
-	
-	var _comment2 = _interopRequireDefault(_comment);
-	
-	var _viewpoint = __webpack_require__(94);
-	
-	var _viewpoint2 = _interopRequireDefault(_viewpoint);
-	
-	var _paths = __webpack_require__(4);
-	
-	var _schemaValidators = __webpack_require__(2);
-	
-	var _topic = __webpack_require__(106);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function hydrate(credentials, projectId, topic) {
-	  var t = new Topic(credentials, projectId, topic.guid);
-	  (0, _copyFields2.default)(t, topic);
-	  return t;
-	}
-	
-	function updateTopic(credentials, projectId, topicId, newTopic) {
-	  (0, _schemaValidators.checkTopic)(newTopic);
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfTopicPath)(projectId, topicId), {
-	    body: newTopic,
-	    method: 'put'
-	  }).then(Topic.serialize).then(function (topic) {
-	    return hydrate(credentials, projectId, topic);
-	  });
-	}
-	
-	function getTopics(credentials, projectId) {
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfTopicsPath)(projectId)).then(Topic.serializeList).then(function (topics) {
-	    return topics.map(function (t) {
-	      return hydrate(credentials, projectId, t);
-	    });
-	  });
-	}
-	
-	function createTopic(credentials, projectId, newTopic) {
-	  return createTopics(credentials, projectId, [newTopic]).then(function (topics) {
-	    return topics[0];
-	  });
-	}
-	
-	function createTopics(credentials, projectId, newTopics) {
-	  for (var i = 0, len = newTopics.length; i < len; i++) {
-	    (0, _schemaValidators.checkTopic)(newTopics[i]);
-	  }
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfTopicsPath)(projectId), {
-	    body: newTopics,
-	    method: 'post'
-	  }).then(Topic.serializeList).then(function (topics) {
-	    return topics.map(function (t) {
-	      return hydrate(credentials, projectId, t);
-	    });
-	  });
-	}
-	
-	function Topic(credentials, projectId, id) {
-	  var path = (0, _paths.bcfTopicPath)(projectId, id);
-	
-	  function fetch() {
-	    var self = this;
-	    return (0, _request.authenticatedRequest)(credentials, path).then(Topic.serialize).then(function (topic) {
-	      return (0, _copyFields2.default)(self, topic);
-	    });
-	  }
-	
-	  function update(newTopic) {
-	    return updateTopic(credentials, projectId, id, newTopic);
-	  }
-	
-	  function getViewpoints() {
-	    return _viewpoint2.default.listViewpoints(credentials, projectId, id);
-	  }
-	
-	  function createViewpoint(newViewpoint) {
-	    return _viewpoint2.default.createViewpoint(credentials, projectId, id, newViewpoint);
-	  }
-	
-	  function getComments() {
-	    return _comment2.default.listComments(credentials, projectId, id);
-	  }
-	
-	  function createComment(newComment) {
-	    return _comment2.default.createComment(credentials, projectId, id, newComment);
-	  }
-	
-	  this.fetch = fetch;
-	  this.update = update;
-	  this.getViewpoints = getViewpoints;
-	  this.createViewpoint = createViewpoint;
-	  this.getComments = getComments;
-	  this.createComment = createComment;
-	}
-	
-	Topic.getTopics = getTopics;
-	Topic.createTopics = createTopics;
-	Topic.createTopic = createTopic;
-	Topic.serialize = _topic.serialize;
-	Topic.serializeList = _topic.serializeList;
-	
-	exports.default = Topic;
-	//# sourceMappingURL=topic.js.map
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _request = __webpack_require__(5);
-	
-	var _copyFields = __webpack_require__(29);
-	
-	var _copyFields2 = _interopRequireDefault(_copyFields);
-	
-	var _paths = __webpack_require__(4);
-	
-	var _schemaValidators = __webpack_require__(2);
-	
-	var _viewpoint = __webpack_require__(107);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function hydrate(credentials, projectId, topicId, viewpoint) {
-	  var v = new Viewpoint(credentials, projectId, topicId, viewpoint.guid);
-	  (0, _copyFields2.default)(v, viewpoint);
-	  return v;
-	}
-	
-	function listViewpoints(credentials, projectId, topicId) {
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfViewpointsPath)(projectId, topicId)).then(Viewpoint.serializeList).then(function (viewpoints) {
-	    return viewpoints.map(function (v) {
-	      return hydrate(credentials, projectId, topicId, v);
-	    });
-	  });
-	}
-	
-	function createViewpoint(credentials, projectId, topicId, newViewpoint) {
-	  (0, _schemaValidators.checkViewpoint)(newViewpoint);
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfViewpointsPath)(projectId, topicId), {
-	    body: newViewpoint,
-	    method: 'post'
-	  }).then(Viewpoint.serialize).then(function (viewpoint) {
-	    return hydrate(credentials, projectId, topicId, viewpoint);
-	  });
-	}
-	
-	function _createSnapshot(credentials, projectId, topicId, viewpointId, snapshot) {
-	  // TODO(alcorn) BCF snapshot validator
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfSnapshotPath)(projectId, topicId, viewpointId), {
-	    body: snapshot,
-	    method: 'post'
-	  });
-	  // TODO(alcorn) BCF snapshot serializer
-	}
-	
-	function _getSnapshot(credentials, projectId, topicId, viewpointId) {
-	  return (0, _request.authenticatedRequest)(credentials, (0, _paths.bcfSnapshotPath)(projectId, topicId, viewpointId));
-	  // TODO(alcorn) BCF snapshot serializer
-	}
-	
-	function Viewpoint(credentials, projectId, topicId, viewpointId) {
-	  var path = (0, _paths.bcfViewpointPath)(projectId, topicId, viewpointId);
-	
-	  function fetch() {
-	    var self = this;
-	    return (0, _request.authenticatedRequest)(credentials, path).then(Viewpoint.serialize).then(function (viewpoint) {
-	      return (0, _copyFields2.default)(self, viewpoint);
-	    });
-	  }
-	
-	  function createSnapshot(snapshot) {
-	    return _createSnapshot(credentials, projectId, topicId, viewpointId, snapshot);
-	  }
-	
-	  function getSnapshot() {
-	    return _getSnapshot(credentials, projectId, topicId, viewpointId);
-	  }
-	
-	  this.fetch = fetch;
-	  this.createSnapshot = createSnapshot;
-	  this.getSnapshot = getSnapshot;
-	}
-	
-	Viewpoint.listViewpoints = listViewpoints;
-	Viewpoint.createViewpoint = createViewpoint;
-	Viewpoint.serialize = _viewpoint.serialize;
-	Viewpoint.serializeList = _viewpoint.serializeList;
-	
-	exports.default = Viewpoint;
-	//# sourceMappingURL=viewpoint.js.map
-
-/***/ },
 /* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -11199,7 +11241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var models = _interopRequireWildcard(_index);
 	
-	var _constants = __webpack_require__(88);
+	var _constants = __webpack_require__(91);
 	
 	var constants = _interopRequireWildcard(_constants);
 	
@@ -11273,13 +11315,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.DataTable = exports.Cell = exports.Project = exports.User = undefined;
+	exports.Viewpoint = exports.Comment = exports.Topic = exports.DataTable = exports.Cell = exports.Project = exports.User = undefined;
 	
 	var _user = __webpack_require__(26);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _project = __webpack_require__(47);
+	var _project = __webpack_require__(50);
 	
 	var _project2 = _interopRequireDefault(_project);
 	
@@ -11291,12 +11333,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _dataTable2 = _interopRequireDefault(_dataTable);
 	
+	var _topic = __webpack_require__(48);
+	
+	var _topic2 = _interopRequireDefault(_topic);
+	
+	var _comment = __webpack_require__(47);
+	
+	var _comment2 = _interopRequireDefault(_comment);
+	
+	var _viewpoint = __webpack_require__(49);
+	
+	var _viewpoint2 = _interopRequireDefault(_viewpoint);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.User = _user2.default;
 	exports.Project = _project2.default;
 	exports.Cell = _cell2.default;
 	exports.DataTable = _dataTable2.default;
+	exports.Topic = _topic2.default;
+	exports.Comment = _comment2.default;
+	exports.Viewpoint = _viewpoint2.default;
 	//# sourceMappingURL=index.js.map
 
 /***/ },
@@ -11441,13 +11498,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _jws = __webpack_require__(51);
+	var _jws = __webpack_require__(54);
 	
 	var _jws2 = _interopRequireDefault(_jws);
 	
 	var _schemaValidators = __webpack_require__(2);
 	
-	var _fluxPublicKey = __webpack_require__(87);
+	var _fluxPublicKey = __webpack_require__(90);
 	
 	var _fluxPublicKey2 = _interopRequireDefault(_fluxPublicKey);
 	
@@ -11533,9 +11590,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.setPorts = undefined;
 	
-	var _fetch = __webpack_require__(48);
+	var _fetch = __webpack_require__(51);
 	
-	var _webSocket = __webpack_require__(49);
+	var _webSocket = __webpack_require__(52);
 	
 	var _base = __webpack_require__(27);
 	
@@ -11607,10 +11664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      type: 'string'
 	    },
 	    fluxProperties: {
-	      type: 'object',
-	      additionalProperties: {
-	        type: 'string'
-	      }
+	      type: 'object'
 	    }
 	  }
 	};
@@ -11758,7 +11812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    perspectiveCamera: {
 	      title: 'PerspectiveCamera',
-	      type: 'object',
+	      type: ['object', 'null'],
 	      properties: {
 	        cameraViewPoint: {
 	          title: 'XYZ',
@@ -11812,7 +11866,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    orthogonalCamera: {
 	      title: 'OrthogonalCamera',
-	      type: 'object',
+	      type: ['object', 'null'],
 	      properties: {
 	        cameraViewPoint: {
 	          title: 'XYZ',
@@ -11866,7 +11920,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    snapshot: {
 	      title: 'Snapshot',
-	      type: 'object',
+	      type: ['object', 'null'],
 	      properties: {
 	        snapshotType: {
 	          type: 'string'
@@ -11877,10 +11931,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    },
 	    fluxProperties: {
-	      type: 'object',
-	      additionalProperties: {
-	        type: 'string'
-	      }
+	      type: 'object'
 	    }
 	  }
 	};
@@ -12024,7 +12075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _dataTableNotificationTypes = __webpack_require__(24);
 	
-	var _cellSerializer = __webpack_require__(50);
+	var _cellSerializer = __webpack_require__(53);
 	
 	function serializeDataTableMessage(_ref) {
 	  var Type = _ref.Type,
@@ -12311,7 +12362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _events2 = _interopRequireDefault(_events);
 	
-	var _webSocket = __webpack_require__(49);
+	var _webSocket = __webpack_require__(52);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	

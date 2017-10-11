@@ -47,7 +47,7 @@ export default {
     },
     perspectiveCamera: {
       title: 'PerspectiveCamera',
-      type: 'object',
+      type: ['object', 'null'],
       properties: {
         cameraViewPoint: {
           title: 'XYZ',
@@ -101,7 +101,7 @@ export default {
     },
     orthogonalCamera: {
       title: 'OrthogonalCamera',
-      type: 'object',
+      type: ['object', 'null'],
       properties: {
         cameraViewPoint: {
           title: 'XYZ',
@@ -155,7 +155,7 @@ export default {
     },
     snapshot: {
       title: 'Snapshot',
-      type: 'object',
+      type: ['object', 'null'],
       properties: {
         snapshotType: {
           type: 'string',

@@ -38,8 +38,15 @@ function handleAuxiliaryResponse(response) {
     })) : handleJson(response);
 }
 
+function handleImage(response) {
+  return response.body;
+}
+
 function handleSuccess(response) {
   const headers = response.headers;
+  if (headers.has('content-type') && headers.get('content-type').slice(0, 5) === 'image') {
+    return handleImage(response);
+  }
   return headers.has('flux-auxiliary-return') ?
     handleAuxiliaryResponse(response) : handleJson(response);
 }
@@ -66,14 +73,19 @@ function handleResponse(response) {
 function request(path, options = {}) {
   const { query, body, headers, form, ...others } = options;
   let payload;
-  let contentType;
   if (form) {
     const formEnc = form.constructor === Object ? urlEncodeObject(form) : form;
     payload = { body: formEnc };
-    contentType = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
   } else {
-    payload = body === undefined ? null : { body: JSON.stringify(body) };
-    contentType = payload ? { 'Content-Type': 'application/json' } : null;
+    if (Object.keys(headers).map((h) => h.toLowerCase()).indexOf('content-type') < 0) {
+      payload = body === undefined ? null : { body: JSON.stringify(body) };
+      if (payload) {
+        headers['Content-Type'] = 'application/json';
+      }
+    } else {
+      payload = { body };
+    }
   }
   const search = query ? stringifyQuery(query) : '';
 
@@ -81,7 +93,6 @@ function request(path, options = {}) {
     credentials: 'include',
     headers: {
       ...headers,
-      ...contentType,
       'User-Agent': USER_AGENT,
       'Flux-Plugin-Platform': PLATFORM,
     },

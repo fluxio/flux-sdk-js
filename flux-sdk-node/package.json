@@ -18,7 +18,7 @@
     "lint": "eslint src spec example/app.js",
     "prepublish": "npm run clean && npm run build",
     "test": "npm run test:e2e",
-    "test:e2e": "cross-env NODE_ENV=test BABEL_ENV=commonjs babel-node node_modules/.bin/jasmine --random=true",
+    "test:e2e": "cross-env NODE_ENV=test BABEL_ENV=commonjs babel-node node_modules/.bin/jasmine --random=true --verbose",
     "test:watch": "nodemon -x 'npm test' -w src -w spec"
   },
   "author": "Flux Factory, Inc. (https://flux.io)",
