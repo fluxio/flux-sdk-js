@@ -20,6 +20,8 @@
     "func-names": 0,
     "prefer-template": 0,
     "no-console": 0,
-    "no-use-before-define": ["error", { "functions": false }]
+    "no-use-before-define": ["error", { "functions": false }],
+    "no-unused-vars": 0,
+    "no-param-reassign": 0
   }
 }

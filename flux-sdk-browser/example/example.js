@@ -65,7 +65,7 @@ function getTopics() {
   var state = {
     user: sdk.getUser(getCredentials()),
     project: null,
-    topics: null,
+    topics: null
   };
   return getAProject(state)
   .then(listTopics);
@@ -85,5 +85,5 @@ function listTopics(state) {
   .then(function(topics) {
     state.topics = topics;
     return state;
-  })
+  });
 }

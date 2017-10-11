@@ -4,3 +4,4 @@ es
 lib
 _book
 **/npm-debug.log
+package-lock.json
