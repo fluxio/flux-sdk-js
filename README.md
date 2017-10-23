@@ -2,6 +2,8 @@
 
 Welcome to the Javascript Flux SDK!
 
+Documentation on how to use the SDK can be found [here](https://www.gitbook.com/book/flux/flux-javascript-sdk/details).
+
 This document describes the requirements for developing the SDK itself and is
 primarily intended for Flux developers and advanced SDK users.
 
