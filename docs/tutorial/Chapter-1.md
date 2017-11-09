@@ -33,7 +33,7 @@ const config = {
 
 You'll need to set `flux_client_id` to the client ID you created for your app in [Before You Begin](../README.md#before-you-begin). For now, the config above assumes you will want to develop on localhost port 8080. If you're using a different host or port, you'll need to add it to the list of valid "post-authorization" URLs for your app (using the [Flux App Manager](https://flux.io/developer/apps)).
 
-Now, add the following to a new file, `js/index.html`:
+Now, add an `index.html` file to your app's root directory and add the contents below:
 
 {% label %}index.html{% endlabel %}
 ```html
@@ -146,7 +146,7 @@ Open a browser and navigate to [http://localhost:8080](http://localhost:8080). Y
   alt="Figure 1.1: Implementing Login"
   title="Figure 1.1: Implementing Login"
   class="doc-img"
-/> 
+/>
 
 ## <a id="logging-out-of-flux"></a>Logging Out of Flux
 
@@ -176,7 +176,7 @@ Next, we need to add some logic to hide the login div (which exposes the contain
 function hideLogin() {
   // hide the login button
   $('#login').hide()
-  
+
   // attach the event handler to the logout button
   $('#logout').click(showLogin)
 }
