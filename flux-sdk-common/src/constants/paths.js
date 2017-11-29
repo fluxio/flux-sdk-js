@@ -4,6 +4,7 @@ export const FLUX_URL = 'https://flux.io/';
 export const PROFILE_PATH = 'api/whoami/';
 export const AUTHORIZE_PATH = 'authorize/';
 export const ACCESS_TOKEN_PATH = 'api/token/';
+export const COLLABORATORS_PATH = 'api/collaborators/';
 
 export const PROJECTS_PATH = 'api/projects/';
 export const projectPath = id => `p/${id}/`;
