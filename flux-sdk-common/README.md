@@ -23,7 +23,11 @@ sym-linked version to npm so that running `npm install flux-sdk-common`
 from another directory (e.g., `flux-sdk-js/flux-sdk-browser`) will use the
 local version.
 
-## <a id="installing"></a>Installing
+## <a id="installing"></a>Running Tests
+
+Make sure you set up your env by following these instructions
+https://docs.google.com/document/d/1joaFumoetcAfN9xCU-ND7vr2dMUXPGaNqa6syz_EqyU/edit#
+Also see the Testing section in flux-sdk-node/README.md
 
 * To run the linter and tests once: `npm run check`
 * To run the tests once (no linting): `npm test`

@@ -80,9 +80,10 @@ describe('Viewpoint', function() {
       it('should get the viewpoint\'s snapshot', function(done) {
         this.topic.createViewpoint(testViewpoint)
         .then((viewpoint) => {
-          return viewpoint.getSnapshot();
-        })
-        .then(done, done.fail);
+          viewpoint.getSnapshot().then((snapshot) => {
+            expect(snapshot).toContain('data:image/png;base64,');
+          }).then(done, done.fail);
+        });
       });
     });
 

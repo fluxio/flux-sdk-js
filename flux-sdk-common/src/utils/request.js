@@ -43,7 +43,18 @@ function handleAuxiliaryResponse(response) {
 
 // Returns the response body as a stream.
 function handleImage(response) {
-  return response.body;
+  const content = response.headers.get('content-type');
+  const snapshot = response.body;
+  return new Promise((resolve) => {
+    snapshot.on('readable', () => {
+      const buffer = snapshot.read();
+      if (buffer !== null && buffer !== undefined) {
+        const str64 = buffer.toString('base64');
+        const img = `data:${content};base64,${str64}`;
+        resolve(img);
+      }
+    });
+  });
 }
 
 function handleSuccess(response) {
