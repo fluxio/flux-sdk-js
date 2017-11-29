@@ -12,6 +12,8 @@ import {
   serializeList,
 } from '../../serializers/bcf/viewpoint';
 
+import * as Snapshot from '../../serializers/bcf/snapshot';
+
 const snapshotMimeTypes = {
   png: 'image/png',
   jpg: 'image/jpeg',
@@ -53,13 +55,12 @@ function _createSnapshot(credentials, projectId, topicId, viewpointId, snapshot)
       'Content-Type': contentType,
     },
     method: 'post',
-  });
-  // TODO(alcorn) BCF snapshot serializer
+  }).then(Snapshot.serialize);
 }
 
 function _getSnapshot(credentials, projectId, topicId, viewpointId) {
-  return authenticatedRequest(credentials, bcfSnapshotPath(projectId, topicId, viewpointId));
-  // TODO(alcorn) BCF snapshot serializer
+  return authenticatedRequest(credentials, bcfSnapshotPath(projectId, topicId, viewpointId))
+    .then(Snapshot.serialize);
 }
 
 function Viewpoint(credentials, projectId, topicId, viewpointId) {
