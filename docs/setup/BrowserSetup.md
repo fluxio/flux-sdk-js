@@ -54,7 +54,7 @@ For example:
   <head>
     <meta charset="UTF-8">
     <title>My Fancy Flux App</title>
-    <script src="https://unpkg.com/flux-sdk-browser@0.5.0/dist/flux-sdk-min.js"></script>
+    <script src="https://unpkg.com/flux-sdk-browser@0.5.1/dist/flux-sdk-min.js"></script>
     <script src="./my-app.js"></script>
   <!-- ... -->
 ```
