@@ -2,9 +2,10 @@
   "name": "flux-sdk-js",
   "description": "Not for direct usage",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.5.1",
   "scripts": {
-    "build": "bash ./build.sh",
+    "build": "echo \"please run './build.sh' from the command line\"",
+    "clean": "./clean.sh",
     "docs:clean": "rimraf _book",
     "docs:build": "npm run docs:clean && gitbook install && gitbook build",
     "docs:install": "gitbook install",

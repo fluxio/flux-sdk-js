@@ -1,6 +1,6 @@
 {
   "name": "flux-sdk-browser",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Flux JavaScript SDK for browser clients",
   "files": [
     "dist",
@@ -49,7 +49,7 @@
     "webpack": "^1.12.14"
   },
   "dependencies": {
-    "flux-sdk-common": "^0.5.0",
+    "flux-sdk-common": "^0.5.1",
     "query-string": "^3.0.3",
     "whatwg-fetch": "^0.11.0"
   }
