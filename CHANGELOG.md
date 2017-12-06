@@ -7,6 +7,10 @@ While the API is considered unstable until we reach `1.0.0`, we will attempt
 to increment the minor version (`Y` in `x.Y.z`) if and when there are
 breaking changes.
 
+## [0.5.2] - 11/29/2017
+
+* Raw request object is now returned for Issue viewpoint snapshots, leaving the handling up to the client.
+
 ## [0.5.1] - 11/29/2017
 
 * Issue viewpoint snapshots now returned as image uris.

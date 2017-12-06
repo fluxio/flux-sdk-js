@@ -81,7 +81,8 @@ describe('Viewpoint', function() {
         this.topic.createViewpoint(testViewpoint)
         .then((viewpoint) => {
           viewpoint.getSnapshot().then((snapshot) => {
-            expect(snapshot).toContain('data:image/png;base64,');
+            expect(snapshot.url.slice(0, 4)).toEqual('http');
+            expect(snapshot.url).toContain('snapshot');
           }).then(done, done.fail);
         });
       });
